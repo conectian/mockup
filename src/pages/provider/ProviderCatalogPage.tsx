@@ -175,7 +175,7 @@ export default function ProviderCatalogPage() {
                                 <TableRow key={useCase.id}>
                                     <TableCell className="font-medium">
                                         <div className="flex items-center gap-3">
-                                            <div className="h-10 w-10 rounded-lg overflow-hidden bg-muted">
+                                            <div className="h-10 w-10 rounded-md overflow-hidden bg-muted">
                                                 <img
                                                     src={useCase.image}
                                                     alt={useCase.title}
@@ -250,7 +250,7 @@ export default function ProviderCatalogPage() {
                 <DialogContent className="sm:max-w-xl">
                     <DialogHeader>
                         <div className="flex items-center gap-3 mb-2">
-                            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center">
+                            <div className="h-10 w-10 rounded-md bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center">
                                 <Sparkles className="h-5 w-5 text-white" />
                             </div>
                             <div>
@@ -262,7 +262,7 @@ export default function ProviderCatalogPage() {
 
                     <div className="space-y-4 py-4">
                         {/* Image Upload */}
-                        <div className="border-2 border-dashed rounded-xl p-6 text-center hover:bg-muted/50 transition-colors cursor-pointer group">
+                        <div className="border-2 border-dashed rounded-md p-6 text-center hover:bg-muted/50 transition-colors cursor-pointer group">
                             <Upload className="h-8 w-8 mx-auto text-muted-foreground group-hover:text-primary mb-2 transition-colors" />
                             <p className="text-sm font-medium">Arrastra una imagen o haz clic</p>
                             <p className="text-xs text-muted-foreground mt-1">PNG, JPG hasta 5MB</p>
@@ -337,7 +337,7 @@ export default function ProviderCatalogPage() {
                 <DialogContent className="sm:max-w-xl">
                     <DialogHeader>
                         <div className="flex items-center gap-3 mb-2">
-                            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                            <div className="h-10 w-10 rounded-md bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
                                 <Edit className="h-5 w-5 text-white" />
                             </div>
                             <div>

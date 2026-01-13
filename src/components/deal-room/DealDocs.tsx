@@ -63,7 +63,7 @@ export default function DealDocs() {
                                     {/* Icon */}
                                     <div
                                         className={cn(
-                                            'h-12 w-12 rounded-lg flex items-center justify-center shrink-0',
+                                            'h-12 w-12 rounded-md flex items-center justify-center shrink-0',
                                             doc.approved
                                                 ? 'bg-emerald-100 dark:bg-emerald-900/50'
                                                 : 'bg-muted'

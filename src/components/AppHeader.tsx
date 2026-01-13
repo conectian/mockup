@@ -99,9 +99,9 @@ export default function AppHeader({ onMenuClick }: AppHeaderProps) {
                 {/* User Dropdown */}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="relative h-10 w-10 md:w-auto md:px-3 md:py-2 gap-2 rounded-full md:rounded-xl hover:bg-white/5 border border-transparent hover:border-white/5 transition-all">
+                        <Button variant="ghost" className="relative h-10 w-10 md:w-auto md:px-3 md:py-2 gap-2 rounded-full md:rounded-md hover:bg-white/5 border border-transparent hover:border-white/5 transition-all">
                             <div className={cn(
-                                "h-8 w-8 rounded-lg flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-indigo-500/10",
+                                "h-8 w-8 rounded-md flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-indigo-500/10",
                                 userType === 'provider' && "bg-gradient-to-br from-emerald-400 to-teal-500",
                                 userType === 'client' && "bg-gradient-to-br from-blue-400 to-indigo-500",
                                 userType === 'admin' && "bg-gradient-to-br from-amber-400 to-orange-500"
@@ -119,20 +119,20 @@ export default function AppHeader({ onMenuClick }: AppHeaderProps) {
                     <DropdownMenuContent align="end" className="w-56 glass-card mt-2">
                         <DropdownMenuLabel className="font-display">Mi Cuenta</DropdownMenuLabel>
                         <DropdownMenuSeparator className="bg-white/5" />
-                        <DropdownMenuItem asChild className="focus:bg-white/10 cursor-pointer rounded-lg m-1">
+                        <DropdownMenuItem asChild className="focus:bg-white/10 cursor-pointer rounded-md m-1">
                             <Link to="/profile" className="flex items-center gap-3 py-1">
                                 <User className="h-4 w-4" />
                                 <span>Perfil</span>
                             </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="focus:bg-white/10 cursor-pointer rounded-lg m-1">
+                        <DropdownMenuItem asChild className="focus:bg-white/10 cursor-pointer rounded-md m-1">
                             <Link to="/settings" className="flex items-center gap-3 py-1">
                                 <Settings className="h-4 w-4" />
                                 <span>Configuración</span>
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator className="bg-white/5" />
-                        <DropdownMenuItem onClick={logout} className="text-destructive focus:text-destructive focus:bg-destructive/10 cursor-pointer rounded-lg m-1">
+                        <DropdownMenuItem onClick={logout} className="text-destructive focus:text-destructive focus:bg-destructive/10 cursor-pointer rounded-md m-1">
                             <LogOut className="h-4 w-4 mr-3" />
                             <span>Cerrar Sesión</span>
                         </DropdownMenuItem>

@@ -239,7 +239,7 @@ export default function SettingsPage() {
                                     <CardDescription>Sube tus certificados fiscales o ISO.</CardDescription>
                                 </CardHeader>
                                 <CardContent className="space-y-4">
-                                    <div className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:bg-muted/50 transition-colors">
+                                    <div className="border-2 border-dashed rounded-md p-6 text-center cursor-pointer hover:bg-muted/50 transition-colors">
                                         <Upload className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
                                         <p className="text-sm font-medium">Arrastra archivos aquí o haz clic</p>
                                         <p className="text-xs text-muted-foreground mt-1">PDF, JPG hasta 10MB</p>

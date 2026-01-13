@@ -37,7 +37,7 @@ export default function DealRightSidebar() {
     const currentPhaseIndex = phases.findIndex((p) => p.id === currentPhase);
 
     const getActionButton = () => {
-        const baseClass = "w-full h-14 rounded-2xl font-bold text-sm shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]";
+        const baseClass = "w-full h-14 rounded-md font-bold text-sm shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]";
         switch (currentPhase) {
             case 'descubrimiento':
                 return (
@@ -92,8 +92,8 @@ export default function DealRightSidebar() {
 
                 <div className="flex items-center justify-between relative z-10">
                     <div className="flex flex-col items-center gap-2">
-                        <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-500 p-[1px] shadow-lg shadow-blue-500/20">
-                            <div className="h-full w-full rounded-[0.95rem] bg-background/20 backdrop-blur-md flex items-center justify-center text-white font-bold text-xl">
+                        <div className="h-14 w-14 rounded-md bg-gradient-to-br from-blue-400 to-indigo-500 p-[1px] shadow-lg shadow-blue-500/20">
+                            <div className="h-full w-full rounded-md bg-background/20 backdrop-blur-md flex items-center justify-center text-white font-bold text-xl">
                                 {clientName.charAt(0)}
                             </div>
                         </div>
@@ -107,8 +107,8 @@ export default function DealRightSidebar() {
                     </div>
 
                     <div className="flex flex-col items-center gap-2">
-                        <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 p-[1px] shadow-lg shadow-emerald-500/20">
-                            <div className="h-full w-full rounded-[0.95rem] bg-background/20 backdrop-blur-md flex items-center justify-center text-white font-bold text-xl">
+                        <div className="h-14 w-14 rounded-md bg-gradient-to-br from-emerald-400 to-teal-500 p-[1px] shadow-lg shadow-emerald-500/20">
+                            <div className="h-full w-full rounded-md bg-background/20 backdrop-blur-md flex items-center justify-center text-white font-bold text-xl">
                                 {providerName.charAt(0)}
                             </div>
                         </div>
@@ -120,7 +120,7 @@ export default function DealRightSidebar() {
                     <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-2">Estado de la Sesión</h3>
                     <Badge
                         className={cn(
-                            "px-4 py-1.5 rounded-xl font-bold text-[10px] tracking-widest uppercase border-0 shadow-lg",
+                            "px-4 py-1.5 rounded-md font-bold text-[10px] tracking-widest uppercase border-0 shadow-lg",
                             dealHealth === 'bueno'
                                 ? "bg-emerald-500/10 text-emerald-500 shadow-emerald-500/5"
                                 : "bg-amber-500/10 text-amber-500 shadow-amber-500/5"
@@ -156,11 +156,11 @@ export default function DealRightSidebar() {
                                 const isActive = index === currentPhaseIndex;
                                 return (
                                     <div key={phase.id} className={cn(
-                                        "flex items-center gap-4 px-4 py-3 rounded-2xl border transition-all duration-500",
+                                        "flex items-center gap-4 px-4 py-3 rounded-md border transition-all duration-500",
                                         isActive ? "bg-primary/5 border-primary/20 shadow-xl shadow-primary/5" : "border-transparent opacity-50"
                                     )}>
                                         <div className={cn(
-                                            "h-7 w-7 rounded-lg flex items-center justify-center text-xs font-bold transition-all",
+                                            "h-7 w-7 rounded-md flex items-center justify-center text-xs font-bold transition-all",
                                             isCompleted ? "bg-emerald-500 text-white" : isActive ? "bg-primary text-white" : "bg-white/5 text-muted-foreground"
                                         )}>
                                             {isCompleted ? <CheckCircle2 className="h-4 w-4" /> : index + 1}
@@ -181,7 +181,7 @@ export default function DealRightSidebar() {
                     </div>
 
                     {/* Financial HUD */}
-                    <div className="glass-card bg-gradient-to-br from-blue-500/10 to-indigo-600/5 p-6 rounded-[2rem] border-blue-500/20 shadow-2xl shadow-blue-500/5 relative overflow-hidden group">
+                    <div className="glass-card bg-gradient-to-br from-blue-500/10 to-indigo-600/5 p-6 rounded-md border-blue-500/20 shadow-2xl shadow-blue-500/5 relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                             <Shield className="h-12 w-12 text-blue-500" />
                         </div>
@@ -200,12 +200,12 @@ export default function DealRightSidebar() {
                         <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 px-1">Compliance Checkpad</h4>
                         <div className="grid gap-2">
                             <div className={cn(
-                                "flex items-center justify-between p-4 rounded-2xl border bg-white/5 backdrop-blur-sm transition-all",
+                                "flex items-center justify-between p-4 rounded-md border bg-white/5 backdrop-blur-sm transition-all",
                                 providerVerified ? "border-emerald-500/20" : "border-white/5"
                             )}>
                                 <div className="flex items-center gap-3">
                                     <div className={cn(
-                                        "h-8 w-8 rounded-xl flex items-center justify-center shadow-sm",
+                                        "h-8 w-8 rounded-md flex items-center justify-center shadow-sm",
                                         providerVerified ? "bg-emerald-500/10 text-emerald-500" : "bg-white/5 text-muted-foreground/30"
                                     )}>
                                         <Award className="h-4 w-4" />
@@ -213,17 +213,17 @@ export default function DealRightSidebar() {
                                     <span className="text-xs font-bold text-foreground/80">Partner Verificado</span>
                                 </div>
                                 {providerVerified && (
-                                    <Badge className="bg-amber-500 text-white border-0 text-[9px] font-bold px-2 py-0.5 rounded-lg shadow-lg shadow-amber-500/20">GOLD</Badge>
+                                    <Badge className="bg-amber-500 text-white border-0 text-[9px] font-bold px-2 py-0.5 rounded-md shadow-lg shadow-amber-500/20">GOLD</Badge>
                                 )}
                             </div>
 
                             <div className={cn(
-                                "flex items-center justify-between p-4 rounded-2xl border bg-white/5 backdrop-blur-sm transition-all",
+                                "flex items-center justify-between p-4 rounded-md border bg-white/5 backdrop-blur-sm transition-all",
                                 ndaSigned ? "border-emerald-500/20" : "border-white/5"
                             )}>
                                 <div className="flex items-center gap-3">
                                     <div className={cn(
-                                        "h-8 w-8 rounded-xl flex items-center justify-center shadow-sm",
+                                        "h-8 w-8 rounded-md flex items-center justify-center shadow-sm",
                                         ndaSigned ? "bg-emerald-500/10 text-emerald-500" : "bg-white/5 text-muted-foreground/30"
                                     )}>
                                         <FileSignature className="h-4 w-4" />
@@ -234,12 +234,12 @@ export default function DealRightSidebar() {
                             </div>
 
                             <div className={cn(
-                                "flex items-center justify-between p-4 rounded-2xl border bg-white/5 backdrop-blur-sm transition-all",
+                                "flex items-center justify-between p-4 rounded-md border bg-white/5 backdrop-blur-sm transition-all",
                                 proposalApproved ? "border-emerald-500/20" : "border-white/5"
                             )}>
                                 <div className="flex items-center gap-3">
                                     <div className={cn(
-                                        "h-8 w-8 rounded-xl flex items-center justify-center shadow-sm",
+                                        "h-8 w-8 rounded-md flex items-center justify-center shadow-sm",
                                         proposalApproved ? "bg-emerald-500/10 text-emerald-500" : "bg-white/5 text-muted-foreground/30"
                                     )}>
                                         <FileCheck className="h-4 w-4" />

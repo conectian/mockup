@@ -11,10 +11,10 @@ export default function AuthLayout() {
 
             {/* Auth Card */}
             <div className="w-full max-w-md">
-                <div className="bg-card border border-border/50 rounded-2xl shadow-xl shadow-violet-500/5 p-8">
+                <div className="bg-card border border-border/50 rounded-md shadow-xl shadow-violet-500/5 p-8">
                     {/* Logo */}
                     <div className="flex flex-col items-center mb-8">
-                        <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center mb-4 shadow-lg shadow-violet-500/30">
+                        <div className="h-12 w-12 rounded-md bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center mb-4 shadow-lg shadow-violet-500/30">
                             <span className="text-white font-bold text-2xl">C</span>
                         </div>
                         <h1 className="text-2xl font-bold tracking-tight">Conectian</h1>

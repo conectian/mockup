@@ -45,7 +45,7 @@ export default function DevToolbar() {
     }
 
     return (
-        <div className="fixed bottom-4 right-4 z-50 bg-card border shadow-xl rounded-lg p-2 flex flex-col gap-2 animate-in slide-in-from-bottom-5">
+        <div className="fixed bottom-4 right-4 z-50 bg-card border shadow-xl rounded-md p-2 flex flex-col gap-2 animate-in slide-in-from-bottom-5">
             <div className="flex items-center justify-between px-1 mb-1 border-b pb-2">
                 <span className="text-xs font-bold uppercase text-muted-foreground flex items-center gap-1">
                     <MonitorSmartphone className="h-3 w-3" />

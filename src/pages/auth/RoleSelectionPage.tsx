@@ -25,7 +25,7 @@ export default function RoleSelectionPage() {
                     onClick={() => handleSelectRole('provider')}
                 >
                     <CardContent className="flex items-center gap-4 p-4">
-                        <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center shrink-0">
+                        <div className="h-12 w-12 rounded-md bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center shrink-0">
                             <Briefcase className="h-6 w-6 text-white" />
                         </div>
                         <div className="flex-1">
@@ -41,7 +41,7 @@ export default function RoleSelectionPage() {
                     onClick={() => handleSelectRole('client')}
                 >
                     <CardContent className="flex items-center gap-4 p-4">
-                        <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shrink-0">
+                        <div className="h-12 w-12 rounded-md bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shrink-0">
                             <Building2 className="h-6 w-6 text-white" />
                         </div>
                         <div className="flex-1">

@@ -41,17 +41,17 @@ export default function MarketplaceFilters({
         filters.tiers.length > 0;
 
     return (
-        <div className="space-y-8 glass-card p-6 rounded-[2rem] border-white/5">
+        <div className="space-y-8 glass-card p-6 rounded-md border-white/5">
             {/* Header */}
             <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-primary/10 text-primary">
+                    <div className="p-2 rounded-md bg-primary/10 text-primary">
                         <Filter className="h-4 w-4" />
                     </div>
                     <h3 className="font-display font-bold text-lg tracking-tight">Filtros Avanzados</h3>
                 </div>
                 {hasActiveFilters && (
-                    <Button variant="ghost" size="sm" onClick={onReset} className="h-8 text-xs font-bold text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg">
+                    <Button variant="ghost" size="sm" onClick={onReset} className="h-8 text-xs font-bold text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md">
                         <X className="h-3 w-3 mr-1.5" />
                         Limpiar
                     </Button>
@@ -68,7 +68,7 @@ export default function MarketplaceFilters({
                         placeholder="IA, Blockchain, Fintech..."
                         value={filters.search}
                         onChange={(e) => onChange({ ...filters, search: e.target.value })}
-                        className="pl-10 h-12 bg-white/5 border-white/10 rounded-xl focus:ring-primary/20 focus:border-primary/40 transition-all placeholder:text-muted-foreground/40 font-medium"
+                        className="pl-10 h-12 bg-white/5 border-white/10 rounded-md focus:ring-primary/20 focus:border-primary/40 transition-all placeholder:text-muted-foreground/40 font-medium"
                     />
                 </div>
             </div>
@@ -82,7 +82,7 @@ export default function MarketplaceFilters({
                             key={tier}
                             variant={filters.tiers.includes(tier) ? 'default' : 'outline'}
                             className={cn(
-                                'cursor-pointer transition-all px-3 py-1.5 rounded-xl font-bold text-[11px] border-white/10',
+                                'cursor-pointer transition-all px-3 py-1.5 rounded-md font-bold text-[11px] border-white/10',
                                 !filters.tiers.includes(tier) && 'bg-white/5 hover:bg-white/10 text-muted-foreground',
                                 filters.tiers.includes(tier) && tier === 'Gold' && 'bg-amber-500 text-white hover:bg-amber-600 shadow-lg shadow-amber-500/20',
                                 filters.tiers.includes(tier) && tier === 'Silver' && 'bg-slate-400 text-white hover:bg-slate-500 shadow-lg shadow-slate-500/20',
@@ -107,7 +107,7 @@ export default function MarketplaceFilters({
                             key={industry}
                             variant={filters.industries.includes(industry) ? 'default' : 'outline'}
                             className={cn(
-                                "cursor-pointer transition-all px-3 py-1.5 rounded-xl font-bold text-[11px] border-white/10",
+                                "cursor-pointer transition-all px-3 py-1.5 rounded-md font-bold text-[11px] border-white/10",
                                 filters.industries.includes(industry) ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "bg-white/5 hover:bg-white/10 text-muted-foreground"
                             )}
                             onClick={() =>
@@ -132,7 +132,7 @@ export default function MarketplaceFilters({
                             key={tech}
                             variant={filters.technologies.includes(tech) ? 'default' : 'outline'}
                             className={cn(
-                                "cursor-pointer transition-all px-3 py-1.5 rounded-xl font-bold text-[11px] border-white/10",
+                                "cursor-pointer transition-all px-3 py-1.5 rounded-md font-bold text-[11px] border-white/10",
                                 filters.technologies.includes(tech) ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20" : "bg-white/5 hover:bg-white/10 text-muted-foreground"
                             )}
                             onClick={() =>
@@ -152,7 +152,7 @@ export default function MarketplaceFilters({
             <div className="pt-6 border-t border-white/5">
                 <div className="flex items-center justify-between text-sm px-1">
                     <span className="text-muted-foreground font-medium">Resultados</span>
-                    <span className="font-bold text-foreground bg-primary/10 text-primary px-2.5 py-0.5 rounded-lg border border-primary/20">
+                    <span className="font-bold text-foreground bg-primary/10 text-primary px-2.5 py-0.5 rounded-md border border-primary/20">
                         {resultCount}
                     </span>
                 </div>

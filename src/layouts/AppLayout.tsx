@@ -30,7 +30,7 @@ export default function AppLayout() {
                 <div className="h-16 flex items-center justify-between px-4 border-b">
                     {sidebarOpen && (
                         <div className="flex items-center space-x-2">
-                            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center">
+                            <div className="h-8 w-8 rounded-md bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center">
                                 <span className="text-white font-bold text-lg">C</span>
                             </div>
                             <span className="font-bold text-lg tracking-tight">Conectian</span>
@@ -58,9 +58,9 @@ export default function AppLayout() {
                         <Link
                             key={item.name}
                             to={item.href}
-                            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive(item.href)
-                                    ? 'bg-primary text-primary-foreground'
-                                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                            className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive(item.href)
+                                ? 'bg-primary text-primary-foreground'
+                                : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                                 }`}
                         >
                             <item.icon className="h-5 w-5" />
@@ -71,13 +71,13 @@ export default function AppLayout() {
 
                 {/* Bottom Actions */}
                 <div className="p-2 border-t space-y-1">
-                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                         <Settings className="h-5 w-5" />
                         {sidebarOpen && <span>Configuración</span>}
                     </button>
                     <button
                         onClick={logout}
-                        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
                     >
                         <LogOut className="h-5 w-5" />
                         {sidebarOpen && <span>Cerrar Sesión</span>}

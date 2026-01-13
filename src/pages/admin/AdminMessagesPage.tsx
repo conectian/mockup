@@ -163,7 +163,7 @@ export default function AdminMessagesPage() {
                     {filteredConversations.map((conv) => (
                         <div
                             key={conv.id}
-                            className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer border"
+                            className="flex items-center gap-4 p-4 rounded-md hover:bg-muted/50 transition-colors cursor-pointer border"
                             onClick={() => setSelectedConversation(conv)}
                         >
                             <div className="h-12 w-12 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-white font-bold shrink-0">
@@ -240,9 +240,9 @@ export default function AdminMessagesPage() {
                                                 {msg.from} · {msg.time}
                                             </div>
                                             <div
-                                                className={`max-w-[80%] p-3 rounded-2xl ${msg.from === selectedConversation.participants[0]
-                                                        ? 'bg-muted rounded-bl-none'
-                                                        : 'bg-primary text-primary-foreground rounded-br-none'
+                                                className={`max-w-[80%] p-3 rounded-md ${msg.from === selectedConversation.participants[0]
+                                                    ? 'bg-muted rounded-bl-none'
+                                                    : 'bg-primary text-primary-foreground rounded-br-none'
                                                     }`}
                                             >
                                                 <p className="text-sm">{msg.text}</p>

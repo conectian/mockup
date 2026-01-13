@@ -28,7 +28,7 @@ export default function DealRoomsList() {
     return (
         <div className="space-y-10">
             {/* Header Section with Mesh Gradient */}
-            <Card className="border-0 mesh-gradient text-white overflow-hidden relative rounded-[2.5rem] shadow-2xl shadow-indigo-500/20">
+            <Card className="border-0 mesh-gradient text-white overflow-hidden relative rounded-md shadow-2xl shadow-indigo-500/20">
                 <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]" />
                 <CardContent className="py-12 px-8 md:px-12 relative z-10">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
@@ -40,7 +40,7 @@ export default function DealRoomsList() {
                                 Gestiona tus alianzas estratégicas y Deal Rooms activos en un solo lugar.
                             </p>
                         </div>
-                        <Button className="bg-white text-indigo-600 hover:bg-white/90 gap-3 shadow-xl shadow-black/20 px-8 py-7 text-lg font-bold rounded-2xl transition-all hover:scale-105 active:scale-95 shrink-0">
+                        <Button className="bg-white text-indigo-600 hover:bg-white/90 gap-3 shadow-xl shadow-black/20 px-8 py-7 text-lg font-bold rounded-md transition-all hover:scale-105 active:scale-95 shrink-0">
                             <Plus className="h-6 w-6" />
                             Nueva Deal Room
                         </Button>
@@ -56,7 +56,7 @@ export default function DealRoomsList() {
 
                 {mockDealRooms.map((room) => (
                     <Link key={room.id} to={`/deal-room/${room.id}`} className="block group">
-                        <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer border-white/5 bg-card/40 backdrop-blur-sm relative overflow-hidden rounded-[2rem] hover:border-primary/20">
+                        <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer border-white/5 bg-card/40 backdrop-blur-sm relative overflow-hidden rounded-md hover:border-primary/20">
                             <CardHeader className="pb-4 pt-6 px-8">
                                 <div className="flex items-start justify-between">
                                     <div className="space-y-1">
@@ -64,7 +64,7 @@ export default function DealRoomsList() {
                                             {room.title}
                                         </CardTitle>
                                         <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
-                                            <div className="h-5 w-5 rounded-lg bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
+                                            <div className="h-5 w-5 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
                                                 {room.counterparty.charAt(0)}
                                             </div>
                                             con <span className="text-foreground/80 font-bold">{room.counterparty}</span>
@@ -86,11 +86,11 @@ export default function DealRoomsList() {
                             </CardHeader>
                             <CardContent className="pb-8 px-8">
                                 <div className="flex flex-wrap items-center gap-6 text-sm">
-                                    <div className="flex items-center gap-2 font-medium text-muted-foreground/80 bg-white/5 px-3 py-1.5 rounded-xl border border-white/5">
+                                    <div className="flex items-center gap-2 font-medium text-muted-foreground/80 bg-white/5 px-3 py-1.5 rounded-md border border-white/5">
                                         <MessageSquare className="h-4 w-4 text-primary/70" />
                                         <span className="text-foreground/90 font-bold">{room.messages}</span> mensajes
                                     </div>
-                                    <div className="flex items-center gap-2 font-medium text-muted-foreground/80 bg-white/5 px-3 py-1.5 rounded-xl border border-white/5">
+                                    <div className="flex items-center gap-2 font-medium text-muted-foreground/80 bg-white/5 px-3 py-1.5 rounded-md border border-white/5">
                                         <Clock className="h-4 w-4 text-primary/70" />
                                         Última actividad: <span className="text-foreground/90 font-bold">{room.lastActivity}</span>
                                     </div>
@@ -106,7 +106,7 @@ export default function DealRoomsList() {
             </div>
 
             {mockDealRooms.length === 0 && (
-                <Card className="border-dashed border-2 border-white/10 bg-transparent rounded-[2.5rem]">
+                <Card className="border-dashed border-2 border-white/10 bg-transparent rounded-md">
                     <CardContent className="py-24 text-center space-y-4">
                         <div className="h-20 w-20 bg-muted/20 rounded-full flex items-center justify-center mx-auto mb-6">
                             <FolderOpen className="h-10 w-10 text-muted-foreground/40" />
@@ -115,7 +115,7 @@ export default function DealRoomsList() {
                         <p className="text-muted-foreground max-w-xs mx-auto">
                             Comienza una nueva negociación directa o responde a un RFP para abrir una Deal Room.
                         </p>
-                        <Button className="mt-8 rounded-2xl h-14 px-8 font-bold text-lg bg-primary shadow-xl shadow-primary/20">
+                        <Button className="mt-8 rounded-md h-14 px-8 font-bold text-lg bg-primary shadow-xl shadow-primary/20">
                             Crear primera Deal Room
                         </Button>
                     </CardContent>

@@ -72,7 +72,7 @@ export default function RFPActionCard({ rfp }: RFPActionCardProps) {
 
                     {/* Client Info - Locked/Unlocked */}
                     <div className={cn(
-                        'bg-muted/50 rounded-lg p-4 mb-4 transition-all',
+                        'bg-muted/50 rounded-md p-4 mb-4 transition-all',
                         !isUnlocked && 'relative overflow-hidden'
                     )}>
                         {!isUnlocked && (

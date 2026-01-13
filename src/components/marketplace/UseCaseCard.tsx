@@ -33,7 +33,7 @@ export default function UseCaseCard({ useCase }: UseCaseCardProps) {
     const TierIcon = tier.icon;
 
     return (
-        <Card className="overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full border-white/5 rounded-3xl bg-card/40 backdrop-blur-sm">
+        <Card className="py-0 overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full border-white/5 rounded-md bg-card/40 backdrop-blur-sm">
             {/* Image Header */}
             <div className="aspect-[16/10] relative overflow-hidden">
                 <img
@@ -50,7 +50,7 @@ export default function UseCaseCard({ useCase }: UseCaseCardProps) {
                 </Badge>
 
                 {/* ROI Badge (Bottom Left on Image) */}
-                <div className="absolute bottom-4 left-4 glass-card px-3 py-1.5 rounded-xl border-white/20 flex items-center gap-2">
+                <div className="absolute bottom-4 left-4 glass-card px-3 py-1.5 rounded-md border-white/20 flex items-center gap-2">
                     <Rocket className="h-3.5 w-3.5 text-emerald-400" />
                     <span className="text-[10px] font-bold text-white uppercase tracking-tight">{useCase.roi}</span>
                 </div>
@@ -61,7 +61,7 @@ export default function UseCaseCard({ useCase }: UseCaseCardProps) {
                 <div className="flex-1">
                     {/* Provider & Category */}
                     <div className="flex items-center gap-2 mb-3">
-                        <div className="h-6 w-6 rounded-lg bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
+                        <div className="h-6 w-6 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
                             {useCase.providerName.charAt(0)}
                         </div>
                         <span className="text-xs font-bold text-muted-foreground/80 tracking-tight">{useCase.providerName}</span>
@@ -80,7 +80,7 @@ export default function UseCaseCard({ useCase }: UseCaseCardProps) {
                     {/* Tech Stack Badges */}
                     <div className="flex flex-wrap gap-1.5 mb-6">
                         {useCase.techStack.slice(0, 3).map((tech) => (
-                            <Badge key={tech} variant="secondary" className="text-[10px] font-bold bg-white/5 hover:bg-white/10 border-white/5 px-2 py-0.5 rounded-lg text-muted-foreground">
+                            <Badge key={tech} variant="secondary" className="text-[10px] font-bold bg-white/5 hover:bg-white/10 border-white/5 px-2 py-0.5 rounded-md text-muted-foreground">
                                 {tech}
                             </Badge>
                         ))}
@@ -90,7 +90,7 @@ export default function UseCaseCard({ useCase }: UseCaseCardProps) {
                 {/* Footer Action */}
                 <div className="pt-4 border-t border-white/5 mt-auto">
                     <Link to={`/marketplace/${useCase.id}`} className="block">
-                        <Button className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-all rounded-2xl font-bold h-11 bg-white/5 text-foreground border border-white/10 hover:border-primary/50">
+                        <Button className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-all rounded-md font-bold h-11 bg-white/5 text-foreground border border-white/10 hover:border-primary/50">
                             Ver Detalles
                             <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                         </Button>

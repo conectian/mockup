@@ -81,7 +81,7 @@ export default function ContactProviderModal({
                         />
                     </div>
 
-                    <div className="bg-muted/50 rounded-lg p-3 text-sm text-muted-foreground">
+                    <div className="bg-muted/50 rounded-md p-3 text-sm text-muted-foreground">
                         <p>
                             💡 <strong>Tip:</strong> Cuanta más información proporciones, mejor podrá el proveedor preparar una propuesta ajustada a tus necesidades.
                         </p>

@@ -97,7 +97,7 @@ export default function MarketplacePage() {
             </div>
 
             {/* Horizontal Filters Bar */}
-            <div className="glass-card rounded-2xl p-4 space-y-4">
+            <div className="glass-card rounded-md p-4 space-y-4">
                 {/* Top Row: Search + Filter Dropdowns */}
                 <div className="flex flex-col lg:flex-row gap-3">
                     {/* Search Input */}
@@ -349,7 +349,7 @@ export default function MarketplacePage() {
                     ))}
                 </div>
             ) : (
-                <div className="text-center py-16 bg-muted/30 rounded-xl border-2 border-dashed">
+                <div className="text-center py-16 bg-muted/30 rounded-md border-2 border-dashed">
                     <Search className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                     <h3 className="text-lg font-semibold mb-2">No se encontraron resultados</h3>
                     <p className="text-muted-foreground mb-4">

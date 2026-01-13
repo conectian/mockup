@@ -49,8 +49,8 @@ export default function LandingPage() {
                     <h2 className="text-3xl font-bold text-center mb-12">¿Por qué Conectian?</h2>
 
                     <div className="grid md:grid-cols-3 gap-8">
-                        <div className="bg-card p-6 rounded-2xl border shadow-sm hover:shadow-md transition-shadow">
-                            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center mb-4">
+                        <div className="bg-card p-6 rounded-md border shadow-sm hover:shadow-md transition-shadow">
+                            <div className="h-12 w-12 rounded-md bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center mb-4">
                                 <Users className="h-6 w-6 text-white" />
                             </div>
                             <h3 className="text-lg font-semibold mb-2">Conexiones Estratégicas</h3>
@@ -59,8 +59,8 @@ export default function LandingPage() {
                             </p>
                         </div>
 
-                        <div className="bg-card p-6 rounded-2xl border shadow-sm hover:shadow-md transition-shadow">
-                            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-4">
+                        <div className="bg-card p-6 rounded-md border shadow-sm hover:shadow-md transition-shadow">
+                            <div className="h-12 w-12 rounded-md bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-4">
                                 <Shield className="h-6 w-6 text-white" />
                             </div>
                             <h3 className="text-lg font-semibold mb-2">Deal Rooms Seguras</h3>
@@ -69,8 +69,8 @@ export default function LandingPage() {
                             </p>
                         </div>
 
-                        <div className="bg-card p-6 rounded-2xl border shadow-sm hover:shadow-md transition-shadow">
-                            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mb-4">
+                        <div className="bg-card p-6 rounded-md border shadow-sm hover:shadow-md transition-shadow">
+                            <div className="h-12 w-12 rounded-md bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mb-4">
                                 <TrendingUp className="h-6 w-6 text-white" />
                             </div>
                             <h3 className="text-lg font-semibold mb-2">Métricas de Impacto</h3>

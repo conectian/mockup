@@ -26,7 +26,7 @@ export default function OnboardingWizard() {
         <div className="max-w-2xl mx-auto">
             <div className="mb-8">
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center">
+                    <div className="h-10 w-10 rounded-md bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center">
                         <Sparkles className="h-5 w-5 text-white" />
                     </div>
                     <div>

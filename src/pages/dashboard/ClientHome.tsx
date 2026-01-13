@@ -35,7 +35,7 @@ export default function ClientHome() {
     return (
         <div className="space-y-10">
             {/* Hero Banner */}
-            <Card className="border-0 mesh-gradient text-white overflow-hidden relative rounded-[2rem] shadow-2xl shadow-indigo-500/20">
+            <Card className="border-0 mesh-gradient text-white overflow-hidden relative rounded-md shadow-2xl shadow-indigo-500/20">
                 <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]" />
                 <CardContent className="py-12 px-8 md:px-12 relative z-10">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
@@ -48,7 +48,7 @@ export default function ClientHome() {
                             </p>
                         </div>
                         <Link to="/marketplace" className="shrink-0">
-                            <Button size="lg" className="bg-white text-indigo-600 hover:bg-white/90 gap-3 shadow-xl shadow-black/20 px-8 py-7 text-lg font-bold rounded-2xl transition-all hover:scale-105 active:scale-95">
+                            <Button size="lg" className="bg-white text-indigo-600 hover:bg-white/90 gap-3 shadow-xl shadow-black/20 px-8 py-7 text-lg font-bold rounded-md transition-all hover:scale-105 active:scale-95">
                                 <Search className="h-6 w-6" />
                                 Explorar Soluciones
                             </Button>
@@ -59,13 +59,13 @@ export default function ClientHome() {
 
             {/* Status Cards */}
             <div className="grid gap-6 md:grid-cols-2">
-                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-white/5 relative overflow-hidden rounded-3xl">
+                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-white/5 relative overflow-hidden rounded-md">
                     <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                         <FileText className="h-24 w-24 -mr-8 -mt-8" />
                     </div>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Mis RFPs Activos</CardTitle>
-                        <div className="p-2 rounded-xl bg-blue-500/10 text-blue-500">
+                        <div className="p-2 rounded-md bg-blue-500/10 text-blue-500">
                             <FileText className="h-5 w-5" />
                         </div>
                     </CardHeader>
@@ -76,7 +76,7 @@ export default function ClientHome() {
                                 <p className="text-sm font-medium text-muted-foreground mt-1 text-balance">Solicitudes de propuesta publicadas</p>
                             </div>
                             <Link to="/client/rfps">
-                                <Button variant="ghost" size="sm" className="rounded-xl gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                                <Button variant="ghost" size="sm" className="rounded-md gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all">
                                     Ver todas
                                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                 </Button>
@@ -85,13 +85,13 @@ export default function ClientHome() {
                     </CardContent>
                 </Card>
 
-                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-white/5 relative overflow-hidden rounded-3xl">
+                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-white/5 relative overflow-hidden rounded-md">
                     <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                         <FolderKanban className="h-24 w-24 -mr-8 -mt-8" />
                     </div>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Deal Rooms Abiertos</CardTitle>
-                        <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-500">
+                        <div className="p-2 rounded-md bg-indigo-500/10 text-indigo-500">
                             <FolderKanban className="h-5 w-5" />
                         </div>
                     </CardHeader>
@@ -102,7 +102,7 @@ export default function ClientHome() {
                                 <p className="text-sm font-medium text-muted-foreground mt-1 text-balance">Negociación técnica en curso</p>
                             </div>
                             <Link to="/deal-rooms">
-                                <Button variant="ghost" size="sm" className="rounded-xl gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                                <Button variant="ghost" size="sm" className="rounded-md gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all">
                                     Ir a salas
                                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                 </Button>
@@ -123,7 +123,7 @@ export default function ClientHome() {
                         <h2 className="text-3xl font-display font-bold tracking-tight">Seleccionado para ti</h2>
                     </div>
                     <Link to="/marketplace">
-                        <Button variant="outline" className="rounded-xl border-white/10 hover:bg-white/5 font-bold gap-2">
+                        <Button variant="outline" className="rounded-md border-white/10 hover:bg-white/5 font-bold gap-2">
                             Ver catálogo completo
                             <ArrowRight className="h-4 w-4" />
                         </Button>
@@ -132,7 +132,7 @@ export default function ClientHome() {
 
                 <div className="grid gap-8 md:grid-cols-3">
                     {mockRecommendations.map((item) => (
-                        <Card key={item.id} className="overflow-hidden group cursor-pointer border-white/5 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl">
+                        <Card key={item.id} className="py-0 overflow-hidden group cursor-pointer border-white/5 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-md">
                             <div className="aspect-[16/10] relative overflow-hidden">
                                 <img
                                     src={item.image}

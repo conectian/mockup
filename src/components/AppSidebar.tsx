@@ -38,7 +38,7 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
             <div className="h-16 flex items-center justify-between px-6 border-b border-white/5">
                 {!isCollapsed && (
                     <Link to="/" className="flex items-center space-x-3 group">
-                        <div className="h-9 w-9 rounded-xl premium-gradient flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300">
+                        <div className="h-9 w-9 rounded-md premium-gradient flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300">
                             <span className="text-white font-display font-bold text-xl">C</span>
                         </div>
                         <span className="font-display font-bold text-xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
@@ -47,7 +47,7 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
                     </Link>
                 )}
                 {isCollapsed && (
-                    <div className="h-9 w-9 rounded-xl premium-gradient flex items-center justify-center mx-auto shadow-lg shadow-indigo-500/20">
+                    <div className="h-9 w-9 rounded-md premium-gradient flex items-center justify-center mx-auto shadow-lg shadow-indigo-500/20">
                         <span className="text-white font-display font-bold text-xl">C</span>
                     </div>
                 )}
@@ -84,7 +84,7 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
                             to={item.href}
                             onClick={onClose}
                             className={cn(
-                                "group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-300",
+                                "group relative flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-300",
                                 active
                                     ? "bg-primary/10 text-primary shadow-[inset_0_0_0_1px_rgba(var(--primary),0.1)]"
                                     : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
@@ -110,35 +110,36 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
                 })}
             </nav>
 
-            {/* Bottom Actions - Spacing fix and visual refinement */}
-            <div className="px-3 py-4 border-t border-white/5 space-y-1.5 bg-white/5">
-                <Link
-                    to="/settings"
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-foreground transition-all duration-200"
-                >
-                    <Settings className="h-5 w-5 shrink-0" />
-                    {!isCollapsed && <span>Configuración</span>}
-                </Link>
-                <button
-                    onClick={logout}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-destructive/80 hover:bg-destructive/10 hover:text-destructive transition-all duration-200"
-                >
-                    <LogOut className="h-5 w-5 shrink-0" />
-                    {!isCollapsed && <span>Cerrar Sesión</span>}
-                </button>
-            </div>
-
             {/* Collapse Toggle (Desktop only) */}
             <div className="hidden lg:block p-3 border-t border-white/5">
                 <Button
                     variant="ghost"
                     size="sm"
                     onClick={onToggleCollapse}
-                    className="w-full justify-center text-muted-foreground hover:text-foreground hover:bg-white/5 rounded-xl"
+                    className="w-full justify-center text-muted-foreground hover:text-foreground hover:bg-white/5 rounded-md"
                 >
                     {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
                 </Button>
             </div>
+
+            {/* Bottom Actions - Spacing fix and visual refinement */}
+            <div className="px-3 py-4 border-t border-white/5 space-y-1.5 bg-white/5">
+                <Link
+                    to="/settings"
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-foreground transition-all duration-200"
+                >
+                    <Settings className="h-5 w-5 shrink-0" />
+                    {!isCollapsed && <span>Configuración</span>}
+                </Link>
+                <button
+                    onClick={logout}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-destructive/80 hover:bg-destructive/10 hover:text-destructive transition-all duration-200"
+                >
+                    <LogOut className="h-5 w-5 shrink-0" />
+                    {!isCollapsed && <span>Cerrar Sesión</span>}
+                </button>
+            </div>
+
         </div>
     );
 

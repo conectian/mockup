@@ -155,7 +155,7 @@ export default function AdminDashboardPage() {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {pendingTasks.map((task) => (
-                                <div key={task.id} className="flex flex-col space-y-2 p-3 border rounded-lg bg-muted/30">
+                                <div key={task.id} className="flex flex-col space-y-2 p-3 border rounded-md bg-muted/30">
                                     <div className="flex justify-between items-start">
                                         <span className="font-medium text-sm">{task.company}</span>
                                         <span className="text-xs text-muted-foreground">{task.time}</span>
@@ -211,7 +211,7 @@ export default function AdminDashboardPage() {
                             { from: 'Retail Master', to: 'TechSolutions Inc', message: 'Necesitamos revisar el contrato antes de firmar...', time: 'Hace 15 min', avatar: 'R' },
                             { from: 'Startup Nova', to: 'DataSecure Ltd', message: '¿Podéis enviar el certificado ISO actualizado?', time: 'Hace 1h', avatar: 'S' },
                         ].map((msg, i) => (
-                            <div key={i} className="flex items-start gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
+                            <div key={i} className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors cursor-pointer">
                                 <div className="h-10 w-10 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-white font-bold shrink-0">
                                     {msg.avatar}
                                 </div>

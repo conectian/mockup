@@ -54,7 +54,7 @@ export default function DealRoomPage() {
                             </p>
                         </div>
                         <div className="grid gap-6">
-                            <Card className="glass-card border-white/5 p-6 rounded-3xl">
+                            <Card className="glass-card border-white/5 p-6 rounded-md">
                                 <h3 className="font-bold mb-2">Resumen Ejecutivo</h3>
                                 <p className="text-sm text-muted-foreground leading-relaxed">
                                     Esta sección contiene la descripción técnica detallada recopilada durante la fase de RFP y las sesiones de descubrimiento.
@@ -72,9 +72,9 @@ export default function DealRoomPage() {
                         </div>
                         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                             {participants.map((p) => (
-                                <div key={p.id} className="flex items-center gap-4 p-5 glass-card border-white/5 rounded-[2rem] hover:border-primary/20 transition-all group">
+                                <div key={p.id} className="flex items-center gap-4 p-5 glass-card border-white/5 rounded-md hover:border-primary/20 transition-all group">
                                     <div className={cn(
-                                        "h-12 w-12 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/10 group-hover:scale-110 transition-transform",
+                                        "h-12 w-12 rounded-md flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/10 group-hover:scale-110 transition-transform",
                                         p.company === 'client' ? "bg-gradient-to-br from-blue-400 to-indigo-500" : "bg-gradient-to-br from-emerald-400 to-teal-500"
                                     )}>
                                         {p.name.charAt(0)}
@@ -105,7 +105,7 @@ export default function DealRoomPage() {
                 {/* Back Button Container */}
                 <div className="h-16 flex items-center px-4 border-b border-white/5">
                     <Link to="/deal-rooms" className="w-full">
-                        <Button variant="ghost" className="w-full justify-start gap-3 rounded-xl hover:bg-white/5 text-muted-foreground hover:text-foreground transition-all group">
+                        <Button variant="ghost" className="w-full justify-start gap-3 rounded-md hover:bg-white/5 text-muted-foreground hover:text-foreground transition-all group">
                             <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
                             {leftMenuExpanded && <span className="font-bold text-sm tracking-tight">Volver al listado</span>}
                         </Button>
@@ -135,7 +135,7 @@ export default function DealRoomPage() {
                                 key={item.id}
                                 onClick={() => setActiveView(item.id)}
                                 className={cn(
-                                    'w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all relative group overflow-hidden',
+                                    'w-full flex items-center gap-4 px-4 py-3.5 rounded-md text-sm font-bold transition-all relative group overflow-hidden',
                                     isActive
                                         ? 'text-white'
                                         : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
@@ -162,7 +162,7 @@ export default function DealRoomPage() {
                     <Button
                         variant="ghost"
                         onClick={() => setLeftMenuExpanded(!leftMenuExpanded)}
-                        className="w-full h-12 justify-center rounded-2xl hover:bg-white/10 transition-all"
+                        className="w-full h-12 justify-center rounded-md hover:bg-white/10 transition-all"
                     >
                         {leftMenuExpanded ? (
                             <div className="flex items-center gap-2">

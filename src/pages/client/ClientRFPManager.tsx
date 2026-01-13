@@ -97,7 +97,7 @@ export default function ClientRFPManager() {
                     <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
                         <SheetHeader className="pb-6 border-b">
                             <div className="flex items-center gap-3">
-                                <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                                <div className="h-12 w-12 rounded-md bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
                                     <FileText className="h-6 w-6 text-white" />
                                 </div>
                                 <div>
@@ -185,7 +185,7 @@ export default function ClientRFPManager() {
                             </div>
 
                             {/* Info Banner */}
-                            <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
+                            <div className="p-4 rounded-md bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
                                 <p className="text-sm text-blue-700 dark:text-blue-300">
                                     <span className="font-semibold">💡 Consejo:</span> Los RFPs con presupuesto definido reciben un 40% más de propuestas.
                                 </p>
@@ -251,7 +251,7 @@ export default function ClientRFPManager() {
                     {clientRFPs.map((rfp) => (
                         <div
                             key={rfp.id}
-                            className="flex items-center justify-between p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors"
+                            className="flex items-center justify-between p-4 bg-muted/50 rounded-md hover:bg-muted transition-colors"
                         >
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-1">

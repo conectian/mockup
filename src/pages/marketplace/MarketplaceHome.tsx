@@ -36,7 +36,7 @@ export default function ClientMarketplace() {
                     <Card key={provider.id} className="group hover:shadow-lg transition-shadow cursor-pointer">
                         <CardContent className="p-6">
                             <div className="flex items-start justify-between mb-4">
-                                <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-white font-bold text-lg">
+                                <div className="h-12 w-12 rounded-md bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-white font-bold text-lg">
                                     {provider.name.charAt(0)}
                                 </div>
                                 <div className="flex items-center gap-1 text-amber-500">

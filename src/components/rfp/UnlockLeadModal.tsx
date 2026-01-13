@@ -65,7 +65,7 @@ export default function UnlockLeadModal({
                 </DialogHeader>
 
                 <div className="py-4 space-y-4">
-                    <div className="bg-muted/50 rounded-lg p-4">
+                    <div className="bg-muted/50 rounded-md p-4">
                         <div className="text-sm text-muted-foreground mb-1">Oportunidad</div>
                         <div className="font-medium">{rfpTitle}</div>
                     </div>
@@ -98,7 +98,7 @@ export default function UnlockLeadModal({
                     </div>
 
                     {!canAfford && (
-                        <div className="flex items-start gap-2 p-3 bg-red-50 dark:bg-red-950/30 rounded-lg text-red-600 dark:text-red-400">
+                        <div className="flex items-start gap-2 p-3 bg-red-50 dark:bg-red-950/30 rounded-md text-red-600 dark:text-red-400">
                             <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
                             <div className="text-sm">
                                 <strong>Saldo insuficiente.</strong> Necesitas {cost - balance} créditos más para desbloquear esta oportunidad.
