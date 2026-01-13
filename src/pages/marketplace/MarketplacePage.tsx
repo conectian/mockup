@@ -1,11 +1,12 @@
 import { useState, useMemo } from 'react';
 import { mockUseCases, INDUSTRIES, TECHNOLOGIES, type ProviderTier } from '@/data/marketplace-data';
 import UseCaseCard from '@/components/marketplace/UseCaseCard';
+import AIChatbotModal from '@/components/marketplace/AIChatbotModal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Search, X, SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { Search, X, SlidersHorizontal, ChevronDown, Sparkles } from 'lucide-react';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -33,6 +34,11 @@ const TIERS: ProviderTier[] = ['Gold', 'Silver', 'Bronze'];
 export default function MarketplacePage() {
     const [filters, setFilters] = useState<FilterState>(initialFilters);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+    const [chatbotOpen, setChatbotOpen] = useState(false);
+
+    const handleChatbotSuggestion = (query: string) => {
+        setFilters({ ...filters, search: query });
+    };
 
     const toggleArrayItem = <T extends string>(array: T[], item: T): T[] => {
         return array.includes(item)
@@ -90,7 +96,7 @@ export default function MarketplacePage() {
         <div className="space-y-6">
             {/* Header */}
             <div>
-                <h1 className="text-2xl font-bold tracking-tight">Explorar Marketplace</h1>
+                <h1 className="text-2xl font-bold tracking-tight">Marketplace</h1>
                 <p className="text-muted-foreground">
                     Encontrados <span className="font-semibold text-foreground">{filteredUseCases.length}</span> casos de uso
                 </p>
@@ -210,6 +216,19 @@ export default function MarketplacePage() {
                                 Limpiar
                             </Button>
                         )}
+
+                        {/* Separator */}
+                        <div className="h-6 w-px bg-border/50 mx-1" />
+
+                        {/* AI Chatbot Button - Professional */}
+                        <Button
+                            onClick={() => setChatbotOpen(true)}
+                            variant="outline"
+                            className="h-11 gap-2 border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/50 text-primary"
+                        >
+                            <Sparkles className="h-4 w-4" />
+                            <span className="font-medium">Asistente IA</span>
+                        </Button>
                     </div>
 
                     {/* Mobile Filters Button */}
@@ -360,6 +379,13 @@ export default function MarketplacePage() {
                     </Button>
                 </div>
             )}
+
+            {/* AI Chatbot Modal */}
+            <AIChatbotModal
+                open={chatbotOpen}
+                onOpenChange={setChatbotOpen}
+                onSearchSuggestion={handleChatbotSuggestion}
+            />
         </div>
     );
 }

@@ -1,7 +1,6 @@
 import {
   LayoutDashboard,
   Store,
-  Search,
   FileText,
   Users,
   MessageSquare,
@@ -59,9 +58,9 @@ export const MENU_CLIENT: MenuItem[] = [
     description: "Tu resumen",
   },
   {
-    name: "Explorar",
+    name: "Marketplace",
     href: "/marketplace",
-    icon: Search,
+    icon: Store,
     description: "Buscar soluciones",
   },
   {
