@@ -8,11 +8,11 @@ export default function PublicLayout() {
             {/* Header */}
             <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
                 <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                    <Link to="/" className="flex items-center space-x-2">
-                        <div className="h-8 w-8 rounded-md bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center">
-                            <span className="text-white font-bold text-lg">C</span>
+                    <Link to="/" className="flex items-center gap-2 group">
+                        <div className="h-9 w-9 flex items-center justify-center shrink-0">
+                            <img src="/conectian.png" alt="Conectian" className="h-8 w-8 object-contain" />
                         </div>
-                        <span className="font-bold text-xl tracking-tight">Conectian</span>
+                        <span className="font-bold text-xl tracking-tight text-[#243A57] dark:text-white">Conectian</span>
                     </Link>
 
                     <nav className="flex items-center gap-4">
@@ -39,8 +39,8 @@ export default function PublicLayout() {
                 <div className="container mx-auto py-8 px-4">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <div className="flex items-center space-x-2">
-                            <div className="h-6 w-6 rounded bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center">
-                                <span className="text-white font-bold text-xs">C</span>
+                            <div className="h-6 w-6 flex items-center justify-center">
+                                <img src="/conectian.png" alt="Conectian" className="h-5 w-5 object-contain" />
                             </div>
                             <span className="text-sm font-semibold">Conectian</span>
                         </div>

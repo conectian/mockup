@@ -18,9 +18,9 @@ import AdminUsersPage from './pages/admin/AdminUsersPage';
 import AdminMessagesPage from './pages/admin/AdminMessagesPage';
 import SettingsPage from './pages/settings/SettingsPage';
 import ClientRFPManager from './pages/client/ClientRFPManager';
-import RFPMarketPage from './pages/provider/RFPMarketPage';
-import ProviderCatalogPage from './pages/provider/ProviderCatalogPage';
 import ProviderAnalyticsPage from './pages/provider/ProviderAnalyticsPage';
+import ProviderMarketplacePage from './pages/provider/ProviderMarketplacePage';
+import LeadsPage from './pages/provider/LeadsPage';
 import ClientFavoritesPage from './pages/client/ClientFavoritesPage';
 import UnauthorizedPage from './pages/UnauthorizedPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -52,9 +52,9 @@ function App() {
 
           {/* Provider Routes */}
           <Route path="/dashboard/provider" element={<ProviderHome />} />
-          <Route path="/provider/catalog" element={<ProviderCatalogPage />} />
-          <Route path="/provider/opportunities" element={<RFPMarketPage />} />
+          <Route path="/provider/marketplace" element={<ProviderMarketplacePage />} />
           <Route path="/provider/analytics" element={<ProviderAnalyticsPage />} />
+          <Route path="/provider/leads" element={<LeadsPage />} />
 
           {/* Client Routes */}
           <Route path="/dashboard/client" element={<ClientHome />} />

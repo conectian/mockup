@@ -1,7 +1,7 @@
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Card, CardContent } from '@/components/ui/card';
-import { Briefcase, Building2, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
+import { Briefcase, Building2, ShieldCheck, ArrowRight } from 'lucide-react';
 
 export default function LoginPage() {
     const { login } = useAuthStore();

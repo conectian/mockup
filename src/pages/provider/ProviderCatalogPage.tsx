@@ -5,7 +5,19 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Search, Edit, Trash2, Eye, MoreHorizontal, FileText, Sparkles, Upload } from 'lucide-react';
+import {
+    Plus,
+    Search,
+    Edit,
+    Trash2,
+    Eye,
+    MoreHorizontal,
+    FileText,
+    Sparkles,
+    Upload,
+    Building2,
+    Target
+} from 'lucide-react';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -27,14 +39,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
 import { mockUseCases } from '@/data/marketplace-data';
 import { toast } from 'sonner';
 
@@ -126,14 +130,19 @@ export default function ProviderCatalogPage() {
 
     return (
         <div className="space-y-6">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Mis Casos de Uso</h1>
-                    <p className="text-muted-foreground">Gestiona el catálogo de soluciones que ofreces al mercado</p>
+            {/* Header / Actions bar */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="relative flex-1 max-w-sm">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                        placeholder="Buscar en mi catálogo..."
+                        className="pl-10 bg-white/50 dark:bg-white/5 border-white/10"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                 </div>
                 <Button
-                    className="gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700"
+                    className="premium-gradient gap-2 px-6 h-10"
                     onClick={() => {
                         setFormData({ title: '', description: '', industry: '', roi: '' });
                         setIsCreateOpen(true);
@@ -144,125 +153,104 @@ export default function ProviderCatalogPage() {
                 </Button>
             </div>
 
-            {/* Filters */}
-            <div className="flex items-center gap-4">
-                <div className="relative flex-1 max-w-sm">
-                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                        placeholder="Buscar en mi catálogo..."
-                        className="pl-9"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-            </div>
-
-            {/* Catalog Table */}
-            <Card>
-                <CardContent className="p-0">
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Título</TableHead>
-                                <TableHead>Industria</TableHead>
-                                <TableHead>Estado</TableHead>
-                                <TableHead className="text-right">KPI Principal</TableHead>
-                                <TableHead className="text-right">Acciones</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {filteredUseCases.map((useCase) => (
-                                <TableRow key={useCase.id}>
-                                    <TableCell className="font-medium">
-                                        <div className="flex items-center gap-3">
-                                            <div className="h-10 w-10 rounded-md overflow-hidden bg-muted">
-                                                <img
-                                                    src={useCase.image}
-                                                    alt={useCase.title}
-                                                    className="h-full w-full object-cover"
-                                                />
-                                            </div>
-                                            <div>
-                                                <div className="font-semibold">{useCase.title}</div>
-                                                <div className="text-xs text-muted-foreground truncate max-w-[200px]">
-                                                    {useCase.description}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Badge variant="outline">{useCase.industry}</Badge>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400">
-                                            Publicado
-                                        </Badge>
-                                    </TableCell>
-                                    <TableCell className="text-right font-medium">
-                                        {useCase.roi}
-                                    </TableCell>
-                                    <TableCell className="text-right">
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" size="icon">
-                                                    <MoreHorizontal className="h-4 w-4" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end">
-                                                <DropdownMenuItem onClick={() => openEdit(useCase)}>
-                                                    <Edit className="mr-2 h-4 w-4" /> Editar
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => toast.info('Vista previa del caso')}>
-                                                    <Eye className="mr-2 h-4 w-4" /> Ver en Marketplace
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem
-                                                    className="text-red-600"
-                                                    onClick={() => handleDelete(useCase.id)}
-                                                >
-                                                    <Trash2 className="mr-2 h-4 w-4" /> Eliminar
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-
-                    {filteredUseCases.length === 0 && (
-                        <div className="text-center py-12">
-                            <FileText className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                            <h3 className="text-lg font-semibold mb-2">No tienes casos publicados</h3>
-                            <p className="text-muted-foreground mb-4">
-                                Comienza a añadir valor a la plataforma subiendo tu primer caso de éxito.
-                            </p>
-                            <Button onClick={() => setIsCreateOpen(true)}>
-                                <Plus className="mr-2 h-4 w-4" />
-                                Crear primer Caso
-                            </Button>
+            {/* Grid display */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredUseCases.map((useCase) => (
+                    <Card key={useCase.id} className="glass-card group hover:border-primary/30 transition-all overflow-hidden border-white/10 flex flex-col h-full">
+                        <div className="aspect-[16/9] overflow-hidden relative">
+                            <img
+                                src={useCase.image}
+                                alt={useCase.title}
+                                className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                            <div className="absolute top-2 right-2">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="secondary" size="icon" className="h-8 w-8 bg-black/20 hover:bg-black/40 backdrop-blur-md border-white/10 text-white">
+                                            <MoreHorizontal className="h-4 w-4" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end" className="glass-card">
+                                        <DropdownMenuItem onClick={() => openEdit(useCase)}>
+                                            <Edit className="mr-2 h-4 w-4" /> Editar
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => toast.info('Vista previa del caso')}>
+                                            <Eye className="mr-2 h-4 w-4" /> Ver en Marketplace
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                            className="text-red-500"
+                                            onClick={() => handleDelete(useCase.id)}
+                                        >
+                                            <Trash2 className="mr-2 h-4 w-4" /> Eliminar
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </div>
+                            <div className="absolute bottom-2 left-2">
+                                <Badge className="bg-emerald-500/90 text-white border-0 backdrop-blur-sm">
+                                    Publicado
+                                </Badge>
+                            </div>
                         </div>
-                    )}
-                </CardContent>
-            </Card>
+                        <CardContent className="p-5 flex flex-col flex-1 space-y-4">
+                            <div>
+                                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 mb-1 flex items-center gap-1.5">
+                                    <Building2 className="h-3 w-3" /> {useCase.industry}
+                                </div>
+                                <h3 className="font-bold text-lg text-[#243A57] dark:text-white leading-tight mb-2">
+                                    {useCase.title}
+                                </h3>
+                                <p className="text-sm text-muted-foreground line-clamp-2">
+                                    {useCase.description}
+                                </p>
+                            </div>
+
+                            <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between font-medium">
+                                <div className="flex flex-col">
+                                    <span className="text-[10px] uppercase text-muted-foreground/50">KPI Principal</span>
+                                    <span className="text-sm text-primary flex items-center gap-1">
+                                        <Target className="h-3.5 w-3.5" />
+                                        {useCase.roi}
+                                    </span>
+                                </div>
+                                <Button variant="ghost" size="sm" className="h-8 text-[11px] gap-1 hover:bg-primary/5">
+                                    Ver detalles <Sparkles className="h-3 w-3" />
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                ))}
+
+                {filteredUseCases.length === 0 && (
+                    <div className="col-span-full text-center py-20 bg-white/5 rounded-2xl border border-dashed border-white/10">
+                        <FileText className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
+                        <h3 className="text-xl font-bold text-[#243A57] dark:text-white mb-2">No se encontraron casos</h3>
+                        <p className="text-muted-foreground mb-6">Prueba a buscar con otros términos o añade uno nuevo.</p>
+                        <Button onClick={() => setIsCreateOpen(true)} className="premium-gradient">
+                            <Plus className="mr-2 h-4 w-4" />
+                            Añadir mi primer caso
+                        </Button>
+                    </div>
+                )}
+            </div>
 
             {/* Create/Edit Dialog */}
             <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-                <DialogContent className="sm:max-w-xl">
+                <DialogContent className="sm:max-w-xl glass-card border-white/20">
                     <DialogHeader>
                         <div className="flex items-center gap-3 mb-2">
-                            <div className="h-10 w-10 rounded-md bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center">
-                                <Sparkles className="h-5 w-5 text-white" />
+                            <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                                <Sparkles className="h-5 w-5 text-primary" />
                             </div>
                             <div>
-                                <DialogTitle>Nuevo Caso de Uso</DialogTitle>
-                                <DialogDescription>Añade una nueva solución a tu catálogo</DialogDescription>
+                                <DialogTitle className="text-[#243A57] dark:text-white">Nuevo Caso de Uso</DialogTitle>
+                                <DialogDescription>Añade una nueva solución a tu catálogo público</DialogDescription>
                             </div>
                         </div>
                     </DialogHeader>
 
                     <div className="space-y-4 py-4">
-                        {/* Image Upload */}
-                        <div className="border-2 border-dashed rounded-md p-6 text-center hover:bg-muted/50 transition-colors cursor-pointer group">
+                        <div className="border-2 border-dashed border-white/10 rounded-xl p-8 text-center hover:bg-white/5 transition-colors cursor-pointer group">
                             <Upload className="h-8 w-8 mx-auto text-muted-foreground group-hover:text-primary mb-2 transition-colors" />
                             <p className="text-sm font-medium">Arrastra una imagen o haz clic</p>
                             <p className="text-xs text-muted-foreground mt-1">PNG, JPG hasta 5MB</p>
@@ -270,21 +258,22 @@ export default function ProviderCatalogPage() {
 
                         <div className="grid grid-cols-2 gap-4">
                             <div className="col-span-2 space-y-2">
-                                <Label>Título del caso *</Label>
+                                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Título del caso *</Label>
                                 <Input
                                     placeholder="Ej: Optimización de procesos con IA"
+                                    className="bg-white/5 border-white/10"
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <Label>Industria *</Label>
+                                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Industria *</Label>
                                 <Select
                                     value={formData.industry}
                                     onValueChange={(v) => setFormData({ ...formData, industry: v })}
                                 >
-                                    <SelectTrigger>
+                                    <SelectTrigger className="bg-white/5 border-white/10">
                                         <SelectValue placeholder="Seleccionar..." />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -298,18 +287,20 @@ export default function ProviderCatalogPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <Label>KPI Principal</Label>
+                                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">KPI Principal</Label>
                                 <Input
                                     placeholder="+25% Eficiencia"
+                                    className="bg-white/5 border-white/10"
                                     value={formData.roi}
                                     onChange={(e) => setFormData({ ...formData, roi: e.target.value })}
                                 />
                             </div>
 
                             <div className="col-span-2 space-y-2">
-                                <Label>Descripción *</Label>
+                                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Descripción *</Label>
                                 <Textarea
-                                    placeholder="Describe el problema que resuelves y los resultados conseguidos..."
+                                    placeholder="Describe el problema que resuelves..."
+                                    className="bg-white/5 border-white/10 resize-none"
                                     rows={4}
                                     value={formData.description}
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -319,12 +310,12 @@ export default function ProviderCatalogPage() {
                     </div>
 
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsCreateOpen(false)}>
+                        <Button variant="ghost" onClick={() => setIsCreateOpen(false)}>
                             Cancelar
                         </Button>
                         <Button
                             onClick={handleCreate}
-                            className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700"
+                            className="premium-gradient px-8"
                         >
                             Publicar Caso
                         </Button>
@@ -334,14 +325,14 @@ export default function ProviderCatalogPage() {
 
             {/* Edit Dialog */}
             <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-                <DialogContent className="sm:max-w-xl">
+                <DialogContent className="sm:max-w-xl glass-card border-white/20">
                     <DialogHeader>
                         <div className="flex items-center gap-3 mb-2">
-                            <div className="h-10 w-10 rounded-md bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                                <Edit className="h-5 w-5 text-white" />
+                            <div className="h-10 w-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                                <Edit className="h-5 w-5 text-blue-500" />
                             </div>
                             <div>
-                                <DialogTitle>Editar Caso de Uso</DialogTitle>
+                                <DialogTitle className="text-[#243A57] dark:text-white">Editar Caso de Uso</DialogTitle>
                                 <DialogDescription>Actualiza los detalles de tu solución</DialogDescription>
                             </div>
                         </div>
@@ -350,20 +341,21 @@ export default function ProviderCatalogPage() {
                     <div className="space-y-4 py-4">
                         <div className="grid grid-cols-2 gap-4">
                             <div className="col-span-2 space-y-2">
-                                <Label>Título del caso *</Label>
+                                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Título del caso *</Label>
                                 <Input
+                                    className="bg-white/5 border-white/10"
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <Label>Industria *</Label>
+                                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Industria *</Label>
                                 <Select
                                     value={formData.industry}
                                     onValueChange={(v) => setFormData({ ...formData, industry: v })}
                                 >
-                                    <SelectTrigger>
+                                    <SelectTrigger className="bg-white/5 border-white/10">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -377,16 +369,18 @@ export default function ProviderCatalogPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <Label>KPI Principal</Label>
+                                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">KPI Principal</Label>
                                 <Input
+                                    className="bg-white/5 border-white/10"
                                     value={formData.roi}
                                     onChange={(e) => setFormData({ ...formData, roi: e.target.value })}
                                 />
                             </div>
 
                             <div className="col-span-2 space-y-2">
-                                <Label>Descripción *</Label>
+                                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Descripción *</Label>
                                 <Textarea
+                                    className="bg-white/5 border-white/10 resize-none"
                                     rows={4}
                                     value={formData.description}
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -396,12 +390,12 @@ export default function ProviderCatalogPage() {
                     </div>
 
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsEditOpen(false)}>
+                        <Button variant="ghost" onClick={() => setIsEditOpen(false)}>
                             Cancelar
                         </Button>
                         <Button
                             onClick={handleEdit}
-                            className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-8"
                         >
                             Guardar Cambios
                         </Button>

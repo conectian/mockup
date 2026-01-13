@@ -23,7 +23,6 @@ import {
     Users,
     MoreHorizontal,
     Search,
-    Filter,
     UserPlus,
     Mail,
     Ban,

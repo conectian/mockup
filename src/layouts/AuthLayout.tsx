@@ -14,11 +14,11 @@ export default function AuthLayout() {
                 <div className="bg-card border border-border/50 rounded-md shadow-xl shadow-violet-500/5 p-8">
                     {/* Logo */}
                     <div className="flex flex-col items-center mb-8">
-                        <div className="h-12 w-12 rounded-md bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center mb-4 shadow-lg shadow-violet-500/30">
-                            <span className="text-white font-bold text-2xl">C</span>
+                        <div className="h-16 w-16 flex items-center justify-center mb-4 transition-all duration-300">
+                            <img src="/conectian.png" alt="Conectian" className="h-12 w-12 object-contain" />
                         </div>
-                        <h1 className="text-2xl font-bold tracking-tight">Conectian</h1>
-                        <p className="text-muted-foreground text-sm">El ecosistema de innovación B2B</p>
+                        <h1 className="text-2xl font-bold tracking-tight text-[#243A57] dark:text-white">Conectian</h1>
+                        <p className="text-muted-foreground text-sm font-medium">El ecosistema de innovación B2B</p>
                     </div>
 
                     <Outlet />

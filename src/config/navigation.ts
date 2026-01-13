@@ -1,6 +1,6 @@
 import {
   LayoutDashboard,
-  Briefcase,
+  Store,
   Search,
   FileText,
   Users,
@@ -26,16 +26,16 @@ export const MENU_PROVIDER: MenuItem[] = [
     description: "Resumen general",
   },
   {
-    name: "Mis Casos de Uso",
-    href: "/provider/catalog",
-    icon: Briefcase,
-    description: "Gestión de catálogo",
+    name: "Marketplace",
+    href: "/provider/marketplace",
+    icon: Store,
+    description: "Empresas, Casos de Uso y Demandas",
   },
   {
-    name: "Oportunidades",
-    href: "/provider/opportunities",
-    icon: FileText,
-    description: "RFPs disponibles",
+    name: "Leads",
+    href: "/provider/leads",
+    icon: Users,
+    description: "Prospectos y ventas",
   },
   {
     name: "Deal Rooms",

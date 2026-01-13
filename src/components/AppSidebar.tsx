@@ -37,18 +37,18 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
             {/* Logo */}
             <div className="h-16 flex items-center justify-between px-6 border-b border-white/5">
                 {!isCollapsed && (
-                    <Link to="/" className="flex items-center space-x-3 group">
-                        <div className="h-9 w-9 rounded-md premium-gradient flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300">
-                            <span className="text-white font-display font-bold text-xl">C</span>
+                    <Link to="/" className="flex items-center gap-2 group">
+                        <div className="h-9 w-9 flex items-center justify-center shrink-0 transition-all duration-300">
+                            <img src="/conectian.png" alt="Conectian" className="h-8 w-8 object-contain" />
                         </div>
-                        <span className="font-display font-bold text-xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+                        <span className="font-display font-bold text-xl tracking-tight text-[#243A57] dark:text-white">
                             Conectian
                         </span>
                     </Link>
                 )}
                 {isCollapsed && (
-                    <div className="h-9 w-9 rounded-md premium-gradient flex items-center justify-center mx-auto shadow-lg shadow-indigo-500/20">
-                        <span className="text-white font-display font-bold text-xl">C</span>
+                    <div className="h-12 w-12 flex items-center justify-center mx-auto">
+                        <img src="/conectian.png" alt="Conectian" className="h-9 w-9 object-contain" />
                     </div>
                 )}
 
@@ -58,21 +58,34 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
                 </Button>
             </div>
 
-            {/* User Badge */}
-            {!isCollapsed && (
-                <div className="px-6 py-4 border-b border-white/5 bg-white/5">
-                    <div className="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-[0.2em] mb-2">Cuenta</div>
-                    <div className="flex items-center gap-3">
-                        <div className={cn(
-                            "h-2.5 w-2.5 rounded-full ring-4 ring-offset-0",
-                            userType === 'provider' && "bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.5)] ring-emerald-500/20",
-                            userType === 'client' && "bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.5)] ring-blue-500/20",
-                            userType === 'admin' && "bg-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.5)] ring-amber-500/20"
-                        )} />
-                        <span className="text-sm font-semibold capitalize tracking-tight">{userType}</span>
+            {/* User Badge & Toggle */}
+            <div className={cn(
+                "px-6 py-4 border-b border-white/5 bg-white/5 flex items-center",
+                isCollapsed ? "justify-center" : "justify-between"
+            )}>
+                {!isCollapsed && (
+                    <div className="flex-1 min-w-0 mr-2">
+                        <div className="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-[0.2em] mb-2">Cuenta</div>
+                        <div className="flex items-center gap-3">
+                            <div className={cn(
+                                "h-2.5 w-2.5 rounded-full ring-4 ring-offset-0",
+                                userType === 'provider' && "bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.5)] ring-emerald-500/20",
+                                userType === 'client' && "bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.5)] ring-blue-500/20",
+                                userType === 'admin' && "bg-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.5)] ring-amber-500/20"
+                            )} />
+                            <span className="text-sm font-semibold capitalize tracking-tight truncate">{userType}</span>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={onToggleCollapse}
+                    className="hidden lg:flex h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-white/5 rounded-md shrink-0"
+                >
+                    {isCollapsed ? <ChevronRight className="h-4 w-4 cursor-pointer" /> : <ChevronLeft className="h-4 w-4 cursor-pointer" />}
+                </Button>
+            </div>
 
             {/* Navigation */}
             <nav className="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto">
@@ -110,17 +123,6 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
                 })}
             </nav>
 
-            {/* Collapse Toggle (Desktop only) */}
-            <div className="hidden lg:block p-3 border-t border-white/5">
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={onToggleCollapse}
-                    className="w-full justify-center text-muted-foreground hover:text-foreground hover:bg-white/5 rounded-md"
-                >
-                    {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-                </Button>
-            </div>
 
             {/* Bottom Actions - Spacing fix and visual refinement */}
             <div className="px-3 py-4 border-t border-white/5 space-y-1.5 bg-white/5">

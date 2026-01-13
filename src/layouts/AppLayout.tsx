@@ -4,6 +4,7 @@ import ThemeToggle from '../components/ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { LayoutGrid, Store, FolderKanban, Settings, LogOut, Menu } from 'lucide-react';
 import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 export default function AppLayout() {
     const { isAuthenticated, userType, logout } = useAuthStore();
@@ -27,30 +28,35 @@ export default function AppLayout() {
             {/* Sidebar */}
             <aside className={`${sidebarOpen ? 'w-64' : 'w-16'} bg-card border-r transition-all duration-300 flex flex-col`}>
                 {/* Logo */}
-                <div className="h-16 flex items-center justify-between px-4 border-b">
+                <div className="h-16 flex items-center justify-between px-6 border-b">
                     {sidebarOpen && (
-                        <div className="flex items-center space-x-2">
-                            <div className="h-8 w-8 rounded-md bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center">
-                                <span className="text-white font-bold text-lg">C</span>
+                        <div className="flex items-center gap-2">
+                            <div className="h-9 w-9 flex items-center justify-center shrink-0">
+                                <img src="/conectian.png" alt="Conectian" className="h-8 w-8 object-contain" />
                             </div>
-                            <span className="font-bold text-lg tracking-tight">Conectian</span>
+                            <span className="font-bold text-lg tracking-tight text-[#243A57] dark:text-white">Conectian</span>
                         </div>
                     )}
-                    <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                </div>
+
+                {/* User Badge & Toggle */}
+                <div className={cn(
+                    "px-4 py-3 border-b flex items-center",
+                    sidebarOpen ? "justify-between" : "justify-center"
+                )}>
+                    {sidebarOpen && (
+                        <div>
+                            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Cuenta</div>
+                            <div className="mt-1 flex items-center gap-2">
+                                <div className={`h-2 w-2 rounded-full ${userType === 'provider' ? 'bg-emerald-500' : userType === 'client' ? 'bg-blue-500' : 'bg-amber-500'}`} />
+                                <span className="text-sm font-medium capitalize">{userType}</span>
+                            </div>
+                        </div>
+                    )}
+                    <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(!sidebarOpen)} className="h-8 w-8">
                         <Menu className="h-5 w-5" />
                     </Button>
                 </div>
-
-                {/* User Badge */}
-                {sidebarOpen && (
-                    <div className="px-4 py-3 border-b">
-                        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Cuenta</div>
-                        <div className="mt-1 flex items-center gap-2">
-                            <div className={`h-2 w-2 rounded-full ${userType === 'provider' ? 'bg-emerald-500' : userType === 'client' ? 'bg-blue-500' : 'bg-amber-500'}`} />
-                            <span className="text-sm font-medium capitalize">{userType}</span>
-                        </div>
-                    </div>
-                )}
 
                 {/* Navigation */}
                 <nav className="flex-1 p-2 space-y-1">
