@@ -448,9 +448,14 @@ export default function MarketplacePage() {
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                                     <Input placeholder="Buscar solución, proveedor..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10" />
                                 </div>
-                                <Button onClick={() => setChatbotOpen(true)} className="gap-2 premium-gradient shadow-lg shadow-violet-500/20 text-white hover:opacity-90">
-                                    <Sparkles className="h-4 w-4" /> <span className="hidden sm:inline">IA Assistant</span>
-                                </Button>
+                                <div className="relative group">
+                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg blur opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                                    <Button onClick={() => setChatbotOpen(true)} className="relative gap-2 premium-gradient shadow-xl shadow-violet-500/30 text-white hover:opacity-90 border border-white/10 h-10 px-6 font-bold tracking-wide overflow-hidden">
+                                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 pointer-events-none" />
+                                        <Sparkles className="h-4 w-4 animate-pulse" />
+                                        <span className="hidden sm:inline">IA Assistant</span>
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                         {filteredUseCases.length > 0 ? (
