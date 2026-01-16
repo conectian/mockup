@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
     Sheet,
     SheetContent,
@@ -22,6 +23,7 @@ import {
     ArrowRight
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 const conversations = [
     {
@@ -104,102 +106,113 @@ export default function AdminMessagesPage() {
     };
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-8">
             {/* Header */}
-            <div>
-                <h1 className="text-2xl font-bold tracking-tight">Mensajes</h1>
-                <p className="text-muted-foreground">Monitorea conversaciones en Deal Rooms activas</p>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Mensajes</h1>
+                    <p className="text-muted-foreground text-lg">Monitorea conversaciones en Deal Rooms activas</p>
+                </div>
+                <div className="flex items-center gap-2 text-sm font-medium bg-muted/50 px-3 py-1.5 rounded-full border border-white/5">
+                    <Clock className="h-4 w-4 text-primary" />
+                    <span>Última actualización: ahora</span>
+                </div>
             </div>
 
             {/* Stats */}
-            <div className="grid gap-4 md:grid-cols-3">
-                <Card>
+            <div className="grid gap-6 md:grid-cols-3">
+                <Card className="border-0 bg-gradient-to-br from-violet-400/20 via-violet-500/10 to-transparent rounded-md shadow-xl shadow-violet-500/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <MessageSquare className="h-16 w-16 text-violet-500" />
+                    </div>
                     <CardContent className="pt-6">
-                        <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                            <MessageSquare className="h-4 w-4" />
-                            <span className="text-sm">Conversaciones</span>
-                        </div>
-                        <div className="text-2xl font-bold">{stats.total}</div>
+                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-violet-600 dark:text-violet-400/70 mb-2">Conversaciones</div>
+                        <div className="text-4xl font-display font-bold text-violet-700 dark:text-violet-400">{stats.total}</div>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="border-0 bg-gradient-to-br from-emerald-400/20 via-emerald-500/10 to-transparent rounded-md shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <CheckCheck className="h-16 w-16 text-emerald-500" />
+                    </div>
                     <CardContent className="pt-6">
-                        <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                            <CheckCheck className="h-4 w-4 text-emerald-500" />
-                            <span className="text-sm">Activas Hoy</span>
-                        </div>
-                        <div className="text-2xl font-bold text-emerald-600">{stats.active}</div>
+                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/70 mb-2">Activas Hoy</div>
+                        <div className="text-4xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.active}</div>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="border-0 bg-gradient-to-br from-amber-400/20 via-amber-500/10 to-transparent rounded-md shadow-xl shadow-amber-500/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <AlertCircle className="h-16 w-16 text-amber-500" />
+                    </div>
                     <CardContent className="pt-6">
-                        <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                            <AlertCircle className="h-4 w-4 text-amber-500" />
-                            <span className="text-sm">Sin Leer</span>
-                        </div>
-                        <div className="text-2xl font-bold text-amber-600">{stats.unread}</div>
+                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70 mb-2">Sin Leer</div>
+                        <div className="text-4xl font-display font-bold text-amber-700 dark:text-amber-400">{stats.unread}</div>
                     </CardContent>
                 </Card>
             </div>
 
             {/* Search */}
-            <div className="relative max-w-sm">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <div className="relative max-w-md">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                     placeholder="Buscar conversaciones..."
-                    className="pl-9"
+                    className="pl-10 h-11 bg-muted/30 border-white/10 rounded-md"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
 
             {/* Conversations List */}
-            <Card>
-                <CardHeader>
-                    <CardTitle>Conversaciones Recientes</CardTitle>
-                    <CardDescription>Haz clic en una conversación para ver el historial</CardDescription>
+            <Card className="border-white/5 rounded-md shadow-sm overflow-hidden">
+                <CardHeader className="px-8 pt-8">
+                    <div className="space-y-1">
+                        <CardTitle className="text-xl font-display font-bold">Conversaciones Recientes</CardTitle>
+                        <p className="text-sm text-muted-foreground">Haz clic en una conversación para ver el historial</p>
+                    </div>
                 </CardHeader>
-                <CardContent className="space-y-2">
+                <CardContent className="px-8 pb-8 space-y-2">
                     {filteredConversations.map((conv) => (
                         <div
                             key={conv.id}
-                            className="flex items-center gap-4 p-4 rounded-md hover:bg-muted/50 transition-colors cursor-pointer border"
+                            className="flex items-center gap-4 p-4 rounded-md hover:bg-muted/30 transition-all duration-200 cursor-pointer border border-transparent hover:border-white/5 group"
                             onClick={() => setSelectedConversation(conv)}
                         >
-                            <div className="h-12 w-12 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-white font-bold shrink-0">
-                                {conv.participants[0].charAt(0)}
-                            </div>
+                            <Avatar className="h-12 w-12 rounded-md shadow-sm shrink-0">
+                                <AvatarFallback className="bg-gradient-to-br from-violet-500 to-indigo-500 text-white font-bold rounded-md">
+                                    {conv.participants[0].charAt(0)}
+                                </AvatarFallback>
+                            </Avatar>
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-semibold text-sm">
+                                    <span className="font-bold text-sm group-hover:text-primary transition-colors">
                                         {conv.participants[0]}
                                     </span>
-                                    <ArrowRight className="h-3 w-3 text-muted-foreground" />
-                                    <span className="font-semibold text-sm">
+                                    <ArrowRight className="h-3 w-3 text-muted-foreground/40" />
+                                    <span className="font-bold text-sm group-hover:text-primary transition-colors">
                                         {conv.participants[1]}
                                     </span>
-                                    <Badge variant="outline" className="text-xs ml-auto">
+                                    <Badge variant="outline" className="text-xs ml-auto bg-white/5 border-white/10 font-bold">
                                         {conv.dealRoom}
                                     </Badge>
                                 </div>
                                 <p className="text-sm text-muted-foreground truncate">{conv.lastMessage}</p>
                             </div>
                             <div className="text-right shrink-0">
-                                <div className="text-xs text-muted-foreground flex items-center gap-1">
+                                <div className="text-xs text-muted-foreground/60 flex items-center gap-1">
                                     <Clock className="h-3 w-3" />
                                     {conv.time}
                                 </div>
                                 {conv.unread > 0 && (
-                                    <Badge className="mt-1 bg-primary">{conv.unread}</Badge>
+                                    <Badge className="mt-1.5 bg-primary font-bold rounded-full px-2">{conv.unread}</Badge>
                                 )}
                             </div>
+                            <ArrowRight className="h-4 w-4 text-muted-foreground/20 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
                         </div>
                     ))}
 
                     {filteredConversations.length === 0 && (
-                        <div className="text-center py-12">
-                            <MessageSquare className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                            <h3 className="text-lg font-semibold mb-2">No hay conversaciones</h3>
+                        <div className="text-center py-16">
+                            <MessageSquare className="h-16 w-16 mx-auto text-muted-foreground/30 mb-4" />
+                            <h3 className="text-lg font-display font-bold mb-2">No hay conversaciones</h3>
                             <p className="text-muted-foreground">
                                 No se encontraron mensajes con ese criterio
                             </p>
@@ -210,16 +223,18 @@ export default function AdminMessagesPage() {
 
             {/* Conversation Detail Sheet */}
             <Sheet open={!!selectedConversation} onOpenChange={() => setSelectedConversation(null)}>
-                <SheetContent className="w-full sm:max-w-lg">
+                <SheetContent className="w-full sm:max-w-lg glass-card">
                     {selectedConversation && (
                         <>
-                            <SheetHeader className="pb-4 border-b">
+                            <SheetHeader className="pb-4 border-b border-white/5">
                                 <div className="flex items-center gap-3">
-                                    <div className="h-10 w-10 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-white font-bold">
-                                        {selectedConversation.participants[0].charAt(0)}
-                                    </div>
+                                    <Avatar className="h-12 w-12 rounded-md shadow-lg">
+                                        <AvatarFallback className="bg-gradient-to-br from-violet-500 to-indigo-500 text-white font-bold rounded-md">
+                                            {selectedConversation.participants[0].charAt(0)}
+                                        </AvatarFallback>
+                                    </Avatar>
                                     <div>
-                                        <SheetTitle className="text-lg">
+                                        <SheetTitle className="text-lg font-display font-bold">
                                             {selectedConversation.participants.join(' ↔ ')}
                                         </SheetTitle>
                                         <SheetDescription>
@@ -234,16 +249,21 @@ export default function AdminMessagesPage() {
                                     {selectedConversation.messages.map((msg, i) => (
                                         <div
                                             key={i}
-                                            className={`flex flex-col ${msg.from === selectedConversation.participants[0] ? 'items-start' : 'items-end'}`}
+                                            className={cn(
+                                                "flex flex-col",
+                                                msg.from === selectedConversation.participants[0] ? 'items-start' : 'items-end'
+                                            )}
                                         >
-                                            <div className="text-xs text-muted-foreground mb-1">
+                                            <div className="text-xs text-muted-foreground/60 mb-1">
                                                 {msg.from} · {msg.time}
                                             </div>
                                             <div
-                                                className={`max-w-[80%] p-3 rounded-md ${msg.from === selectedConversation.participants[0]
-                                                    ? 'bg-muted rounded-bl-none'
-                                                    : 'bg-primary text-primary-foreground rounded-br-none'
-                                                    }`}
+                                                className={cn(
+                                                    "max-w-[80%] p-3 rounded-md",
+                                                    msg.from === selectedConversation.participants[0]
+                                                        ? 'bg-muted/50 rounded-bl-none'
+                                                        : 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-br-none shadow-lg shadow-violet-500/20'
+                                                )}
                                             >
                                                 <p className="text-sm">{msg.text}</p>
                                             </div>
@@ -252,23 +272,23 @@ export default function AdminMessagesPage() {
                                 </div>
                             </ScrollArea>
 
-                            <div className="pt-4 border-t">
+                            <div className="pt-4 border-t border-white/5">
                                 <div className="flex gap-2">
                                     <Textarea
                                         placeholder="Enviar mensaje como moderador..."
                                         value={replyText}
                                         onChange={(e) => setReplyText(e.target.value)}
                                         rows={2}
-                                        className="resize-none"
+                                        className="resize-none bg-muted/30 border-white/10 rounded-md"
                                     />
                                     <Button
                                         onClick={handleSendReply}
-                                        className="shrink-0 bg-gradient-to-r from-violet-600 to-indigo-600"
+                                        className="shrink-0 h-auto bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/20"
                                     >
                                         <Send className="h-4 w-4" />
                                     </Button>
                                 </div>
-                                <p className="text-xs text-muted-foreground mt-2">
+                                <p className="text-xs text-muted-foreground/60 mt-2">
                                     Los mensajes de moderador aparecerán marcados en la conversación
                                 </p>
                             </div>

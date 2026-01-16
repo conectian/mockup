@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PublicLayout from './layouts/PublicLayout';
 import AuthLayout from './layouts/AuthLayout';
 import DashboardLayout from './layouts/DashboardLayout';
-import LandingPage from './pages/LandingPage';
+
 import LoginPage from './pages/auth/LoginPage';
 import RoleSelectionPage from './pages/auth/RoleSelectionPage';
 import RegisterPage from './pages/auth/RegisterPage';
@@ -22,8 +22,11 @@ import ProviderAnalyticsPage from './pages/provider/ProviderAnalyticsPage';
 import ProviderMarketplacePage from './pages/provider/ProviderMarketplacePage';
 import LeadsPage from './pages/provider/LeadsPage';
 import ClientFavoritesPage from './pages/client/ClientFavoritesPage';
+import ClientProposalDetail from './pages/client/ClientProposalDetail';
+import ClientRequestDetail from './pages/client/ClientRequestDetail';
 import UnauthorizedPage from './pages/UnauthorizedPage';
 import NotFoundPage from './pages/NotFoundPage';
+import ProfilePage from './pages/ProfilePage';
 import DevToolbar from './components/DevToolbar';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -33,7 +36,7 @@ function App() {
       <Routes>
         {/* Public Routes */}
         <Route element={<PublicLayout />}>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<Navigate to="/auth/login" replace />} />
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
         </Route>
 
@@ -50,28 +53,32 @@ function App() {
           {/* Onboarding */}
           <Route path="/onboarding" element={<OnboardingWizard />} />
 
-          {/* Provider Routes */}
-          <Route path="/dashboard/provider" element={<ProviderHome />} />
+          {/* Client Routes - All prefixed with /client */}
+          <Route path="/client/dashboard" element={<ClientHome />} />
+          <Route path="/client/marketplace" element={<MarketplacePage />} />
+          <Route path="/client/marketplace/:id" element={<UseCaseDetailPage />} />
+          <Route path="/client/proposals/:id" element={<ClientProposalDetail />} />
+          <Route path="/client/requests/:id" element={<ClientRequestDetail />} />
+          <Route path="/client/rfps" element={<ClientRFPManager />} />
+          <Route path="/client/favorites" element={<ClientFavoritesPage />} />
+          <Route path="/client/deal-rooms" element={<DealRoomsList />} />
+          <Route path="/client/settings" element={<SettingsPage />} />
+          <Route path="/client/profile" element={<ProfilePage />} />
+
+          {/* Provider Routes - All prefixed with /provider */}
+          <Route path="/provider/dashboard" element={<ProviderHome />} />
           <Route path="/provider/marketplace" element={<ProviderMarketplacePage />} />
           <Route path="/provider/analytics" element={<ProviderAnalyticsPage />} />
           <Route path="/provider/leads" element={<LeadsPage />} />
+          <Route path="/provider/deal-rooms" element={<DealRoomsList />} />
+          <Route path="/provider/settings" element={<SettingsPage />} />
+          <Route path="/provider/profile" element={<ProfilePage />} />
 
-          {/* Client Routes */}
-          <Route path="/dashboard/client" element={<ClientHome />} />
-          <Route path="/marketplace" element={<MarketplacePage />} />
-          <Route path="/marketplace/:id" element={<UseCaseDetailPage />} />
-          <Route path="/client/rfps" element={<ClientRFPManager />} />
-          <Route path="/client/favorites" element={<ClientFavoritesPage />} />
-
-          {/* Shared Routes */}
-          <Route path="/deal-rooms" element={<DealRoomsList />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/profile" element={<div className="text-2xl font-bold">Mi Perfil</div>} />
-
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminDashboardPage />} />
+          {/* Admin Routes - All prefixed with /admin */}
+          <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
           <Route path="/admin/users" element={<AdminUsersPage />} />
           <Route path="/admin/messages" element={<AdminMessagesPage />} />
+          <Route path="/admin/settings" element={<SettingsPage />} />
         </Route>
 
         {/* Deal Room - Full Screen Layout (outside DashboardLayout) */}

@@ -1,17 +1,15 @@
 import { useAuthStore } from '../../store/useAuthStore';
-import ProviderHome from './ProviderHome';
-import ClientHome from './ClientHome';
 import { Navigate } from 'react-router-dom';
 
 export default function DashboardHome() {
     const { userType } = useAuthStore();
 
     if (userType === 'provider') {
-        return <ProviderHome />;
+        return <Navigate to="/provider/marketplace" replace />;
     }
 
     if (userType === 'client') {
-        return <ClientHome />;
+        return <Navigate to="/marketplace" replace />;
     }
 
     if (userType === 'admin') {

@@ -27,9 +27,9 @@ export default function DevToolbar() {
         });
 
         // Redirect logic based on role
-        if (role === 'provider') navigate('/dashboard/provider');
-        else if (role === 'client') navigate('/dashboard/client');
-        else if (role === 'admin') navigate('/admin');
+        if (role === 'provider') navigate('/provider/marketplace');
+        else if (role === 'client') navigate('/client/marketplace');
+        else if (role === 'admin') navigate('/admin/dashboard');
     };
 
     if (isMinimized) {

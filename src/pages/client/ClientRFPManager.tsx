@@ -28,10 +28,14 @@ import {
     Calendar,
     Eye,
     MessageSquare,
-    Clock
+    Clock,
+    ArrowRight,
+    Sparkles,
+    Briefcase
 } from 'lucide-react';
 import { toast } from 'sonner';
 import MagicWriter from '@/components/MagicWriter';
+
 
 // Mock client RFPs
 const clientRFPs = [
@@ -78,41 +82,47 @@ export default function ClientRFPManager() {
         setFormData({ title: '', description: '', budget: '', deadline: '' });
     };
 
+    const stats = {
+        active: clientRFPs.length,
+        proposals: clientRFPs.reduce((sum, rfp) => sum + rfp.proposals, 0),
+        views: clientRFPs.reduce((sum, rfp) => sum + rfp.views, 0),
+    };
+
     return (
-        <div className="space-y-6">
+        <div className="space-y-8">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Mis Necesidades</h1>
-                    <p className="text-muted-foreground">Gestiona tus RFPs y recibe propuestas de proveedores</p>
+                    <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Mis Necesidades</h1>
+                    <p className="text-muted-foreground text-lg">Gestiona tus RFPs y recibe propuestas</p>
                 </div>
 
                 <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
                     <SheetTrigger asChild>
-                        <Button className="gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700">
+                        <Button className="h-12 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 font-bold rounded-md shadow-lg shadow-blue-500/20 gap-2">
                             <Plus className="h-5 w-5" />
                             Publicar Nueva Necesidad
                         </Button>
                     </SheetTrigger>
-                    <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
-                        <SheetHeader className="pb-6 border-b">
+                    <SheetContent className="w-full sm:max-w-lg overflow-y-auto glass-card border-l border-white/10">
+                        <SheetHeader className="pb-6 border-b border-white/5">
                             <div className="flex items-center gap-3">
-                                <div className="h-12 w-12 rounded-md bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                                <div className="h-12 w-12 rounded-md bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
                                     <FileText className="h-6 w-6 text-white" />
                                 </div>
                                 <div>
-                                    <SheetTitle className="text-xl">Nueva Necesidad</SheetTitle>
+                                    <SheetTitle className="text-xl font-display font-bold">Nueva Necesidad</SheetTitle>
                                     <SheetDescription>
-                                        Los proveedores podrán enviarte propuestas
+                                        Describe tu problema para recibir propuestas
                                     </SheetDescription>
                                 </div>
                             </div>
                         </SheetHeader>
 
-                        <div className="py-6 px-4 space-y-6">
+                        <div className="py-6 px-1 space-y-6">
                             {/* Title */}
                             <div className="space-y-2">
-                                <Label htmlFor="title" className="text-sm font-semibold">
+                                <Label htmlFor="title" className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">
                                     Título breve <span className="text-destructive">*</span>
                                 </Label>
                                 <Input
@@ -120,14 +130,14 @@ export default function ClientRFPManager() {
                                     placeholder="Ej: Buscamos ERP para gestión de almacén"
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="h-11"
+                                    className="h-11 bg-muted/30 border-white/10 rounded-md"
                                 />
                             </div>
 
                             {/* Description */}
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between">
-                                    <Label htmlFor="description" className="text-sm font-semibold">
+                                    <Label htmlFor="description" className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">
                                         Descripción del problema <span className="text-destructive">*</span>
                                     </Label>
                                     <MagicWriter
@@ -137,11 +147,11 @@ export default function ClientRFPManager() {
                                 </div>
                                 <Textarea
                                     id="description"
-                                    placeholder="Describe en detalle qué problema quieres resolver, qué requisitos tienes y qué resultados esperas..."
+                                    placeholder="Describe en detalle qué problema quieres resolver..."
                                     rows={6}
                                     value={formData.description}
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                    className="resize-none"
+                                    className="resize-none bg-muted/30 border-white/10 rounded-md"
                                 />
                                 <p className="text-xs text-muted-foreground">
                                     Cuanto más detallado, mejores propuestas recibirás
@@ -151,14 +161,14 @@ export default function ClientRFPManager() {
                             {/* Budget & Deadline Grid */}
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="budget" className="text-sm font-semibold">
+                                    <Label htmlFor="budget" className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">
                                         Presupuesto <span className="text-destructive">*</span>
                                     </Label>
                                     <Select
                                         value={formData.budget}
                                         onValueChange={(value) => setFormData({ ...formData, budget: value })}
                                     >
-                                        <SelectTrigger id="budget" className="h-11">
+                                        <SelectTrigger id="budget" className="h-11 bg-muted/30 border-white/10 rounded-md">
                                             <SelectValue placeholder="Selecciona..." />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -171,7 +181,7 @@ export default function ClientRFPManager() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="deadline" className="text-sm font-semibold">
+                                    <Label htmlFor="deadline" className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">
                                         Fecha límite
                                     </Label>
                                     <Input
@@ -179,26 +189,27 @@ export default function ClientRFPManager() {
                                         type="date"
                                         value={formData.deadline}
                                         onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
-                                        className="h-11"
+                                        className="h-11 bg-muted/30 border-white/10 rounded-md"
                                     />
                                 </div>
                             </div>
 
                             {/* Info Banner */}
-                            <div className="p-4 rounded-md bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
-                                <p className="text-sm text-blue-700 dark:text-blue-300">
-                                    <span className="font-semibold">💡 Consejo:</span> Los RFPs con presupuesto definido reciben un 40% más de propuestas.
+                            <div className="p-4 rounded-md bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/10">
+                                <p className="text-sm text-blue-600 dark:text-blue-300 flex items-start gap-2">
+                                    <Sparkles className="h-4 w-4 shrink-0 mt-0.5" />
+                                    <span><span className="font-bold">Consejo:</span> Los RFPs con presupuesto definido reciben un 40% más de propuestas cualificadas.</span>
                                 </p>
                             </div>
                         </div>
 
-                        <SheetFooter className="pt-4 border-t gap-3">
-                            <Button variant="outline" onClick={() => setSheetOpen(false)} className="flex-1">
+                        <SheetFooter className="pt-4 border-t border-white/5 gap-3">
+                            <Button variant="outline" onClick={() => setSheetOpen(false)} className="flex-1 h-11 border-white/10">
                                 Cancelar
                             </Button>
                             <Button
                                 onClick={handleSubmit}
-                                className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
+                                className="flex-1 h-11 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 font-bold shadow-lg shadow-blue-500/20"
                             >
                                 Publicar RFP
                             </Button>
@@ -208,95 +219,96 @@ export default function ClientRFPManager() {
             </div>
 
             {/* Stats */}
-            <div className="grid gap-4 md:grid-cols-3">
-                <Card>
+            <div className="grid gap-6 md:grid-cols-3">
+                <Card className="border-0 bg-gradient-to-br from-slate-400/20 via-slate-500/10 to-transparent rounded-md shadow-xl shadow-slate-500/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <FileText className="h-16 w-16 text-slate-500" />
+                    </div>
                     <CardContent className="pt-6">
-                        <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                            <FileText className="h-4 w-4" />
-                            <span className="text-sm">RFPs Activos</span>
-                        </div>
-                        <div className="text-2xl font-bold">{clientRFPs.length}</div>
+                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-2">RFPs Activos</div>
+                        <div className="text-4xl font-display font-bold">{stats.active}</div>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="border-0 bg-gradient-to-br from-emerald-400/20 via-emerald-500/10 to-transparent rounded-md shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <MessageSquare className="h-16 w-16 text-emerald-500" />
+                    </div>
                     <CardContent className="pt-6">
-                        <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                            <MessageSquare className="h-4 w-4" />
-                            <span className="text-sm">Propuestas Recibidas</span>
-                        </div>
-                        <div className="text-2xl font-bold text-emerald-600">
-                            {clientRFPs.reduce((sum, rfp) => sum + rfp.proposals, 0)}
-                        </div>
+                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/70 mb-2">Propuestas</div>
+                        <div className="text-4xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.proposals}</div>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="border-0 bg-gradient-to-br from-blue-400/20 via-blue-500/10 to-transparent rounded-md shadow-xl shadow-blue-500/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <Eye className="h-16 w-16 text-blue-500" />
+                    </div>
                     <CardContent className="pt-6">
-                        <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                            <Eye className="h-4 w-4" />
-                            <span className="text-sm">Vistas Totales</span>
-                        </div>
-                        <div className="text-2xl font-bold">
-                            {clientRFPs.reduce((sum, rfp) => sum + rfp.views, 0)}
-                        </div>
+                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400/70 mb-2">Vistas Totales</div>
+                        <div className="text-4xl font-display font-bold text-blue-700 dark:text-blue-400">{stats.views}</div>
                     </CardContent>
                 </Card>
             </div>
 
             {/* RFP List */}
-            <Card>
-                <CardHeader>
-                    <CardTitle>Mis RFPs Publicados</CardTitle>
+            <Card className="border-white/5 rounded-md shadow-sm overflow-hidden">
+                <CardHeader className="px-8 pt-8">
+                    <CardTitle className="text-xl font-display font-bold flex items-center gap-2">
+                        <Briefcase className="h-5 w-5 text-primary" />
+                        Mis RFPs Publicados
+                    </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="px-8 pb-8 space-y-4">
                     {clientRFPs.map((rfp) => (
                         <div
                             key={rfp.id}
-                            className="flex items-center justify-between p-4 bg-muted/50 rounded-md hover:bg-muted transition-colors"
+                            className="flex items-center justify-between p-4 bg-muted/30 border border-white/5 rounded-md hover:bg-muted/50 hover:border-white/10 transition-all cursor-pointer group"
                         >
                             <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <h3 className="font-medium">{rfp.title}</h3>
-                                    <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400">
+                                <div className="flex items-center gap-3 mb-1.5">
+                                    <h3 className="font-bold text-lg group-hover:text-primary transition-colors">{rfp.title}</h3>
+                                    <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border-0 gap-1.5 rounded-full px-2.5">
+                                        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                                         {rfp.status}
                                     </Badge>
                                 </div>
-                                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                                    <span className="flex items-center gap-1">
-                                        <Clock className="h-3 w-3" />
-                                        {rfp.postedAt}
+                                <div className="flex items-center gap-4 text-sm text-muted-foreground/70">
+                                    <span className="flex items-center gap-1.5">
+                                        <Clock className="h-3.5 w-3.5" />
+                                        Publicado {rfp.postedAt}
                                     </span>
-                                    <span className="flex items-center gap-1">
-                                        <Calendar className="h-3 w-3" />
+                                    <span className="flex items-center gap-1.5">
+                                        <Calendar className="h-3.5 w-3.5" />
                                         Hasta {rfp.deadline}
                                     </span>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-6">
-                                <div className="text-center">
-                                    <div className="text-2xl font-bold text-primary">{rfp.proposals}</div>
-                                    <div className="text-xs text-muted-foreground">propuestas</div>
+                            <div className="flex items-center gap-8">
+                                <div className="text-center min-w-[3rem]">
+                                    <div className="text-xl font-bold text-primary">{rfp.proposals}</div>
+                                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60">propuestas</div>
                                 </div>
-                                <div className="text-center">
-                                    <div className="text-xl font-semibold">{rfp.views}</div>
-                                    <div className="text-xs text-muted-foreground">vistas</div>
+                                <div className="text-center min-w-[3rem]">
+                                    <div className="text-lg font-bold">{rfp.views}</div>
+                                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60">vistas</div>
                                 </div>
-                                <Button variant="outline" size="sm">
+                                <Button variant="outline" size="sm" className="font-bold border-white/10 hover:bg-white/5 gap-2 group/btn">
                                     Ver Propuestas
+                                    <ArrowRight className="h-4 w-4 text-muted-foreground group-hover/btn:translate-x-1 transition-transform" />
                                 </Button>
                             </div>
                         </div>
                     ))}
 
                     {clientRFPs.length === 0 && (
-                        <div className="text-center py-12">
-                            <FileText className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                            <h3 className="text-lg font-semibold mb-2">No tienes RFPs publicados</h3>
-                            <p className="text-muted-foreground mb-4">
-                                Publica tu primera necesidad y recibe propuestas de proveedores verificados.
+                        <div className="text-center py-16">
+                            <FileText className="h-16 w-16 mx-auto text-muted-foreground/30 mb-6" />
+                            <h3 className="text-xl font-display font-bold mb-2">No tienes RFPs publicados</h3>
+                            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                                Publica tu primera necesidad y recibe propuestas de proveedores verificados en menos de 48h.
                             </p>
-                            <Button onClick={() => setSheetOpen(true)}>
-                                <Plus className="mr-2 h-4 w-4" />
+                            <Button onClick={() => setSheetOpen(true)} className="h-12 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 font-bold rounded-md shadow-lg shadow-blue-500/20">
+                                <Plus className="mr-2 h-5 w-5" />
                                 Publicar Primera Necesidad
                             </Button>
                         </div>

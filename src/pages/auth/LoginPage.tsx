@@ -9,9 +9,9 @@ export default function LoginPage() {
 
     const handleLogin = (type: 'client' | 'provider' | 'admin') => {
         login(type);
-        if (type === 'admin') navigate('/admin');
-        else if (type === 'client') navigate('/dashboard/client');
-        else navigate('/dashboard/provider');
+        if (type === 'admin') navigate('/admin/dashboard');
+        else if (type === 'client') navigate('/client/marketplace');
+        else navigate('/provider/marketplace');
     };
 
     return (

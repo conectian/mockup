@@ -88,8 +88,8 @@ export default function UseCaseCard({ useCase }: UseCaseCardProps) {
                 </div>
 
                 {/* Footer Action */}
-                <div className="pt-4 border-t border-white/5 mt-auto">
-                    <Link to={`/marketplace/${useCase.id}`} className="block">
+                <div className="border-t border-white/5 mt-auto">
+                    <Link to={`/client/marketplace/${useCase.id}`} className="block">
                         <Button className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-all rounded-md font-bold h-11 bg-white/5 text-foreground border border-white/10 hover:border-primary/50">
                             Ver Detalles
                             <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />

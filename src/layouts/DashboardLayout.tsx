@@ -1,35 +1,19 @@
-import { useState } from 'react';
-import { Outlet, Navigate, useLocation } from 'react-router-dom';
-import { useAuthStore } from '../store/useAuthStore';
-import AppSidebar from '../components/AppSidebar';
+import { Outlet } from 'react-router-dom';
 import AppHeader from '../components/AppHeader';
+import BottomNav from '@/components/mobile/BottomNav';
 
-export default function DashboardLayout() {
-    const { isAuthenticated } = useAuthStore();
-    const location = useLocation();
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-
-    if (!isAuthenticated) {
-        return <Navigate to="/auth/login" state={{ from: location }} replace />;
-    }
-
+function DashboardLayout() {
     return (
-        <div className="min-h-screen flex bg-muted/30">
-            <AppSidebar
-                isOpen={sidebarOpen}
-                onClose={() => setSidebarOpen(false)}
-                isCollapsed={sidebarCollapsed}
-                onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
-            />
-
-            <div className="flex-1 flex flex-col min-w-0">
-                <AppHeader onMenuClick={() => setSidebarOpen(true)} />
-
-                <main className="flex-1 p-4 lg:p-6 overflow-auto">
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-muted/20">
+            <AppHeader />
+            <main className="flex-1 p-4 md:p-6 lg:p-8 pb-20 md:pb-8">
+                <div className="max-w-[1600px] mx-auto">
                     <Outlet />
-                </main>
-            </div>
+                </div>
+            </main>
+            <BottomNav />
         </div>
     );
 }
+
+export default DashboardLayout;

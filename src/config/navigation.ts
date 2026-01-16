@@ -1,12 +1,10 @@
 import {
-  LayoutDashboard,
   Store,
   FileText,
   Users,
   MessageSquare,
-  BarChart3,
-  Heart,
   FolderKanban,
+  LayoutDashboard,
   type LucideIcon,
 } from "lucide-react";
 
@@ -18,12 +16,12 @@ export interface MenuItem {
 }
 
 export const MENU_PROVIDER: MenuItem[] = [
-  {
+  /* {
     name: "Dashboard",
-    href: "/dashboard/provider",
+    href: "/provider/dashboard",
     icon: LayoutDashboard,
-    description: "Resumen general",
-  },
+    description: "Vista general",
+  }, */
   {
     name: "Marketplace",
     href: "/provider/marketplace",
@@ -36,30 +34,30 @@ export const MENU_PROVIDER: MenuItem[] = [
     icon: Users,
     description: "Prospectos y ventas",
   },
-  {
-    name: "Deal Rooms",
-    href: "/deal-rooms",
-    icon: FolderKanban,
-    description: "Negociaciones activas",
-  },
-  {
+  /* {
     name: "Analytics",
     href: "/provider/analytics",
     icon: BarChart3,
-    description: "Vistas de perfil",
+    description: "Métricas y rendimiento",
+  }, */
+  {
+    name: "Deal Rooms",
+    href: "/provider/deal-rooms",
+    icon: FolderKanban,
+    description: "Negociaciones activas",
   },
 ];
 
 export const MENU_CLIENT: MenuItem[] = [
-  {
+  /* {
     name: "Dashboard",
-    href: "/dashboard/client",
+    href: "/client/dashboard",
     icon: LayoutDashboard,
-    description: "Tu resumen",
-  },
+    description: "Vista general",
+  }, */
   {
     name: "Marketplace",
-    href: "/marketplace",
+    href: "/client/marketplace",
     icon: Store,
     description: "Buscar soluciones",
   },
@@ -69,26 +67,26 @@ export const MENU_CLIENT: MenuItem[] = [
     icon: FileText,
     description: "Tus publicaciones",
   },
-  {
-    name: "Deal Rooms",
-    href: "/deal-rooms",
-    icon: FolderKanban,
-    description: "Negociaciones activas",
-  },
-  {
+  /*  {
     name: "Favoritos",
     href: "/client/favorites",
     icon: Heart,
-    description: "Proveedores guardados",
+    description: "Soluciones guardadas",
+  }, */
+  {
+    name: "Deal Rooms",
+    href: "/client/deal-rooms",
+    icon: FolderKanban,
+    description: "Negociaciones activas",
   },
 ];
 
 export const MENU_ADMIN: MenuItem[] = [
   {
     name: "Dashboard",
-    href: "/admin",
+    href: "/admin/dashboard",
     icon: LayoutDashboard,
-    description: "Panel de control",
+    description: "Vista general",
   },
   {
     name: "Usuarios",
