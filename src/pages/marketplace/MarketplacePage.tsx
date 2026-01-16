@@ -430,7 +430,7 @@ export default function MarketplacePage() {
                         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                             <div>
                                 <h1 className="text-3xl font-display font-bold tracking-tight">Marketplace</h1>
-                                <p className="text-muted-foreground">{filteredUseCases.length} soluciones verificadas para tu empresa</p>
+                                <p className="text-muted-foreground mt-1">{filteredUseCases.length} soluciones verificadas para tu empresa</p>
                             </div>
                             <div className="flex gap-2 w-full md:w-auto">
                                 <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
@@ -448,7 +448,7 @@ export default function MarketplacePage() {
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                                     <Input placeholder="Buscar solución, proveedor..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10" />
                                 </div>
-                                <Button onClick={() => setChatbotOpen(true)} className="gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/20">
+                                <Button onClick={() => setChatbotOpen(true)} className="gap-2 premium-gradient shadow-lg shadow-violet-500/20 text-white hover:opacity-90">
                                     <Sparkles className="h-4 w-4" /> <span className="hidden sm:inline">IA Assistant</span>
                                 </Button>
                             </div>

@@ -34,13 +34,12 @@ export default function ProviderAnalyticsPage() {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-2xl font-bold tracking-tight">Analytics</h1>
-                <p className="text-muted-foreground">Rendimiento de tus casos de uso y oportunidades</p>
+                <h1 className="text-3xl font-display font-bold tracking-tight">Analytics</h1>
+                <p className="text-muted-foreground mt-1">Rendimiento de tus casos de uso y oportunidades</p>
             </div>
 
-            {/* KPI Cards */}
             <div className="grid gap-4 md:grid-cols-4">
-                <Card>
+                <Card className="border-white/5 shadow-sm">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Vistas Totales</CardTitle>
                         <Eye className="h-4 w-4 text-muted-foreground" />
@@ -50,7 +49,7 @@ export default function ProviderAnalyticsPage() {
                         <p className="text-xs text-muted-foreground">+12% desde el mes pasado</p>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="border-white/5 shadow-sm">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Interacciones</CardTitle>
                         <MousePointerClick className="h-4 w-4 text-muted-foreground" />
@@ -60,7 +59,7 @@ export default function ProviderAnalyticsPage() {
                         <p className="text-xs text-muted-foreground">+5% desde el mes pasado</p>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="border-white/5 shadow-sm">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Deals Iniciados</CardTitle>
                         <Users className="h-4 w-4 text-muted-foreground" />
@@ -70,7 +69,7 @@ export default function ProviderAnalyticsPage() {
                         <p className="text-xs text-muted-foreground">+2 esta semana</p>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="border-white/5 shadow-sm">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Retorno Estimado</CardTitle>
                         <DollarSign className="h-4 w-4 text-muted-foreground" />

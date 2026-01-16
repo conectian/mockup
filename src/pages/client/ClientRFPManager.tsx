@@ -99,7 +99,7 @@ export default function ClientRFPManager() {
 
                 <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
                     <SheetTrigger asChild>
-                        <Button className="h-12 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 font-bold rounded-md shadow-lg shadow-blue-500/20 gap-2">
+                        <Button className="h-12 px-6 premium-gradient hover:opacity-90 font-bold rounded-md shadow-lg shadow-indigo-500/20 gap-2 text-white">
                             <Plus className="h-5 w-5" />
                             Publicar Nueva Necesidad
                         </Button>

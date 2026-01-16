@@ -82,7 +82,7 @@ export default function RFPMarketPage() {
                 {/* Search & Filters Header */}
                 <div className="flex flex-col sm:flex-row gap-3 items-center justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold tracking-tight">Oportunidades de Negocio</h2>
+                        <h1 className="text-3xl font-display font-bold tracking-tight">Oportunidades de Negocio</h1>
                         <p className="text-muted-foreground">Encuentra nuevas demandas de innovación</p>
                     </div>
 

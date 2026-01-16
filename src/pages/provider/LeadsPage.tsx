@@ -121,7 +121,7 @@ export default function LeadsPage() {
             {/* Header section */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-display font-bold tracking-tight text-[#243A57]">Pipeline de Leads</h1>
+                    <h1 className="text-3xl font-display font-bold tracking-tight text-foreground">Pipeline de Leads</h1>
                     <p className="text-muted-foreground mt-1">Arrastra y gestiona tus oportunidades de negocio</p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -143,7 +143,7 @@ export default function LeadsPage() {
                             <div className="flex items-center justify-between px-2">
                                 <div className="flex items-center gap-2">
                                     <div className={cn("h-2 w-2 rounded-full", column.color)} />
-                                    <h3 className="font-bold text-[#243A57] dark:text-white uppercase tracking-wider text-xs">
+                                    <h3 className="font-bold text-foreground dark:text-white uppercase tracking-wider text-xs">
                                         {column.title}
                                     </h3>
                                     <Badge variant="secondary" className="bg-white/10 text-[10px] h-5 px-1.5">
@@ -183,7 +183,7 @@ export default function LeadsPage() {
                                                             <CardContent className="p-4 space-y-3">
                                                                 <div className="flex justify-between items-start">
                                                                     <div>
-                                                                        <div className="font-bold text-[#243A57] dark:text-white group-hover:text-primary transition-colors">
+                                                                        <div className="font-bold text-foreground dark:text-white group-hover:text-primary transition-colors">
                                                                             {lead.company}
                                                                         </div>
                                                                         <div className="text-xs text-muted-foreground flex items-center gap-1 mt-1">

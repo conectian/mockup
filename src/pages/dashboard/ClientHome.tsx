@@ -48,7 +48,7 @@ export default function ClientHome() {
                             </p>
                         </div>
                         <Link to="/marketplace" className="shrink-0">
-                            <Button size="lg" className="bg-white text-indigo-600 hover:bg-white/90 gap-3 shadow-xl shadow-black/20 px-8 py-7 text-lg font-bold rounded-md transition-all hover:scale-105 active:scale-95">
+                            <Button size="lg" className="premium-gradient text-white hover:opacity-90 gap-3 shadow-xl shadow-black/20 px-8 py-7 text-lg font-bold rounded-md transition-all hover:scale-105 active:scale-95 border border-white/10">
                                 <Search className="h-6 w-6" />
                                 Explorar Soluciones
                             </Button>

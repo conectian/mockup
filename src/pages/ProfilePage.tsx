@@ -48,8 +48,8 @@ export default function ProfilePage() {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Mi Perfil</h1>
-                    <p className="text-muted-foreground text-lg">Gestiona la información de tu cuenta</p>
+                    <h1 className="text-3xl md:text-5xl font-display font-bold tracking-tight">Mi Perfil</h1>
+                    <p className="text-muted-foreground text-lg mt-1">Gestiona la información de tu cuenta</p>
                 </div>
                 <div className="flex items-center gap-2 text-sm font-medium bg-muted/50 px-3 py-1.5 rounded-full border border-white/5">
                     <Clock className="h-4 w-4 text-primary" />
@@ -210,7 +210,7 @@ export default function ProfilePage() {
                             </div>
                             <Button
                                 onClick={handleSave}
-                                className="h-11 px-6 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 font-bold rounded-md shadow-lg shadow-violet-500/20"
+                                className="h-11 px-8 premium-gradient hover:opacity-90 font-bold rounded-md shadow-lg shadow-indigo-500/20 text-white"
                             >
                                 Guardar Cambios
                             </Button>
