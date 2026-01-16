@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Send, ArrowRight, User, Cpu, TrendingUp, MessageSquare, Sparkles, X, Lightbulb, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { AnimatePresence, motion } from 'framer-motion';
 
 // --- Interfaces ---
 interface Message {
