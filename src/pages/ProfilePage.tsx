@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import PageHeader from '@/components/common/PageHeader';
 
 export default function ProfilePage() {
     const { userType } = useAuthStore();
@@ -46,16 +47,15 @@ export default function ProfilePage() {
     return (
         <div className="space-y-8">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl md:text-5xl font-display font-bold tracking-tight">Mi Perfil</h1>
-                    <p className="text-muted-foreground text-lg mt-1">Gestiona la información de tu cuenta</p>
-                </div>
+            <PageHeader
+                title="Mi Perfil"
+                description="Gestiona la información de tu cuenta"
+            >
                 <div className="flex items-center gap-2 text-sm font-medium bg-muted/50 px-3 py-1.5 rounded-full border border-white/5">
                     <Clock className="h-4 w-4 text-primary" />
                     <span>Último acceso: hoy</span>
                 </div>
-            </div>
+            </PageHeader>
 
             <div className="grid gap-8 lg:grid-cols-3">
                 {/* Profile Card */}

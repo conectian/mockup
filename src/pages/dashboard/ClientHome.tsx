@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { FileText, FolderKanban, Search, ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import StatsCard from '@/components/common/StatsCard';
 
 // Mock recommended use cases
 const mockRecommendations = [
@@ -59,57 +60,49 @@ export default function ClientHome() {
 
             {/* Status Cards */}
             <div className="grid gap-6 md:grid-cols-2">
-                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-white/5 relative overflow-hidden rounded-md">
-                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <FileText className="h-24 w-24 -mr-8 -mt-8" />
+                <StatsCard
+                    title="Mis RFPs Activos"
+                    value={2}
+                    icon={FileText}
+                    gradient="from-blue-400/20 via-blue-500/10 to-transparent"
+                    iconColor="text-blue-500"
+                    titleColor="text-blue-600 dark:text-blue-400/70"
+                    textColor="text-blue-700 dark:text-blue-400"
+                    shadowColor="shadow-blue-500/5"
+                    showHeaderIcon={true}
+                >
+                    <div className="flex items-center justify-between mt-2">
+                        <p className="text-sm font-medium text-muted-foreground text-balance">Solicitudes de propuesta publicadas</p>
+                        <Link to="/client/rfps">
+                            <Button variant="ghost" size="sm" className="rounded-md gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                                Ver todas
+                                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                            </Button>
+                        </Link>
                     </div>
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Mis RFPs Activos</CardTitle>
-                        <div className="p-2 rounded-md bg-blue-500/10 text-blue-500">
-                            <FileText className="h-5 w-5" />
-                        </div>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="flex items-end justify-between">
-                            <div>
-                                <div className="text-5xl font-display font-bold text-foreground">2</div>
-                                <p className="text-sm font-medium text-muted-foreground mt-1 text-balance">Solicitudes de propuesta publicadas</p>
-                            </div>
-                            <Link to="/client/rfps">
-                                <Button variant="ghost" size="sm" className="rounded-md gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all">
-                                    Ver todas
-                                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                                </Button>
-                            </Link>
-                        </div>
-                    </CardContent>
-                </Card>
+                </StatsCard>
 
-                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-white/5 relative overflow-hidden rounded-md">
-                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <FolderKanban className="h-24 w-24 -mr-8 -mt-8" />
+                <StatsCard
+                    title="Deal Rooms Abiertos"
+                    value={1}
+                    icon={FolderKanban}
+                    gradient="from-indigo-400/20 via-indigo-500/10 to-transparent"
+                    iconColor="text-indigo-500"
+                    titleColor="text-indigo-600 dark:text-indigo-400/70"
+                    textColor="text-indigo-700 dark:text-indigo-400"
+                    shadowColor="shadow-indigo-500/5"
+                    showHeaderIcon={true}
+                >
+                    <div className="flex items-center justify-between mt-2">
+                        <p className="text-sm font-medium text-muted-foreground text-balance">Negociación técnica en curso</p>
+                        <Link to="/client/deal-rooms">
+                            <Button variant="ghost" size="sm" className="rounded-md gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                                Ir a salas
+                                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                            </Button>
+                        </Link>
                     </div>
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Deal Rooms Abiertos</CardTitle>
-                        <div className="p-2 rounded-md bg-indigo-500/10 text-indigo-500">
-                            <FolderKanban className="h-5 w-5" />
-                        </div>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="flex items-end justify-between">
-                            <div>
-                                <div className="text-5xl font-display font-bold text-foreground">1</div>
-                                <p className="text-sm font-medium text-muted-foreground mt-1 text-balance">Negociación técnica en curso</p>
-                            </div>
-                            <Link to="/client/deal-rooms">
-                                <Button variant="ghost" size="sm" className="rounded-md gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all">
-                                    Ir a salas
-                                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                                </Button>
-                            </Link>
-                        </div>
-                    </CardContent>
-                </Card>
+                </StatsCard>
             </div>
 
             {/* Recommendations */}

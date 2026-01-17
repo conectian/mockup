@@ -5,6 +5,8 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Coins, Eye, FolderKanban, Plus, Search, TrendingUp, Building2, Clock, ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import PageHeader from '@/components/common/PageHeader';
+import StatsCard from '@/components/common/StatsCard';
 
 // Mock data for leads
 const mockLeads = [
@@ -19,71 +21,72 @@ export default function ProviderHome() {
     return (
         <div className="space-y-8">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight">¡Bienvenido de vuelta!</h1>
-                    <p className="text-muted-foreground text-lg">Este es tu centro de operaciones hoy</p>
-                </div>
+            <PageHeader
+                title="¡Bienvenido de vuelta!"
+                description="Este es tu centro de operaciones hoy"
+            >
                 <div className="flex items-center gap-2 text-sm font-medium bg-muted/50 px-3 py-1.5 rounded-full border border-white/5">
                     <Clock className="h-4 w-4 text-primary" />
                     <span>Última actualización: hace 5 min</span>
                 </div>
-            </div>
+            </PageHeader>
 
             {/* KPI Row */}
             <div className="grid gap-6 md:grid-cols-3">
                 {/* Credits */}
-                <Card className="border-0 bg-gradient-to-br from-amber-400/20 via-orange-500/10 to-transparent relative overflow-hidden rounded-md shadow-xl shadow-amber-500/5 group">
-                    <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <Coins className="h-20 w-20 text-amber-500" />
+                <StatsCard
+                    title="Créditos Disponibles"
+                    value={150}
+                    icon={Coins}
+                    gradient="from-amber-400/20 via-orange-500/10 to-transparent"
+                    iconColor="text-amber-500"
+                    titleColor="text-amber-600 dark:text-amber-400/70"
+                    textColor="text-amber-700 dark:text-amber-400"
+                    shadowColor="shadow-amber-500/5"
+                    showHeaderIcon={true}
+                >
+                    <div className="flex items-center justify-between">
+                        <span className="text-xs font-medium text-amber-600/70">Usa créditos para ver leads</span>
+                        <Link to="/settings?tab=billing">
+                            <Button size="sm" variant="outline" className="h-8 text-xs border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 rounded-md font-bold">
+                                Recargar
+                            </Button>
+                        </Link>
                     </div>
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70">Créditos Disponibles</CardTitle>
-                        <Coins className="h-5 w-5 text-amber-500" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-5xl font-display font-bold text-amber-700 dark:text-amber-400 mb-4">150</div>
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-medium text-amber-600/70">Usa créditos para ver leads</span>
-                            <Link to="/settings?tab=billing">
-                                <Button size="sm" variant="outline" className="h-8 text-xs border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 rounded-md font-bold">
-                                    Recargar
-                                </Button>
-                            </Link>
-                        </div>
-                    </CardContent>
-                </Card>
+                </StatsCard>
 
                 {/* Profile Views */}
-                <Card className="border-white/5 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden">
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Visitas al Perfil</CardTitle>
-                        <div className="p-2 rounded-md bg-primary/10 text-primary">
-                            <Eye className="h-5 w-5" />
-                        </div>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-5xl font-display font-bold mb-2">1,240</div>
-                        <div className="flex items-center gap-1.5 text-emerald-500 bg-emerald-500/10 w-fit px-2 py-0.5 rounded-full font-bold text-xs">
-                            <TrendingUp className="h-3 w-3" />
-                            <span>+12%</span>
-                        </div>
-                    </CardContent>
-                </Card>
+                <StatsCard
+                    title="Visitas al Perfil"
+                    value="1,240"
+                    icon={Eye}
+                    gradient="from-blue-400/20 via-indigo-500/10 to-transparent"
+                    iconColor="text-blue-500"
+                    titleColor="text-blue-600 dark:text-blue-400/70"
+                    textColor="text-blue-700 dark:text-blue-400"
+                    shadowColor="shadow-blue-500/5"
+                    showHeaderIcon={true}
+                >
+                    <div className="flex items-center gap-1.5 text-emerald-500 bg-emerald-500/10 w-fit px-2 py-0.5 rounded-full font-bold text-xs">
+                        <TrendingUp className="h-3 w-3" />
+                        <span>+12%</span>
+                    </div>
+                </StatsCard>
 
                 {/* Active Deals */}
-                <Card className="border-white/5 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden">
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Deals Activos</CardTitle>
-                        <div className="p-2 rounded-md bg-indigo-500/10 text-indigo-500">
-                            <FolderKanban className="h-5 w-5" />
-                        </div>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-5xl font-display font-bold mb-2">3</div>
-                        <p className="text-sm font-medium text-muted-foreground">Oportunidades abiertas</p>
-                    </CardContent>
-                </Card>
+                <StatsCard
+                    title="Deals Activos"
+                    value={3}
+                    icon={FolderKanban}
+                    gradient="from-indigo-400/20 via-violet-500/10 to-transparent"
+                    iconColor="text-indigo-500"
+                    titleColor="text-indigo-600 dark:text-indigo-400/70"
+                    textColor="text-indigo-700 dark:text-indigo-400"
+                    shadowColor="shadow-indigo-500/5"
+                    showHeaderIcon={true}
+                >
+                    <p className="text-sm font-medium text-muted-foreground">Oportunidades abiertas</p>
+                </StatsCard>
             </div>
 
             {/* Main Content Grid */}

@@ -42,6 +42,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { MultiSelect } from '@/components/ui/multi-select';
+import PageHeader from '@/components/common/PageHeader';
 
 const SECTORS = [
     'Fintech & Banca',
@@ -456,37 +457,35 @@ export default function MarketplacePage() {
                         </div>
                     </div>
                     <div className="space-y-6">
-                        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                            <div>
-                                <h1 className="text-3xl font-display font-bold tracking-tight">Marketplace</h1>
-                                <p className="text-muted-foreground mt-1">{filteredUseCases.length} soluciones verificadas para tu empresa</p>
-                            </div>
-                            <div className="flex gap-2 w-full md:w-auto">
-                                <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
-                                    <SheetTrigger asChild>
-                                        <Button variant="outline" className="lg:hidden flex-1 gap-2">
-                                            <SlidersHorizontal className="h-4 w-4" /> Filtros
-                                            {activeFilterCount > 0 && <Badge className="ml-1 h-5 w-5 p-0 flex items-center justify-center bg-primary text-xs">{activeFilterCount}</Badge>}
-                                        </Button>
-                                    </SheetTrigger>
-                                    <SheetContent side="left" className="w-[320px] sm:w-[400px] overflow-y-auto">
-                                        <div className="py-6 px-6"><SidebarContent /></div>
-                                    </SheetContent>
-                                </Sheet>
-                                <div className="relative flex-1 md:w-[300px]">
-                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                    <Input placeholder="Buscar solución, proveedor..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10" />
-                                </div>
-                                <div className="relative group">
-                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg blur opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-                                    <Button onClick={() => setChatbotOpen(true)} className="relative gap-2 premium-gradient shadow-xl shadow-violet-500/30 text-white hover:opacity-90 border border-white/10 h-10 px-6 font-bold tracking-wide overflow-hidden">
-                                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 pointer-events-none" />
-                                        <Sparkles className="h-4 w-4 animate-pulse" />
-                                        <span className="hidden sm:inline">IA Assistant</span>
+                        <PageHeader
+                            title="Marketplace"
+                            description={`${filteredUseCases.length} soluciones verificadas para tu empresa`}
+                            className="md:items-center"
+                        >
+                            <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
+                                <SheetTrigger asChild>
+                                    <Button variant="outline" className="lg:hidden flex-1 gap-2">
+                                        <SlidersHorizontal className="h-4 w-4" /> Filtros
+                                        {activeFilterCount > 0 && <Badge className="ml-1 h-5 w-5 p-0 flex items-center justify-center bg-primary text-xs">{activeFilterCount}</Badge>}
                                     </Button>
-                                </div>
+                                </SheetTrigger>
+                                <SheetContent side="left" className="w-[320px] sm:w-[400px] overflow-y-auto">
+                                    <div className="py-6 px-6"><SidebarContent /></div>
+                                </SheetContent>
+                            </Sheet>
+                            <div className="relative flex-1 md:w-[300px]">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input placeholder="Buscar solución, proveedor..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10" />
                             </div>
-                        </div>
+                            <div className="relative group">
+                                <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg blur opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                                <Button onClick={() => setChatbotOpen(true)} className="relative gap-2 premium-gradient shadow-xl shadow-violet-500/30 text-white hover:opacity-90 border border-white/10 h-10 px-6 font-bold tracking-wide overflow-hidden">
+                                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 pointer-events-none" />
+                                    <Sparkles className="h-4 w-4 animate-pulse" />
+                                    <span className="hidden sm:inline">IA Assistant</span>
+                                </Button>
+                            </div>
+                        </PageHeader>
                         {filteredUseCases.length > 0 ? (
                             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                                 {filteredUseCases.map((useCase) => (

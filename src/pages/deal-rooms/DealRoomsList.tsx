@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import PageHeader from '@/components/common/PageHeader';
+import StatsCard from '@/components/common/StatsCard';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -127,55 +129,60 @@ export default function DealRoomsList() {
     return (
         <div className="space-y-8">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Deal Rooms</h1>
-                    <p className="text-muted-foreground text-lg">Gestiona tus negociaciones y alianzas estratégicas</p>
-                </div>
+            <PageHeader
+                title="Deal Rooms"
+                description="Gestiona tus negociaciones y alianzas estratégicas"
+            >
                 <Button className="gap-2 h-12 px-6 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 font-bold rounded-md shadow-lg shadow-violet-500/20">
                     <Plus className="h-5 w-5" />
                     Nueva Deal Room
                 </Button>
-            </div>
+            </PageHeader>
 
             {/* Stats */}
             <div className="grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-4">
-                <Card className="border-0 bg-gradient-to-br from-slate-400/20 via-slate-500/10 to-transparent rounded-md shadow-xl shadow-slate-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <Users className="h-10 w-10 md:h-16 md:w-16 text-slate-500" />
-                    </div>
-                    <CardContent className="p-4 md:pt-6">
-                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-1 md:mb-2">Total</div>
-                        <div className="text-2xl md:text-4xl font-display font-bold">{stats.total}</div>
-                    </CardContent>
-                </Card>
-                <Card className="border-0 bg-gradient-to-br from-emerald-400/20 via-emerald-500/10 to-transparent rounded-md shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <CheckCircle className="h-10 w-10 md:h-16 md:w-16 text-emerald-500" />
-                    </div>
-                    <CardContent className="p-4 md:pt-6">
-                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/70 mb-1 md:mb-2">Activas</div>
-                        <div className="text-2xl md:text-4xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.active}</div>
-                    </CardContent>
-                </Card>
-                <Card className="border-0 bg-gradient-to-br from-amber-400/20 via-amber-500/10 to-transparent rounded-md shadow-xl shadow-amber-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <AlertCircle className="h-10 w-10 md:h-16 md:w-16 text-amber-500" />
-                    </div>
-                    <CardContent className="p-4 md:pt-6">
-                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70 mb-1 md:mb-2">Pendientes</div>
-                        <div className="text-2xl md:text-4xl font-display font-bold text-amber-700 dark:text-amber-400">{stats.pending}</div>
-                    </CardContent>
-                </Card>
-                <Card className="border-0 bg-gradient-to-br from-slate-400/20 via-slate-500/10 to-transparent rounded-md shadow-xl shadow-slate-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <XCircle className="h-10 w-10 md:h-16 md:w-16 text-slate-500" />
-                    </div>
-                    <CardContent className="p-4 md:pt-6">
-                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-1 md:mb-2">Cerradas</div>
-                        <div className="text-2xl md:text-4xl font-display font-bold">{stats.closed}</div>
-                    </CardContent>
-                </Card>
+                <StatsCard
+                    title="Total"
+                    value={stats.total}
+                    icon={Users}
+                    gradient="from-slate-400/20 via-slate-500/10 to-transparent"
+                    iconColor="text-slate-500"
+                    titleColor="text-muted-foreground/60"
+                    shadowColor="shadow-slate-500/5"
+                    valueClassName="text-2xl md:text-4xl"
+                />
+                <StatsCard
+                    title="Activas"
+                    value={stats.active}
+                    icon={CheckCircle}
+                    gradient="from-emerald-400/20 via-emerald-500/10 to-transparent"
+                    iconColor="text-emerald-500"
+                    titleColor="text-emerald-600 dark:text-emerald-400/70"
+                    textColor="text-emerald-700 dark:text-emerald-400"
+                    shadowColor="shadow-emerald-500/5"
+                    valueClassName="text-2xl md:text-4xl"
+                />
+                <StatsCard
+                    title="Pendientes"
+                    value={stats.pending}
+                    icon={AlertCircle}
+                    gradient="from-amber-400/20 via-amber-500/10 to-transparent"
+                    iconColor="text-amber-500"
+                    titleColor="text-amber-600 dark:text-amber-400/70"
+                    textColor="text-amber-700 dark:text-amber-400"
+                    shadowColor="shadow-amber-500/5"
+                    valueClassName="text-2xl md:text-4xl"
+                />
+                <StatsCard
+                    title="Cerradas"
+                    value={stats.closed}
+                    icon={XCircle}
+                    gradient="from-slate-400/20 via-slate-500/10 to-transparent"
+                    iconColor="text-slate-500"
+                    titleColor="text-muted-foreground/60"
+                    shadowColor="shadow-slate-500/5"
+                    valueClassName="text-2xl md:text-4xl"
+                />
             </div>
 
             {/* Filters */}
