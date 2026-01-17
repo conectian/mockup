@@ -71,7 +71,7 @@ export default function AdminDashboardPage() {
                     )}>
                         <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
                             <stat.icon className={cn(
-                                "h-20 w-20",
+                                "h-12 w-12 md:h-20 md:w-20",
                                 stat.color === 'blue' && "text-blue-500",
                                 stat.color === 'emerald' && "text-emerald-500",
                                 stat.color === 'violet' && "text-violet-500"
@@ -95,7 +95,7 @@ export default function AdminDashboardPage() {
                         </CardHeader>
                         <CardContent>
                             <div className={cn(
-                                "text-5xl font-display font-bold mb-4",
+                                "text-3xl md:text-5xl font-display font-bold mb-4",
                                 stat.color === 'blue' && "text-blue-700 dark:text-blue-400",
                                 stat.color === 'emerald' && "text-emerald-700 dark:text-emerald-400",
                                 stat.color === 'violet' && "text-violet-700 dark:text-violet-400"
@@ -129,9 +129,10 @@ export default function AdminDashboardPage() {
                         </div>
                     </CardHeader>
                     <CardContent className="px-8 pb-8">
-                        <Table>
-                            <TableHeader>
-                                <TableRow className="border-white/5">
+                        <div className="overflow-x-auto">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow className="border-white/5">
                                     <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Empresa</TableHead>
                                     <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Tipo</TableHead>
                                     <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Estado</TableHead>
@@ -215,7 +216,8 @@ export default function AdminDashboardPage() {
                                     </TableRow>
                                 ))}
                             </TableBody>
-                        </Table>
+                            </Table>
+                        </div>
                     </CardContent>
                 </Card>
 
