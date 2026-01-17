@@ -1,7 +1,7 @@
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
-import { Card, CardContent } from '@/components/ui/card';
-import { Briefcase, Building2, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Briefcase, Building2, ShieldCheck, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export default function LoginPage() {
     const { login } = useAuthStore();
@@ -14,64 +14,72 @@ export default function LoginPage() {
         else navigate('/provider/marketplace');
     };
 
+    const roles = [
+        {
+            id: 'provider' as const,
+            title: 'Proveedor',
+            description: 'Gestiona tus soluciones y leads',
+            icon: Briefcase,
+            color: 'text-violet-500',
+            bgColor: 'bg-violet-500/10',
+        },
+        {
+            id: 'client' as const,
+            title: 'Cliente',
+            description: 'Explora y contacta proveedores',
+            icon: Building2,
+            color: 'text-blue-500',
+            bgColor: 'bg-blue-500/10',
+        },
+        {
+            id: 'admin' as const,
+            title: 'Admin',
+            description: 'Panel de administración',
+            icon: ShieldCheck,
+            color: 'text-slate-400',
+            bgColor: 'bg-slate-500/10',
+        },
+    ];
+
     return (
         <div className="space-y-6">
-
-            <div className="grid gap-3">
-                <Card
-                    className="cursor-pointer group border-2 border-transparent hover:border-violet-500/50 transition-all duration-200 hover:shadow-lg hover:shadow-violet-500/10"
-                    onClick={() => handleLogin('provider')}
-                >
-                    <CardContent className="flex items-center gap-4 p-4">
-                        <div className="h-12 w-12 rounded-md bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center shrink-0">
-                            <Briefcase className="h-6 w-6 text-white" />
-                        </div>
-                        <div className="flex-1">
-                            <div className="font-semibold">Entrar como Proveedor</div>
-                            <div className="text-sm text-muted-foreground">Gestiona tus soluciones y leads</div>
-                        </div>
-                        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-violet-500 group-hover:translate-x-1 transition-all" />
-                    </CardContent>
-                </Card>
-
-                <Card
-                    className="cursor-pointer group border-2 border-transparent hover:border-blue-500/50 transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/10"
-                    onClick={() => handleLogin('client')}
-                >
-                    <CardContent className="flex items-center gap-4 p-4">
-                        <div className="h-12 w-12 rounded-md bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shrink-0">
-                            <Building2 className="h-6 w-6 text-white" />
-                        </div>
-                        <div className="flex-1">
-                            <div className="font-semibold">Entrar como Cliente</div>
-                            <div className="text-sm text-muted-foreground">Explora y contacta proveedores</div>
-                        </div>
-                        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
-                    </CardContent>
-                </Card>
-
-                <Card
-                    className="cursor-pointer group border-2 border-transparent hover:border-slate-500/50 transition-all duration-200 hover:shadow-lg hover:shadow-slate-500/10"
-                    onClick={() => handleLogin('admin')}
-                >
-                    <CardContent className="flex items-center gap-4 p-4">
-                        <div className="h-12 w-12 rounded-md bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center shrink-0">
-                            <ShieldCheck className="h-6 w-6 text-white" />
-                        </div>
-                        <div className="flex-1">
-                            <div className="font-semibold">Entrar como Admin</div>
-                            <div className="text-sm text-muted-foreground">Panel de administración</div>
-                        </div>
-                        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-slate-500 group-hover:translate-x-1 transition-all" />
-                    </CardContent>
-                </Card>
+            {/* Role Cards */}
+            <div className="space-y-3">
+                {roles.map((role) => {
+                    const Icon = role.icon;
+                    return (
+                        <button
+                            key={role.id}
+                            onClick={() => handleLogin(role.id)}
+                            className={cn(
+                                "w-full flex items-center gap-4 p-4 rounded-lg",
+                                "bg-white/5 border border-white/5",
+                                "hover:bg-white/10 hover:border-white/10",
+                                "transition-all duration-200 group text-left"
+                            )}
+                        >
+                            <div className={cn(
+                                "h-11 w-11 rounded-lg flex items-center justify-center shrink-0",
+                                role.bgColor
+                            )}>
+                                <Icon className={cn("h-5 w-5", role.color)} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <div className="font-bold text-sm">Entrar como {role.title}</div>
+                                <div className="text-xs text-muted-foreground truncate">{role.description}</div>
+                            </div>
+                            <ChevronRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-muted-foreground group-hover:translate-x-0.5 transition-all shrink-0" />
+                        </button>
+                    );
+                })}
             </div>
 
-            <div className="text-center pt-4 border-t">
-                <p className="text-sm text-muted-foreground">
+            {/* Divider */}
+            <div className="border-t border-white/5 pt-4">
+                <p className="text-xs text-center text-muted-foreground">
                     ¿No tienes cuenta?{' '}
                     <Link to="/auth/role-selection" className="text-primary hover:underline font-medium">
-                        Regístrate aquí
+                        Regístrate
                     </Link>
                 </p>
             </div>

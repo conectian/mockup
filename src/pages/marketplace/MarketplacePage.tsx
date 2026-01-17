@@ -21,7 +21,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Search, X, SlidersHorizontal, Sparkles, Filter, Globe, Inbox, Lightbulb, MoreHorizontal, Mail, Ban, Eye, FileText } from 'lucide-react';
+import { Search, X, SlidersHorizontal, Sparkles, Filter, Globe, Inbox, Lightbulb, MoreHorizontal, Mail, Ban, Eye, FileText, Lock, MessageSquare } from 'lucide-react';
 import {
     Table,
     TableBody,
@@ -520,101 +520,113 @@ export default function MarketplacePage() {
                                 <CardTitle className="text-xl font-display font-bold">Propuestas Recibidas</CardTitle>
                             </CardHeader>
                             <CardContent className="p-0 mt-6">
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow className="border-white/5">
-                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pl-8">Proveedor</TableHead>
-                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Propuesta</TableHead>
-                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Estado</TableHead>
-                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Impacto Est.</TableHead>
-                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Etiquetas</TableHead>
-                                            <TableHead className="text-right text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pr-8">Acciones</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {MOCK_PROPOSALS.map((proposal) => (
-                                            <TableRow key={proposal.id} className="border-white/5 hover:bg-muted/30 transition-colors">
-                                                <TableCell className="pl-8">
-                                                    <div className="flex items-center gap-3">
-                                                        <Avatar className="h-10 w-10 rounded-md shadow-sm">
-                                                            <AvatarFallback className="bg-gradient-to-br from-blue-400 to-indigo-500 text-white font-bold rounded-md">
-                                                                {proposal.providerName.charAt(0)}
-                                                            </AvatarFallback>
-                                                        </Avatar>
-                                                        <span className="font-bold">{proposal.providerName}</span>
-                                                    </div>
-                                                </TableCell>
-                                                <TableCell className="font-medium text-muted-foreground">{proposal.title}</TableCell>
-                                                <TableCell>
-                                                    <Badge className={cn(
-                                                        "font-bold rounded-full border-0 gap-1.5",
-                                                        proposal.isPrivate
-                                                            ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
-                                                            : "bg-blue-500/10 text-blue-600 dark:text-blue-400"
-                                                    )}>
-                                                        <div className={cn(
-                                                            "h-1.5 w-1.5 rounded-full",
-                                                            proposal.isPrivate ? "bg-amber-500" : "bg-blue-500"
-                                                        )} />
-                                                        {proposal.isPrivate ? "Privada" : "Pública"}
-                                                    </Badge>
-                                                </TableCell>
-                                                <TableCell>
-                                                    {proposal.savingEstimation && (
-                                                        <div className="flex items-center gap-2">
-                                                            <span className="text-xs text-muted-foreground">Ahorro:</span>
-                                                            <span className="font-bold text-emerald-500">{proposal.savingEstimation}</span>
-                                                        </div>
-                                                    )}
-                                                    {proposal.efficiencyEstimation && (
-                                                        <div className="flex items-center gap-2">
-                                                            <span className="text-xs text-muted-foreground">Eficiencia:</span>
-                                                            <span className="font-bold text-blue-500">{proposal.efficiencyEstimation}</span>
-                                                        </div>
-                                                    )}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <div className="flex flex-wrap gap-1">
-                                                        {proposal.tags.slice(0, 2).map(tag => (
-                                                            <Badge key={tag} variant="secondary" className="text-[10px] bg-muted/50 text-muted-foreground border border-white/5">{tag}</Badge>
-                                                        ))}
-                                                        {proposal.tags.length > 2 && (
-                                                            <Badge variant="secondary" className="text-[10px] bg-muted/50 text-muted-foreground border border-white/5">+{proposal.tags.length - 2}</Badge>
-                                                        )}
-                                                    </div>
-                                                </TableCell>
-                                                <TableCell className="text-right pr-8">
-                                                    <DropdownMenu>
-                                                        <DropdownMenuTrigger asChild>
-                                                            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
-                                                                <span className="sr-only">Open menu</span>
-                                                                <MoreHorizontal className="h-4 w-4" />
-                                                            </Button>
-                                                        </DropdownMenuTrigger>
-                                                        <DropdownMenuContent align="end" className="glass-card">
-                                                            <DropdownMenuLabel className="font-display">Acciones</DropdownMenuLabel>
-                                                            <DropdownMenuItem className="cursor-pointer">
-                                                                <Eye className="mr-2 h-4 w-4" /> Ver Propuesta
-                                                            </DropdownMenuItem>
-                                                            <DropdownMenuItem className="cursor-pointer">
-                                                                <Mail className="mr-2 h-4 w-4" /> Contactar
-                                                            </DropdownMenuItem>
-                                                            <DropdownMenuSeparator className="bg-white/5" />
-                                                            <DropdownMenuItem className="text-red-500 cursor-pointer">
-                                                                <Ban className="mr-2 h-4 w-4" /> Rechazar
-                                                            </DropdownMenuItem>
-                                                        </DropdownMenuContent>
-                                                    </DropdownMenu>
-                                                </TableCell>
+                                {/* Desktop Table */}
+                                <div className="hidden md:block">
+                                    <Table>
+                                        <TableHeader>
+                                            <TableRow className="border-white/5">
+                                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pl-8">Propuesta</TableHead>
+                                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Proveedor</TableHead>
+                                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Ahorro Est.</TableHead>
+                                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Etiquetas</TableHead>
+                                                <TableHead className="text-right text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pr-8">Acciones</TableHead>
                                             </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {MOCK_PROPOSALS.map((proposal) => (
+                                                <TableRow key={proposal.id} className="border-white/5 hover:bg-muted/30 transition-colors">
+                                                    <TableCell className="pl-8">
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="h-10 w-10 rounded-md bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/20">
+                                                                <FileText className="h-5 w-5" />
+                                                            </div>
+                                                            <div>
+                                                                <div className="font-bold line-clamp-1 max-w-[200px]">{proposal.title}</div>
+                                                                {proposal.isPrivate && (
+                                                                    <div className="flex items-center gap-1.5 mt-0.5 text-xs text-indigo-400 font-medium">
+                                                                        <Lock className="h-3 w-3" /> Privada
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </TableCell>
+                                                    <TableCell className="font-medium text-sm text-muted-foreground">{proposal.providerName}</TableCell>
+                                                    <TableCell>
+                                                        <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 font-bold">
+                                                            {proposal.savingEstimation}
+                                                        </Badge>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <div className="flex flex-wrap gap-1">
+                                                            {proposal.tags.slice(0, 2).map((tag) => (
+                                                                <Badge key={tag} variant="secondary" className="text-[10px] h-5 px-1.5 font-medium bg-white/5 hover:bg-white/10 text-muted-foreground">
+                                                                    {tag}
+                                                                </Badge>
+                                                            ))}
+                                                        </div>
+                                                    </TableCell>
+                                                    <TableCell className="text-right pr-8">
+                                                        <div className="flex items-center justify-end gap-2">
+                                                            <Button size="sm" variant="ghost" className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground">
+                                                                <Eye className="h-4 w-4" />
+                                                            </Button>
+                                                            <Button size="sm" className="h-8 px-3 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+                                                                <MessageSquare className="h-3.5 w-3.5 mr-1.5" />
+                                                                Chat
+                                                            </Button>
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </div>
+
+                                {/* Mobile List View */}
+                                <div className="md:hidden space-y-4 p-4">
+                                    {MOCK_PROPOSALS.map((proposal) => (
+                                        <div key={proposal.id} className="bg-white/5 rounded-lg border border-white/5 p-4 space-y-4">
+                                            <div className="flex items-start justify-between gap-3">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="h-10 w-10 rounded-md bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/20 shrink-0">
+                                                        <FileText className="h-5 w-5" />
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="font-bold text-sm leading-tight line-clamp-2">{proposal.title}</h3>
+                                                        <div className="flex items-center gap-2 mt-1">
+                                                            <span className="text-xs text-muted-foreground">{proposal.providerName}</span>
+                                                            {proposal.isPrivate && (
+                                                                <Badge variant="outline" className="h-4 px-1 text-[9px] border-indigo-500/30 text-indigo-400 bg-indigo-500/5">
+                                                                    <Lock className="h-2 w-2 mr-0.5" /> PRIVADA
+                                                                </Badge>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center justify-between border-t border-white/5 pt-3">
+                                                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 font-bold">
+                                                    Ahorro: {proposal.savingEstimation}
+                                                </Badge>
+                                                <div className="flex items-center gap-2">
+                                                    <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                                                        <Eye className="h-4 w-4" />
+                                                    </Button>
+                                                    <Button size="sm" className="h-8 px-3 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors text-xs font-bold">
+                                                        <MessageSquare className="h-3.5 w-3.5 mr-1.5" />
+                                                        Chat
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </CardContent>
                         </Card>
-                    </div>
-                </div>
-            </TabsContent>
+                    </div >
+                </div >
+            </TabsContent >
 
             <TabsContent value="innovacion" className="mt-0">
                 <div className="grid lg:grid-cols-[280px_1fr] gap-8">
@@ -630,78 +642,135 @@ export default function MarketplacePage() {
                                 <CardTitle className="text-xl font-display font-bold">Mis Solicitudes</CardTitle>
                             </CardHeader>
                             <CardContent className="p-0 mt-6">
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow className="border-white/5">
-                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pl-8">Título</TableHead>
-                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Estado</TableHead>
-                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Fecha Pub.</TableHead>
-                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Presupuesto</TableHead>
-                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Respuestas</TableHead>
-                                            <TableHead className="text-right text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pr-8">Acciones</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {MOCK_REQUESTS.map((request) => (
-                                            <TableRow key={request.id} className="border-white/5 hover:bg-muted/30 transition-colors">
-                                                <TableCell className="pl-8">
-                                                    <div className="flex items-center gap-3">
-                                                        <Avatar className="h-10 w-10 rounded-md shadow-sm">
-                                                            <AvatarFallback className="bg-gradient-to-br from-violet-400 to-fuchsia-500 text-white font-bold rounded-md">
-                                                                {request.title.charAt(0)}
-                                                            </AvatarFallback>
-                                                        </Avatar>
-                                                        <span className="font-bold line-clamp-1 max-w-[200px]">{request.title}</span>
-                                                    </div>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Badge className={cn(
-                                                        "font-bold rounded-full border-0 gap-1.5",
-                                                        request.status === 'Active' && "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-                                                        request.status === 'Closed' && "bg-slate-500/10 text-slate-600 dark:text-slate-400",
-                                                    )}>
-                                                        <div className={cn(
-                                                            "h-1.5 w-1.5 rounded-full",
-                                                            request.status === 'Active' ? "bg-emerald-500" : "bg-slate-500"
-                                                        )} />
-                                                        {request.status === 'Active' ? 'Activo' : 'Cerrado'}
-                                                    </Badge>
-                                                </TableCell>
-                                                <TableCell className="text-muted-foreground text-sm">{request.createdAt}</TableCell>
-                                                <TableCell className="font-medium text-sm">{request.budgetRange}</TableCell>
-                                                <TableCell>
-                                                    <div className="flex items-center gap-2">
-                                                        <Inbox className="h-4 w-4 text-muted-foreground" />
-                                                        <span className="font-medium">{request.responsesCount}</span>
-                                                    </div>
-                                                </TableCell>
-                                                <TableCell className="text-right pr-8">
-                                                    <DropdownMenu>
-                                                        <DropdownMenuTrigger asChild>
-                                                            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
-                                                                <span className="sr-only">Open menu</span>
-                                                                <MoreHorizontal className="h-4 w-4" />
-                                                            </Button>
-                                                        </DropdownMenuTrigger>
-                                                        <DropdownMenuContent align="end" className="glass-card">
-                                                            <DropdownMenuLabel className="font-display">Acciones</DropdownMenuLabel>
-                                                            <DropdownMenuItem className="cursor-pointer">
-                                                                <Eye className="mr-2 h-4 w-4" /> Ver Detalles
-                                                            </DropdownMenuItem>
-                                                            <DropdownMenuItem className="cursor-pointer">
-                                                                <FileText className="mr-2 h-4 w-4" /> Editar
-                                                            </DropdownMenuItem>
-                                                            <DropdownMenuSeparator className="bg-white/5" />
-                                                            <DropdownMenuItem className="text-red-500 cursor-pointer">
-                                                                <Ban className="mr-2 h-4 w-4" /> Cerrar Solicitud
-                                                            </DropdownMenuItem>
-                                                        </DropdownMenuContent>
-                                                    </DropdownMenu>
-                                                </TableCell>
+                                {/* Desktop Table */}
+                                <div className="hidden md:block">
+                                    <Table>
+                                        <TableHeader>
+                                            <TableRow className="border-white/5">
+                                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pl-8">Título</TableHead>
+                                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Estado</TableHead>
+                                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Fecha Pub.</TableHead>
+                                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Presupuesto</TableHead>
+                                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Respuestas</TableHead>
+                                                <TableHead className="text-right text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pr-8">Acciones</TableHead>
                                             </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {MOCK_REQUESTS.map((request) => (
+                                                <TableRow key={request.id} className="border-white/5 hover:bg-muted/30 transition-colors">
+                                                    <TableCell className="pl-8">
+                                                        <div className="flex items-center gap-3">
+                                                            <Avatar className="h-10 w-10 rounded-md shadow-sm">
+                                                                <AvatarFallback className="bg-gradient-to-br from-violet-400 to-fuchsia-500 text-white font-bold rounded-md">
+                                                                    {request.title.charAt(0)}
+                                                                </AvatarFallback>
+                                                            </Avatar>
+                                                            <span className="font-bold line-clamp-1 max-w-[200px]">{request.title}</span>
+                                                        </div>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Badge className={cn(
+                                                            "font-bold rounded-full border-0 gap-1.5",
+                                                            request.status === 'Active' && "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+                                                            request.status === 'Closed' && "bg-slate-500/10 text-slate-600 dark:text-slate-400",
+                                                        )}>
+                                                            <div className={cn(
+                                                                "h-1.5 w-1.5 rounded-full",
+                                                                request.status === 'Active' ? "bg-emerald-500" : "bg-slate-500"
+                                                            )} />
+                                                            {request.status === 'Active' ? 'Activo' : 'Cerrado'}
+                                                        </Badge>
+                                                    </TableCell>
+                                                    <TableCell className="text-muted-foreground text-sm">{request.createdAt}</TableCell>
+                                                    <TableCell className="font-medium text-sm">{request.budgetRange}</TableCell>
+                                                    <TableCell>
+                                                        <div className="flex items-center gap-2">
+                                                            <Inbox className="h-4 w-4 text-muted-foreground" />
+                                                            <span className="font-medium">{request.responsesCount}</span>
+                                                        </div>
+                                                    </TableCell>
+                                                    <TableCell className="text-right pr-8">
+                                                        <DropdownMenu>
+                                                            <DropdownMenuTrigger asChild>
+                                                                <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
+                                                                    <span className="sr-only">Open menu</span>
+                                                                    <MoreHorizontal className="h-4 w-4" />
+                                                                </Button>
+                                                            </DropdownMenuTrigger>
+                                                            <DropdownMenuContent align="end" className="glass-card">
+                                                                <DropdownMenuLabel className="font-display">Acciones</DropdownMenuLabel>
+                                                                <DropdownMenuItem className="cursor-pointer">
+                                                                    <Eye className="mr-2 h-4 w-4" /> Ver Detalles
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem className="cursor-pointer">
+                                                                    <FileText className="mr-2 h-4 w-4" /> Editar
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuSeparator className="bg-white/5" />
+                                                                <DropdownMenuItem className="text-red-500 cursor-pointer">
+                                                                    <Ban className="mr-2 h-4 w-4" /> Cerrar Solicitud
+                                                                </DropdownMenuItem>
+                                                            </DropdownMenuContent>
+                                                        </DropdownMenu>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </div>
+
+                                {/* Mobile List View */}
+                                <div className="md:hidden space-y-4 p-4">
+                                    {MOCK_REQUESTS.map((request) => (
+                                        <div key={request.id} className="bg-white/5 rounded-lg border border-white/5 p-4 space-y-4">
+                                            <div className="flex items-start justify-between gap-3">
+                                                <div className="flex items-center gap-3">
+                                                    <Avatar className="h-10 w-10 rounded-md shadow-sm shrink-0">
+                                                        <AvatarFallback className="bg-gradient-to-br from-violet-400 to-fuchsia-500 text-white font-bold rounded-md">
+                                                            {request.title.charAt(0)}
+                                                        </AvatarFallback>
+                                                    </Avatar>
+                                                    <div>
+                                                        <h3 className="font-bold text-sm leading-tight line-clamp-2">{request.title}</h3>
+                                                        <div className="text-xs text-muted-foreground mt-1">{request.createdAt}</div>
+                                                    </div>
+                                                </div>
+                                                <DropdownMenu>
+                                                    <DropdownMenuTrigger asChild>
+                                                        <Button variant="ghost" className="h-8 w-8 p-0 -mr-2 text-muted-foreground shrink-0">
+                                                            <MoreHorizontal className="h-4 w-4" />
+                                                        </Button>
+                                                    </DropdownMenuTrigger>
+                                                    <DropdownMenuContent align="end" className="glass-card">
+                                                        <DropdownMenuItem>Ver Detalles</DropdownMenuItem>
+                                                        <DropdownMenuItem>Editar</DropdownMenuItem>
+                                                        <DropdownMenuItem className="text-red-500">Cerrar Solicitud</DropdownMenuItem>
+                                                    </DropdownMenuContent>
+                                                </DropdownMenu>
+                                            </div>
+
+                                            <div className="flex items-center justify-between border-t border-white/5 pt-3">
+                                                <Badge className={cn(
+                                                    "font-bold rounded-full border-0 gap-1.5",
+                                                    request.status === 'Active' && "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+                                                    request.status === 'Closed' && "bg-slate-500/10 text-slate-600 dark:text-slate-400",
+                                                )}>
+                                                    <div className={cn(
+                                                        "h-1.5 w-1.5 rounded-full",
+                                                        request.status === 'Active' ? "bg-emerald-500" : "bg-slate-500"
+                                                    )} />
+                                                    {request.status === 'Active' ? 'Activo' : 'Cerrado'}
+                                                </Badge>
+                                                <div className="flex items-center gap-4 text-xs font-medium">
+                                                    <span>{request.budgetRange}</span>
+                                                    <div className="flex items-center gap-1.5 text-muted-foreground">
+                                                        <Inbox className="h-3.5 w-3.5" />
+                                                        <span>{request.responsesCount}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </CardContent>
                         </Card>
                     </div>
@@ -709,6 +778,6 @@ export default function MarketplacePage() {
             </TabsContent>
 
             <AIChatbotModal open={chatbotOpen} onOpenChange={setChatbotOpen} onSearchSuggestion={handleChatbotSuggestion} />
-        </Tabs>
+        </Tabs >
     );
 }
