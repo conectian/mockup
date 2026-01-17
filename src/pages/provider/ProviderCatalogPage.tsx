@@ -16,7 +16,6 @@ import {
     Sparkles,
     Upload,
     Building2,
-    Target,
     Filter
 } from 'lucide-react';
 import {

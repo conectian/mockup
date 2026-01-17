@@ -2,7 +2,6 @@ import { useState, useMemo } from 'react';
 import { mockUseCases, MOCK_REQUESTS } from '@/data/marketplace-data';
 import UseCaseCard from '@/components/marketplace/UseCaseCard';
 import { type Proposal } from '@/components/marketplace/ClientProposalCard';
-import { type InnovationRequest } from '@/components/marketplace/ClientInnovationRequestCard';
 import AIChatbotModal from '@/components/marketplace/AIChatbotModal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,7 +20,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Search, X, SlidersHorizontal, Sparkles, Filter, Globe, Inbox, Lightbulb, MoreHorizontal, Mail, Ban, Eye, FileText, Lock, MessageSquare } from 'lucide-react';
+import { Search, X, SlidersHorizontal, Sparkles, Filter, Globe, Inbox, Lightbulb, MoreHorizontal, Ban, Eye, FileText, Lock, MessageSquare } from 'lucide-react';
 import {
     Table,
     TableBody,
