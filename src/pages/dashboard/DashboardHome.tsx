@@ -9,7 +9,7 @@ export default function DashboardHome() {
     }
 
     if (userType === 'client') {
-        return <Navigate to="/marketplace" replace />;
+        return <Navigate to="/client/marketplace" replace />;
     }
 
     if (userType === 'admin') {

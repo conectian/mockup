@@ -63,7 +63,7 @@ export default function ClientDashboard() {
                         <CardTitle>Acciones Rápidas</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-2">
-                        <Link to="/marketplace">
+                        <Link to="/client/marketplace">
                             <Button variant="outline" className="w-full justify-start gap-2">
                                 <Search className="h-4 w-4" />
                                 Explorar Marketplace

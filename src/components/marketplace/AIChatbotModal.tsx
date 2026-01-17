@@ -125,7 +125,7 @@ export default function AIChatbotModal({ open, onOpenChange, onSearchSuggestion 
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[700px] h-[85vh] max-h-[800px] p-0 border-0 bg-transparent shadow-none overflow-hidden outline-none">
+            <DialogContent showCloseButton={false} className="sm:max-w-[700px] h-[85vh] max-h-[800px] p-0 border-0 bg-transparent shadow-none overflow-hidden outline-none">
 
                 {/* Main Container with Glassmorphism - Adaptive colors */}
                 <div className="relative w-full h-full flex flex-col bg-background/80 backdrop-blur-2xl border border-border rounded-2xl overflow-hidden shadow-2xl shadow-primary/20">
@@ -159,7 +159,7 @@ export default function AIChatbotModal({ open, onOpenChange, onSearchSuggestion 
                     </div>
 
                     {/* Chat Area */}
-                    <ScrollArea className="flex-1 px-6 py-6 relative z-10" ref={scrollRef}>
+                    <ScrollArea className="flex-1 px-6 py-6 relative z-10 bg-white" ref={scrollRef}>
                         {messages.length === 0 ? (
                             <div className="h-full flex flex-col justify-center items-center space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                                 <div className="text-center space-y-3">

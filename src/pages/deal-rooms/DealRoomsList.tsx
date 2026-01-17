@@ -1,9 +1,43 @@
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Plus, MessageSquare, Clock, FolderOpen } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import {
+    Plus,
+    MessageSquare,
+    Clock,
+    FolderOpen,
+    Search,
+    MoreHorizontal,
+    Eye,
+    Archive,
+    Trash2,
+    Users,
+    CheckCircle,
+    AlertCircle,
+    XCircle
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 const mockDealRooms = [
     {
@@ -13,6 +47,7 @@ const mockDealRooms = [
         status: 'active',
         lastActivity: '2 horas',
         messages: 12,
+        createdAt: '15 Ene 2026',
     },
     {
         id: 'dr-002',
@@ -21,106 +56,338 @@ const mockDealRooms = [
         status: 'pending',
         lastActivity: '1 día',
         messages: 5,
+        createdAt: '10 Ene 2026',
+    },
+    {
+        id: 'dr-003',
+        title: 'Motor de Recomendación IA',
+        counterparty: 'RecoTech Solutions',
+        status: 'active',
+        lastActivity: '30 min',
+        messages: 24,
+        createdAt: '8 Ene 2026',
+    },
+    {
+        id: 'dr-004',
+        title: 'Chatbot Multicanal',
+        counterparty: 'BotMaster Pro',
+        status: 'closed',
+        lastActivity: '5 días',
+        messages: 45,
+        createdAt: '20 Dic 2025',
+    },
+    {
+        id: 'dr-005',
+        title: 'Análisis Predictivo de Ventas',
+        counterparty: 'PredictAI Labs',
+        status: 'pending',
+        lastActivity: '3 horas',
+        messages: 8,
+        createdAt: '12 Ene 2026',
     },
 ];
 
 export default function DealRoomsList() {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filterStatus, setFilterStatus] = useState<'all' | 'active' | 'pending' | 'closed'>('all');
+
+    const handleAction = (action: string, room: string) => {
+        toast.success(`${action} ejecutado para "${room}"`);
+    };
+
+    const filteredRooms = mockDealRooms.filter(room => {
+        const matchesSearch = room.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            room.counterparty.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesStatus = filterStatus === 'all' || room.status === filterStatus;
+        return matchesSearch && matchesStatus;
+    });
+
+    const stats = {
+        total: mockDealRooms.length,
+        active: mockDealRooms.filter(r => r.status === 'active').length,
+        pending: mockDealRooms.filter(r => r.status === 'pending').length,
+        closed: mockDealRooms.filter(r => r.status === 'closed').length,
+    };
+
+    const getStatusBadge = (status: string) => {
+        const config = {
+            active: { label: 'Activa', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
+            pending: { label: 'Pendiente', color: 'bg-amber-500/10 text-amber-600 dark:text-amber-400', dot: 'bg-amber-500 animate-pulse' },
+            closed: { label: 'Cerrada', color: 'bg-slate-500/10 text-slate-600 dark:text-slate-400', dot: 'bg-slate-500' },
+        }[status] || { label: status, color: 'bg-muted', dot: 'bg-muted-foreground' };
+
+        return (
+            <Badge className={cn("font-bold rounded-full border-0 gap-1.5", config.color)}>
+                <div className={cn("h-1.5 w-1.5 rounded-full", config.dot)} />
+                {config.label}
+            </Badge>
+        );
+    };
+
     return (
-        <div className="space-y-10">
-            {/* Header Section with Mesh Gradient */}
-            <Card className="border-0 mesh-gradient text-white overflow-hidden relative rounded-md shadow-2xl shadow-indigo-500/20">
-                <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]" />
-                <CardContent className="py-12 px-8 md:px-12 relative z-10">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-                        <div>
-                            <h1 className="text-3xl md:text-5xl font-display font-bold mb-4 tracking-tight leading-tight">
-                                Tus Negociaciones
-                            </h1>
-                            <p className="text-white/80 text-lg md:text-xl font-medium max-w-md leading-relaxed">
-                                Gestiona tus alianzas estratégicas y Deal Rooms activos en un solo lugar.
-                            </p>
-                        </div>
-                        <Button className="bg-white text-indigo-600 hover:bg-white/90 gap-3 shadow-xl shadow-black/20 px-8 py-7 text-lg font-bold rounded-md transition-all hover:scale-105 active:scale-95 shrink-0">
-                            <Plus className="h-6 w-6" />
-                            Nueva Deal Room
-                        </Button>
-                    </div>
-                </CardContent>
-            </Card>
-
-            <div className="space-y-4">
-                <div className="flex items-center justify-between px-2 mb-2">
-                    <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Salas Activas</h2>
-                    <span className="text-xs font-bold text-muted-foreground/50">{mockDealRooms.length} Negociaciones</span>
+        <div className="space-y-8">
+            {/* Header */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Deal Rooms</h1>
+                    <p className="text-muted-foreground text-lg">Gestiona tus negociaciones y alianzas estratégicas</p>
                 </div>
-
-                {mockDealRooms.map((room) => (
-                    <Link key={room.id} to={`/deal-room/${room.id}`} className="block group">
-                        <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer border-white/5 bg-card/40 backdrop-blur-sm relative overflow-hidden rounded-md hover:border-primary/20">
-                            <CardHeader className="pb-4 pt-6 px-8">
-                                <div className="flex items-start justify-between">
-                                    <div className="space-y-1">
-                                        <CardTitle className="text-xl font-display font-bold group-hover:text-primary transition-colors tracking-tight">
-                                            {room.title}
-                                        </CardTitle>
-                                        <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
-                                            <div className="h-5 w-5 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
-                                                {room.counterparty.charAt(0)}
-                                            </div>
-                                            con <span className="text-foreground/80 font-bold">{room.counterparty}</span>
-                                        </div>
-                                    </div>
-                                    <Badge className={cn(
-                                        "px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border-0 shadow-lg",
-                                        room.status === 'active'
-                                            ? "bg-emerald-500/10 text-emerald-500 shadow-emerald-500/10"
-                                            : "bg-amber-500/10 text-amber-500 shadow-amber-500/10"
-                                    )}>
-                                        <div className={cn(
-                                            "h-1.5 w-1.5 rounded-full mr-2 animate-pulse",
-                                            room.status === 'active' ? "bg-emerald-500" : "bg-amber-500"
-                                        )} />
-                                        {room.status === 'active' ? 'Activa' : 'Pendiente'}
-                                    </Badge>
-                                </div>
-                            </CardHeader>
-                            <CardContent className="pb-8 px-8">
-                                <div className="flex flex-wrap items-center gap-6 text-sm">
-                                    <div className="flex items-center gap-2 font-medium text-muted-foreground/80 bg-white/5 px-3 py-1.5 rounded-md border border-white/5">
-                                        <MessageSquare className="h-4 w-4 text-primary/70" />
-                                        <span className="text-foreground/90 font-bold">{room.messages}</span> mensajes
-                                    </div>
-                                    <div className="flex items-center gap-2 font-medium text-muted-foreground/80 bg-white/5 px-3 py-1.5 rounded-md border border-white/5">
-                                        <Clock className="h-4 w-4 text-primary/70" />
-                                        Última actividad: <span className="text-foreground/90 font-bold">{room.lastActivity}</span>
-                                    </div>
-                                    <div className="ml-auto flex items-center gap-2 text-primary font-bold transition-all group-hover:translate-x-1">
-                                        Entrar a la sala
-                                        <Plus className="h-4 w-4 rotate-45" />
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </Link>
-                ))}
+                <Button className="gap-2 h-12 px-6 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 font-bold rounded-md shadow-lg shadow-violet-500/20">
+                    <Plus className="h-5 w-5" />
+                    Nueva Deal Room
+                </Button>
             </div>
 
-            {mockDealRooms.length === 0 && (
-                <Card className="border-dashed border-2 border-white/10 bg-transparent rounded-md">
-                    <CardContent className="py-24 text-center space-y-4">
-                        <div className="h-20 w-20 bg-muted/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <FolderOpen className="h-10 w-10 text-muted-foreground/40" />
-                        </div>
-                        <h3 className="text-2xl font-display font-bold">No hay negociaciones activas</h3>
-                        <p className="text-muted-foreground max-w-xs mx-auto">
-                            Comienza una nueva negociación directa o responde a un RFP para abrir una Deal Room.
-                        </p>
-                        <Button className="mt-8 rounded-md h-14 px-8 font-bold text-lg bg-primary shadow-xl shadow-primary/20">
-                            Crear primera Deal Room
-                        </Button>
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-4">
+                <Card className="border-0 bg-gradient-to-br from-slate-400/20 via-slate-500/10 to-transparent rounded-md shadow-xl shadow-slate-500/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <Users className="h-10 w-10 md:h-16 md:w-16 text-slate-500" />
+                    </div>
+                    <CardContent className="p-4 md:pt-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-1 md:mb-2">Total</div>
+                        <div className="text-2xl md:text-4xl font-display font-bold">{stats.total}</div>
                     </CardContent>
                 </Card>
-            )}
+                <Card className="border-0 bg-gradient-to-br from-emerald-400/20 via-emerald-500/10 to-transparent rounded-md shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <CheckCircle className="h-10 w-10 md:h-16 md:w-16 text-emerald-500" />
+                    </div>
+                    <CardContent className="p-4 md:pt-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/70 mb-1 md:mb-2">Activas</div>
+                        <div className="text-2xl md:text-4xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.active}</div>
+                    </CardContent>
+                </Card>
+                <Card className="border-0 bg-gradient-to-br from-amber-400/20 via-amber-500/10 to-transparent rounded-md shadow-xl shadow-amber-500/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <AlertCircle className="h-10 w-10 md:h-16 md:w-16 text-amber-500" />
+                    </div>
+                    <CardContent className="p-4 md:pt-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70 mb-1 md:mb-2">Pendientes</div>
+                        <div className="text-2xl md:text-4xl font-display font-bold text-amber-700 dark:text-amber-400">{stats.pending}</div>
+                    </CardContent>
+                </Card>
+                <Card className="border-0 bg-gradient-to-br from-slate-400/20 via-slate-500/10 to-transparent rounded-md shadow-xl shadow-slate-500/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <XCircle className="h-10 w-10 md:h-16 md:w-16 text-slate-500" />
+                    </div>
+                    <CardContent className="p-4 md:pt-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-1 md:mb-2">Cerradas</div>
+                        <div className="text-2xl md:text-4xl font-display font-bold">{stats.closed}</div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            {/* Filters */}
+            <div className="flex flex-col sm:flex-row gap-4">
+                <div className="relative flex-1 max-w-md">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                        placeholder="Buscar por título o contraparte..."
+                        className="pl-10 h-11 bg-muted/30 border-white/10 rounded-md"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+                <div className="flex flex-wrap gap-2">
+                    <Button
+                        variant={filterStatus === 'all' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setFilterStatus('all')}
+                        className={cn(
+                            "h-11 px-4 rounded-md font-bold",
+                            filterStatus === 'all' && "bg-primary shadow-lg shadow-primary/20"
+                        )}
+                    >
+                        Todas
+                    </Button>
+                    <Button
+                        variant={filterStatus === 'active' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setFilterStatus('active')}
+                        className={cn(
+                            "h-11 px-4 rounded-md font-bold",
+                            filterStatus === 'active' && "bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-500/20"
+                        )}
+                    >
+                        Activas
+                    </Button>
+                    <Button
+                        variant={filterStatus === 'pending' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setFilterStatus('pending')}
+                        className={cn(
+                            "h-11 px-4 rounded-md font-bold",
+                            filterStatus === 'pending' && "bg-amber-600 hover:bg-amber-700 shadow-lg shadow-amber-500/20"
+                        )}
+                    >
+                        Pendientes
+                    </Button>
+                    <Button
+                        variant={filterStatus === 'closed' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setFilterStatus('closed')}
+                        className={cn(
+                            "h-11 px-4 rounded-md font-bold",
+                            filterStatus === 'closed' && "bg-slate-600 hover:bg-slate-700 shadow-lg shadow-slate-500/20"
+                        )}
+                    >
+                        Cerradas
+                    </Button>
+                </div>
+            </div>
+
+            {/* Deal Rooms Table */}
+            <Card className="border-white/5 rounded-md shadow-sm overflow-hidden">
+                <CardHeader className="px-8 pt-8 pb-0">
+                    <CardTitle className="text-xl font-display font-bold">Negociaciones</CardTitle>
+                </CardHeader>
+                <CardContent className="p-0 mt-6">
+                    {/* Desktop Table */}
+                    <div className="hidden md:block">
+                        <Table>
+                            <TableHeader>
+                                <TableRow className="border-white/5">
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pl-8">Deal Room</TableHead>
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Contraparte</TableHead>
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Estado</TableHead>
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Mensajes</TableHead>
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Última Actividad</TableHead>
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Creado</TableHead>
+                                    <TableHead className="text-right text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pr-8">Acciones</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {filteredRooms.map((room) => (
+                                    <TableRow key={room.id} className="border-white/5 hover:bg-muted/30 transition-colors">
+                                        <TableCell className="pl-8">
+                                            <Link to={`/deal-room/${room.id}`} className="flex items-center gap-3 group">
+                                                <Avatar className="h-10 w-10 rounded-md shadow-sm">
+                                                    <AvatarFallback className="bg-gradient-to-br from-violet-400 to-indigo-500 text-white font-bold rounded-md">
+                                                        {room.title.charAt(0)}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <span className="font-bold group-hover:text-primary transition-colors">{room.title}</span>
+                                            </Link>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className="flex items-center gap-2">
+                                                <div className="h-6 w-6 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
+                                                    {room.counterparty.charAt(0)}
+                                                </div>
+                                                <span className="text-muted-foreground">{room.counterparty}</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>{getStatusBadge(room.status)}</TableCell>
+                                        <TableCell>
+                                            <div className="flex items-center gap-2 text-sm">
+                                                <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                                                <span className="font-medium">{room.messages}</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                                <Clock className="h-4 w-4" />
+                                                <span>{room.lastActivity}</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="text-muted-foreground text-sm">{room.createdAt}</TableCell>
+                                        <TableCell className="text-right pr-8">
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
+                                                        <span className="sr-only">Open menu</span>
+                                                        <MoreHorizontal className="h-4 w-4" />
+                                                    </Button>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent align="end" className="glass-card">
+                                                    <DropdownMenuLabel className="font-display">Acciones</DropdownMenuLabel>
+                                                    <DropdownMenuItem asChild className="cursor-pointer">
+                                                        <Link to={`/deal-room/${room.id}`}>
+                                                            <Eye className="mr-2 h-4 w-4" /> Entrar a la sala
+                                                        </Link>
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem onClick={() => handleAction('Archivado', room.title)} className="cursor-pointer">
+                                                        <Archive className="mr-2 h-4 w-4" /> Archivar
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuSeparator className="bg-white/5" />
+                                                    <DropdownMenuItem className="text-red-500 cursor-pointer" onClick={() => handleAction('Eliminado', room.title)}>
+                                                        <Trash2 className="mr-2 h-4 w-4" /> Eliminar
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+
+                    {/* Mobile List View */}
+                    <div className="md:hidden space-y-4 p-4">
+                        {filteredRooms.map((room) => (
+                            <div key={room.id} className="bg-white/5 rounded-lg border border-white/5 p-4 space-y-4">
+                                <div className="flex items-start justify-between">
+                                    <Link to={`/deal-room/${room.id}`} className="flex items-center gap-3">
+                                        <Avatar className="h-10 w-10 rounded-md shadow-sm">
+                                            <AvatarFallback className="bg-gradient-to-br from-violet-400 to-indigo-500 text-white font-bold rounded-md">
+                                                {room.title.charAt(0)}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <div>
+                                            <h3 className="font-bold text-sm leading-tight">{room.title}</h3>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <div className="h-5 w-5 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
+                                                    {room.counterparty.charAt(0)}
+                                                </div>
+                                                <span className="text-xs text-muted-foreground">{room.counterparty}</span>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" className="h-8 w-8 p-0 -mr-2 text-muted-foreground">
+                                                <MoreHorizontal className="h-4 w-4" />
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end" className="glass-card">
+                                            <DropdownMenuItem asChild>
+                                                <Link to={`/deal-room/${room.id}`}>Entrar a la sala</Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem onSelect={() => handleAction('Archivado', room.title)}>Archivar</DropdownMenuItem>
+                                            <DropdownMenuItem className="text-red-500" onSelect={() => handleAction('Eliminado', room.title)}>Eliminar</DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </div>
+
+                                <div className="flex items-center justify-between border-t border-white/5 pt-3">
+                                    {getStatusBadge(room.status)}
+                                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                        <div className="flex items-center gap-1.5">
+                                            <MessageSquare className="h-3.5 w-3.5" />
+                                            <span>{room.messages}</span>
+                                        </div>
+                                        <div className="flex items-center gap-1.5">
+                                            <Clock className="h-3.5 w-3.5" />
+                                            <span>{room.lastActivity}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {filteredRooms.length === 0 && (
+                        <div className="text-center py-16">
+                            <FolderOpen className="h-16 w-16 mx-auto text-muted-foreground/30 mb-4" />
+                            <h3 className="text-lg font-display font-bold mb-2">No se encontraron Deal Rooms</h3>
+                            <p className="text-muted-foreground">
+                                Prueba ajustando los filtros de búsqueda
+                            </p>
+                        </div>
+                    )}
+                </CardContent>
+            </Card>
         </div>
     );
 }

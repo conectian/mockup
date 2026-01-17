@@ -20,6 +20,7 @@ import SettingsPage from './pages/settings/SettingsPage';
 import ClientRFPManager from './pages/client/ClientRFPManager';
 import ProviderAnalyticsPage from './pages/provider/ProviderAnalyticsPage';
 import ProviderMarketplacePage from './pages/provider/ProviderMarketplacePage';
+import CompanyDetailPage from './pages/provider/CompanyDetailPage';
 import LeadsPage from './pages/provider/LeadsPage';
 import ClientFavoritesPage from './pages/client/ClientFavoritesPage';
 import ClientProposalDetail from './pages/client/ClientProposalDetail';
@@ -68,6 +69,7 @@ function App() {
           {/* Provider Routes - All prefixed with /provider */}
           <Route path="/provider/dashboard" element={<ProviderHome />} />
           <Route path="/provider/marketplace" element={<ProviderMarketplacePage />} />
+          <Route path="/provider/marketplace/company/:id" element={<CompanyDetailPage />} />
           <Route path="/provider/analytics" element={<ProviderAnalyticsPage />} />
           <Route path="/provider/leads" element={<LeadsPage />} />
           <Route path="/provider/deal-rooms" element={<DealRoomsList />} />

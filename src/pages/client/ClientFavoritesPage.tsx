@@ -50,7 +50,7 @@ export default function ClientFavoritesPage() {
                                     }`}>
                                     {provider.tier} Partner
                                 </span>
-                                <Link to="/deal-rooms">
+                                <Link to="/client/deal-rooms">
                                     <Button size="sm" variant="ghost" className="gap-1 h-8">
                                         Contactar <ArrowRight className="h-3 w-3" />
                                     </Button>

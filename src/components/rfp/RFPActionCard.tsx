@@ -11,7 +11,6 @@ import {
     Send,
     Calendar,
     Users,
-    Building2,
     Mail
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -67,26 +66,37 @@ export default function RFPActionCard({ rfp }: RFPActionCardProps) {
 
                     {/* Client Info - Locked/Unlocked */}
                     <div className={cn(
-                        'bg-white/5 border border-white/5 rounded-lg p-3 transition-all',
-                        !isUnlocked && 'relative overflow-hidden'
+                        'rounded-xl p-4 transition-all',
+                        isUnlocked
+                            ? 'bg-emerald-500/5 border border-emerald-500/20'
+                            : 'bg-gradient-to-br from-slate-100/80 to-slate-200/60 dark:from-slate-800/60 dark:to-slate-900/40 border border-white/10 relative overflow-hidden'
                     )}>
                         {!isUnlocked && (
-                            <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center z-10 rounded-lg">
-                                <div className="text-center">
-                                    <Lock className="h-5 w-5 mx-auto mb-1 text-muted-foreground" />
-                                    <span className="text-xs font-medium text-muted-foreground">Información protegida</span>
+                            <div className="absolute inset-0 backdrop-blur-[6px] flex items-center justify-center z-10">
+                                <div className="absolute inset-0 bg-gradient-to-br from-slate-500/20 via-slate-400/10 to-slate-600/20 dark:from-slate-700/40 dark:via-slate-800/30 dark:to-slate-900/40" />
+                                <div className="relative text-center px-4">
+                                    <div className="h-12 w-12 mx-auto mb-2 rounded-xl bg-white/80 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center shadow-lg border border-white/20">
+                                        <Lock className="h-5 w-5 text-slate-500 dark:text-slate-400" />
+                                    </div>
+                                    <span className="text-sm font-semibold text-slate-600 dark:text-slate-300">Información protegida</span>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Desbloquea para ver los datos de contacto</p>
                                 </div>
                             </div>
                         )}
 
-                        <div className={cn(!isUnlocked && 'blur-sm select-none', 'space-y-2')}>
-                            <div className="flex items-center gap-2">
-                                <Building2 className="h-4 w-4 text-muted-foreground" />
-                                <span className="font-medium text-sm">{rfp.clientName}</span>
+                        <div className={cn(!isUnlocked && 'blur-md select-none opacity-50', 'space-y-3')}>
+                            <div className="flex items-center gap-3">
+                                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow-md">
+                                    {rfp.clientName.charAt(0)}
+                                </div>
+                                <div>
+                                    <span className="font-bold text-sm block">{rfp.clientName}</span>
+                                    <span className="text-xs text-muted-foreground">Empresa verificada</span>
+                                </div>
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <Mail className="h-4 w-4" />
-                                <span className="text-xs">{rfp.clientEmail}</span>
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 dark:bg-white/5 rounded-lg px-3 py-2">
+                                <Mail className="h-4 w-4 text-primary" />
+                                <span className="text-xs font-medium">{rfp.clientEmail}</span>
                             </div>
                         </div>
                     </div>

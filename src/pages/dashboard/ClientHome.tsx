@@ -47,7 +47,7 @@ export default function ClientHome() {
                                 ¿Qué desafío de innovación resolvemos hoy para tu empresa?
                             </p>
                         </div>
-                        <Link to="/marketplace" className="shrink-0">
+                        <Link to="/client/marketplace" className="shrink-0">
                             <Button size="lg" className="premium-gradient text-white hover:opacity-90 gap-3 shadow-xl shadow-black/20 px-8 py-7 text-lg font-bold rounded-md transition-all hover:scale-105 active:scale-95 border border-white/10">
                                 <Search className="h-6 w-6" />
                                 Explorar Soluciones
@@ -101,7 +101,7 @@ export default function ClientHome() {
                                 <div className="text-5xl font-display font-bold text-foreground">1</div>
                                 <p className="text-sm font-medium text-muted-foreground mt-1 text-balance">Negociación técnica en curso</p>
                             </div>
-                            <Link to="/deal-rooms">
+                            <Link to="/client/deal-rooms">
                                 <Button variant="ghost" size="sm" className="rounded-md gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all">
                                     Ir a salas
                                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -122,7 +122,7 @@ export default function ClientHome() {
                         </div>
                         <h2 className="text-3xl font-display font-bold tracking-tight">Seleccionado para ti</h2>
                     </div>
-                    <Link to="/marketplace">
+                    <Link to="/client/marketplace">
                         <Button variant="outline" className="rounded-md border-white/10 hover:bg-white/5 font-bold gap-2">
                             Ver catálogo completo
                             <ArrowRight className="h-4 w-4" />

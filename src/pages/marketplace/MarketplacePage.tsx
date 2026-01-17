@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
-import { mockUseCases } from '@/data/marketplace-data';
+import { mockUseCases, MOCK_REQUESTS } from '@/data/marketplace-data';
 import UseCaseCard from '@/components/marketplace/UseCaseCard';
-import ClientProposalCard, { type Proposal } from '@/components/marketplace/ClientProposalCard';
-import ClientInnovationRequestCard, { type InnovationRequest } from '@/components/marketplace/ClientInnovationRequestCard';
+import { type Proposal } from '@/components/marketplace/ClientProposalCard';
+import { type InnovationRequest } from '@/components/marketplace/ClientInnovationRequestCard';
 import AIChatbotModal from '@/components/marketplace/AIChatbotModal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,7 +21,25 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Search, X, SlidersHorizontal, Sparkles, Filter, Globe, Inbox, Lightbulb, Plus } from 'lucide-react';
+import { Search, X, SlidersHorizontal, Sparkles, Filter, Globe, Inbox, Lightbulb, MoreHorizontal, Mail, Ban, Eye, FileText } from 'lucide-react';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { MultiSelect } from '@/components/ui/multi-select';
@@ -66,27 +84,41 @@ const MOCK_PROPOSALS: Proposal[] = [
         efficiencyEstimation: '40%',
         tags: ['Private Offer', 'NLP'],
         isPrivate: true
+    },
+    {
+        id: '3',
+        title: 'Propuesta: Sistema de Predicción de Demanda',
+        providerName: 'DataFlow Analytics',
+        savingEstimation: '25%',
+        tags: ['AI/ML', 'Forecasting'],
+        isPrivate: true
+    },
+    {
+        id: '4',
+        title: 'Propuesta: Automatización de Procesamiento de Facturas',
+        providerName: 'FinanceBot Pro',
+        efficiencyEstimation: '60%',
+        tags: ['RPA', 'Finance'],
+        isPrivate: false
+    },
+    {
+        id: '5',
+        title: 'Propuesta: Plataforma de Gestión de Contratos con IA',
+        providerName: 'LegalTech Solutions',
+        savingEstimation: '45%',
+        tags: ['Legal', 'Contract Management'],
+        isPrivate: true
+    },
+    {
+        id: '6',
+        title: 'Propuesta: Sistema de Análisis de Sentimiento en Redes',
+        providerName: 'SocialInsight AI',
+        efficiencyEstimation: '35%',
+        tags: ['NLP', 'Social Media'],
+        isPrivate: false
     }
 ];
 
-const MOCK_REQUESTS: InnovationRequest[] = [
-    {
-        id: '1',
-        title: 'Sistema de Detección de Anomalías en Producción',
-        createdAt: '2025-10-15',
-        status: 'Active',
-        budgetRange: '50k - 100k',
-        responsesCount: 5
-    },
-    {
-        id: '2',
-        title: 'Motor de Recomendación para E-commerce',
-        createdAt: '2025-09-20',
-        status: 'Closed',
-        budgetRange: '20k - 50k',
-        responsesCount: 12
-    }
-];
 
 export interface FilterState {
     search: string;
@@ -410,12 +442,10 @@ export default function MarketplacePage() {
                 <TabsTrigger value="propuestas" className="gap-2 px-4 md:px-6 h-10 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md font-medium">
                     <Inbox className="h-4 w-4" />
                     <span className="hidden sm:inline">Propuestas Recibidas</span>
-                    <Badge className="ml-2 h-5 w-5 p-0 flex items-center justify-center bg-blue-500 text-white text-[10px] rounded-full">2</Badge>
                 </TabsTrigger>
                 <TabsTrigger value="innovacion" className="gap-2 px-4 md:px-6 h-10 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md font-medium">
                     <Lightbulb className="h-4 w-4" />
                     <span className="hidden sm:inline">Mis Solicitudes (Innovación)</span>
-                    <Badge className="ml-2 h-5 w-5 p-0 flex items-center justify-center bg-blue-500 text-white text-[10px] rounded-full">2</Badge>
                 </TabsTrigger>
             </TabsList>
 
@@ -484,21 +514,104 @@ export default function MarketplacePage() {
                         </div>
                     </div>
                     <div className="space-y-6">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                            <div>
-                                <h2 className="text-2xl font-bold tracking-tight">Propuestas Recibidas</h2>
-                                <p className="text-muted-foreground">Casos de uso y ofertas enviadas directamente a ti</p>
-                            </div>
-                            <div className="relative w-full md:w-[280px]">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                <Input placeholder="Buscar propuestas..." className="pl-10 bg-background/50 border-white/10" />
-                            </div>
-                        </div>
-                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                            {MOCK_PROPOSALS.map(proposal => (
-                                <ClientProposalCard key={proposal.id} proposal={proposal} />
-                            ))}
-                        </div>
+
+                        <Card className="border-white/5 rounded-md shadow-sm overflow-hidden">
+                            <CardHeader className="px-8 pt-8 pb-0">
+                                <CardTitle className="text-xl font-display font-bold">Propuestas Recibidas</CardTitle>
+                            </CardHeader>
+                            <CardContent className="p-0 mt-6">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow className="border-white/5">
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pl-8">Proveedor</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Propuesta</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Estado</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Impacto Est.</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Etiquetas</TableHead>
+                                            <TableHead className="text-right text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pr-8">Acciones</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {MOCK_PROPOSALS.map((proposal) => (
+                                            <TableRow key={proposal.id} className="border-white/5 hover:bg-muted/30 transition-colors">
+                                                <TableCell className="pl-8">
+                                                    <div className="flex items-center gap-3">
+                                                        <Avatar className="h-10 w-10 rounded-md shadow-sm">
+                                                            <AvatarFallback className="bg-gradient-to-br from-blue-400 to-indigo-500 text-white font-bold rounded-md">
+                                                                {proposal.providerName.charAt(0)}
+                                                            </AvatarFallback>
+                                                        </Avatar>
+                                                        <span className="font-bold">{proposal.providerName}</span>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="font-medium text-muted-foreground">{proposal.title}</TableCell>
+                                                <TableCell>
+                                                    <Badge className={cn(
+                                                        "font-bold rounded-full border-0 gap-1.5",
+                                                        proposal.isPrivate
+                                                            ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                                                            : "bg-blue-500/10 text-blue-600 dark:text-blue-400"
+                                                    )}>
+                                                        <div className={cn(
+                                                            "h-1.5 w-1.5 rounded-full",
+                                                            proposal.isPrivate ? "bg-amber-500" : "bg-blue-500"
+                                                        )} />
+                                                        {proposal.isPrivate ? "Privada" : "Pública"}
+                                                    </Badge>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {proposal.savingEstimation && (
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-xs text-muted-foreground">Ahorro:</span>
+                                                            <span className="font-bold text-emerald-500">{proposal.savingEstimation}</span>
+                                                        </div>
+                                                    )}
+                                                    {proposal.efficiencyEstimation && (
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-xs text-muted-foreground">Eficiencia:</span>
+                                                            <span className="font-bold text-blue-500">{proposal.efficiencyEstimation}</span>
+                                                        </div>
+                                                    )}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {proposal.tags.slice(0, 2).map(tag => (
+                                                            <Badge key={tag} variant="secondary" className="text-[10px] bg-muted/50 text-muted-foreground border border-white/5">{tag}</Badge>
+                                                        ))}
+                                                        {proposal.tags.length > 2 && (
+                                                            <Badge variant="secondary" className="text-[10px] bg-muted/50 text-muted-foreground border border-white/5">+{proposal.tags.length - 2}</Badge>
+                                                        )}
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="text-right pr-8">
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger asChild>
+                                                            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
+                                                                <span className="sr-only">Open menu</span>
+                                                                <MoreHorizontal className="h-4 w-4" />
+                                                            </Button>
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent align="end" className="glass-card">
+                                                            <DropdownMenuLabel className="font-display">Acciones</DropdownMenuLabel>
+                                                            <DropdownMenuItem className="cursor-pointer">
+                                                                <Eye className="mr-2 h-4 w-4" /> Ver Propuesta
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem className="cursor-pointer">
+                                                                <Mail className="mr-2 h-4 w-4" /> Contactar
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuSeparator className="bg-white/5" />
+                                                            <DropdownMenuItem className="text-red-500 cursor-pointer">
+                                                                <Ban className="mr-2 h-4 w-4" /> Rechazar
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </CardContent>
+                        </Card>
                     </div>
                 </div>
             </TabsContent>
@@ -511,20 +624,86 @@ export default function MarketplacePage() {
                         </div>
                     </div>
                     <div className="space-y-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <h2 className="text-2xl font-bold tracking-tight">Mis Solicitudes de Innovación</h2>
-                                <p className="text-muted-foreground">Gestiona tus retos publicados y revisa las respuestas</p>
-                            </div>
-                            <Button className="gap-2 bg-blue-600 hover:bg-blue-700 text-white">
-                                <Plus className="h-4 w-4" /> Publicar Nuevo Reto
-                            </Button>
-                        </div>
-                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                            {MOCK_REQUESTS.map(request => (
-                                <ClientInnovationRequestCard key={request.id} request={request} />
-                            ))}
-                        </div>
+
+                        <Card className="border-white/5 rounded-md shadow-sm overflow-hidden">
+                            <CardHeader className="px-8 pt-8 pb-0">
+                                <CardTitle className="text-xl font-display font-bold">Mis Solicitudes</CardTitle>
+                            </CardHeader>
+                            <CardContent className="p-0 mt-6">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow className="border-white/5">
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pl-8">Título</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Estado</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Fecha Pub.</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Presupuesto</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Respuestas</TableHead>
+                                            <TableHead className="text-right text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pr-8">Acciones</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {MOCK_REQUESTS.map((request) => (
+                                            <TableRow key={request.id} className="border-white/5 hover:bg-muted/30 transition-colors">
+                                                <TableCell className="pl-8">
+                                                    <div className="flex items-center gap-3">
+                                                        <Avatar className="h-10 w-10 rounded-md shadow-sm">
+                                                            <AvatarFallback className="bg-gradient-to-br from-violet-400 to-fuchsia-500 text-white font-bold rounded-md">
+                                                                {request.title.charAt(0)}
+                                                            </AvatarFallback>
+                                                        </Avatar>
+                                                        <span className="font-bold line-clamp-1 max-w-[200px]">{request.title}</span>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Badge className={cn(
+                                                        "font-bold rounded-full border-0 gap-1.5",
+                                                        request.status === 'Active' && "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+                                                        request.status === 'Closed' && "bg-slate-500/10 text-slate-600 dark:text-slate-400",
+                                                    )}>
+                                                        <div className={cn(
+                                                            "h-1.5 w-1.5 rounded-full",
+                                                            request.status === 'Active' ? "bg-emerald-500" : "bg-slate-500"
+                                                        )} />
+                                                        {request.status === 'Active' ? 'Activo' : 'Cerrado'}
+                                                    </Badge>
+                                                </TableCell>
+                                                <TableCell className="text-muted-foreground text-sm">{request.createdAt}</TableCell>
+                                                <TableCell className="font-medium text-sm">{request.budgetRange}</TableCell>
+                                                <TableCell>
+                                                    <div className="flex items-center gap-2">
+                                                        <Inbox className="h-4 w-4 text-muted-foreground" />
+                                                        <span className="font-medium">{request.responsesCount}</span>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="text-right pr-8">
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger asChild>
+                                                            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
+                                                                <span className="sr-only">Open menu</span>
+                                                                <MoreHorizontal className="h-4 w-4" />
+                                                            </Button>
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent align="end" className="glass-card">
+                                                            <DropdownMenuLabel className="font-display">Acciones</DropdownMenuLabel>
+                                                            <DropdownMenuItem className="cursor-pointer">
+                                                                <Eye className="mr-2 h-4 w-4" /> Ver Detalles
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem className="cursor-pointer">
+                                                                <FileText className="mr-2 h-4 w-4" /> Editar
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuSeparator className="bg-white/5" />
+                                                            <DropdownMenuItem className="text-red-500 cursor-pointer">
+                                                                <Ban className="mr-2 h-4 w-4" /> Cerrar Solicitud
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </CardContent>
+                        </Card>
                     </div>
                 </div>
             </TabsContent>

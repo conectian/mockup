@@ -33,7 +33,7 @@ export default function DealChat() {
     };
 
     return (
-        <div className="flex flex-col h-screen md:h-full max-h-screen">
+        <div className="flex flex-col h-full w-full relative">
             {/* Chat Header - Glassmorphism */}
             <div className="px-6 py-4 border-b border-white/5 bg-card/40 backdrop-blur-md flex items-center justify-between sticky top-0 z-10">
                 <div className="flex items-center gap-3">

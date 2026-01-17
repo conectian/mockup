@@ -58,7 +58,7 @@ export default function UseCaseDetailPage() {
                 <p className="text-muted-foreground mb-6">
                     El caso de uso que buscas no existe o ha sido eliminado.
                 </p>
-                <Link to="/marketplace">
+                <Link to="/client/marketplace">
                     <Button variant="outline" className="gap-2">
                         <ArrowLeft className="h-4 w-4" />
                         Volver al Marketplace
@@ -75,7 +75,7 @@ export default function UseCaseDetailPage() {
         <div className="space-y-6">
             {/* Breadcrumbs */}
             <nav className="flex items-center text-sm text-muted-foreground">
-                <Link to="/marketplace" className="hover:text-foreground transition-colors">
+                <Link to="/client/marketplace" className="hover:text-foreground transition-colors">
                     Marketplace
                 </Link>
                 <ChevronRight className="h-4 w-4 mx-2" />

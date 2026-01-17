@@ -96,7 +96,7 @@ export default function ProviderHome() {
                                 <CardTitle className="text-xl font-display font-bold">Última Actividad</CardTitle>
                                 <p className="text-sm text-muted-foreground">Monitorea quién interactúa con tus soluciones</p>
                             </div>
-                            <Link to="/provider/opportunities">
+                            <Link to="/provider/leads">
                                 <Button variant="ghost" size="sm" className="font-bold text-primary rounded-md hover:bg-primary/5">
                                     Ver historial completo
                                 </Button>
@@ -156,7 +156,7 @@ export default function ProviderHome() {
                                     Nuevo Caso de Uso
                                 </Button>
                             </Link>
-                            <Link to="/provider/opportunities" className="block">
+                            <Link to="/provider/marketplace" className="block">
                                 <Button className="w-full gap-2 h-14 bg-white/10 hover:bg-white/20 border-white/20 text-white hover:border-white/30 backdrop-blur-md font-bold rounded-md transition-all">
                                     <Search className="h-5 w-5" />
                                     Explorar RFPs

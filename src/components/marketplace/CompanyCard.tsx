@@ -3,26 +3,11 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Building2, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { type LucideIcon } from 'lucide-react';
+import { type Company } from '@/data/marketplace-data';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import SendProposalModal from './SendProposalModal';
 
-export interface Company {
-    id: string;
-    name: string;
-    industry: string;
-    tier: string;
-    tierBadge: string;
-    innovation: string;
-    cloud: string;
-    revenue: string;
-    employees: string;
-    sector: string;
-    tech: string[];
-    rfps: number;
-    color: string;
-    icon: LucideIcon;
-    image: string;
-    description?: string;
-}
 
 interface CompanyCardProps {
     company: Company;
@@ -46,6 +31,7 @@ const tierConfig: Record<string, { className: string }> = {
 export default function CompanyCard({ company }: CompanyCardProps) {
     const IconComponent = company.icon;
     const tierStyle = tierConfig[company.tier] || tierConfig['Enterprise'];
+    const [isProposalModalOpen, setIsProposalModalOpen] = useState(false);
 
     return (
         <Card className="py-0 overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full border-white/5 rounded-xl bg-card/40 backdrop-blur-sm">
@@ -125,16 +111,28 @@ export default function CompanyCard({ company }: CompanyCardProps) {
 
                 {/* Actions */}
                 <div className="flex items-center gap-2 mt-auto pt-3 border-t border-white/5">
-                    <Button variant="outline" size="sm" className="flex-1 h-9 text-xs font-bold border-primary/30 text-primary hover:bg-primary/5 rounded-lg">
-                        <Building2 className="h-3.5 w-3.5 mr-1.5" />
-                        Ver Necesidades
-                    </Button>
-                    <Button size="sm" className="flex-1 h-9 text-xs font-bold premium-gradient rounded-lg gap-1.5">
+                    <Link to={`/provider/marketplace/company/${company.id}`} className="flex-1">
+                        <Button variant="outline" size="sm" className="w-full h-9 text-xs font-bold border-primary/30 text-primary hover:bg-primary/5 rounded-lg">
+                            <Building2 className="h-3.5 w-3.5 mr-1.5" />
+                            Ver Necesidades
+                        </Button>
+                    </Link>
+                    <Button
+                        size="sm"
+                        className="flex-1 h-9 text-xs font-bold premium-gradient rounded-lg gap-1.5"
+                        onClick={() => setIsProposalModalOpen(true)}
+                    >
                         Propuesta
                         <ArrowRight className="h-3.5 w-3.5" />
                     </Button>
                 </div>
             </CardContent>
+
+            <SendProposalModal
+                companyName={company.name}
+                isOpen={isProposalModalOpen}
+                onClose={() => setIsProposalModalOpen(false)}
+            />
         </Card>
     );
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useDealStore } from '@/store/useDealStore';
+import { useAuthStore } from '@/store/useAuthStore';
 import DealRightSidebar from '@/components/deal-room/DealRightSidebar';
 import DealChat from '@/components/deal-room/DealChat';
 import DealFinance from '@/components/deal-room/DealFinance';
@@ -36,9 +37,12 @@ const menuItems: { id: DealView; label: string; icon: typeof MessageSquare }[] =
 export default function DealRoomPage() {
     const { id } = useParams<{ id: string }>();
     const { dealTitle, participants } = useDealStore();
+    const { userType } = useAuthStore();
     const [activeView, setActiveView] = useState<DealView>('chat');
     const [leftMenuExpanded, setLeftMenuExpanded] = useState(true);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const backPath = userType === 'provider' ? '/provider/deal-rooms' : '/client/deal-rooms';
 
     const renderView = () => {
         switch (activeView) {
@@ -146,7 +150,7 @@ export default function DealRoomPage() {
                         </SheetTrigger>
                         <SheetContent side="left" className="w-72 p-0 bg-card/95 backdrop-blur-xl border-white/5">
                             <div className="h-16 flex items-center px-4 border-b border-white/5">
-                                <Link to="/deal-rooms" className="w-full">
+                                <Link to={backPath} className="w-full">
                                     <Button variant="ghost" className="w-full justify-start gap-3 rounded-md hover:bg-white/5">
                                         <ArrowLeft className="h-5 w-5" />
                                         <span className="font-bold text-sm">Volver al listado</span>
@@ -188,7 +192,7 @@ export default function DealRoomPage() {
             >
                 {/* Back Button Container */}
                 <div className="h-16 flex items-center px-4 border-b border-white/5">
-                    <Link to="/deal-rooms" className="w-full">
+                    <Link to={backPath} className="w-full">
                         <Button variant="ghost" className="w-full justify-start gap-3 rounded-md hover:bg-white/5 text-muted-foreground hover:text-foreground transition-all group">
                             <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
                             {leftMenuExpanded && <span className="font-bold text-sm tracking-tight">Volver al listado</span>}
@@ -261,12 +265,16 @@ export default function DealRoomPage() {
             </aside>
 
             {/* Main Content Area */}
-            <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-                <ScrollArea className="flex-1 bg-gradient-to-br from-background to-muted/20">
-                    <div className="pb-24">
-                        {renderView()}
-                    </div>
-                </ScrollArea>
+            <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative bg-gradient-to-br from-background to-muted/20">
+                {activeView === 'chat' ? (
+                    <DealChat />
+                ) : (
+                    <ScrollArea className="flex-1">
+                        <div className="pb-24">
+                            {renderView()}
+                        </div>
+                    </ScrollArea>
+                )}
             </main>
 
             {/* Right HUD Sidebar - Desktop only */}

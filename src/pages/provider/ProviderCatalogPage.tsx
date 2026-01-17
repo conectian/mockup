@@ -45,7 +45,7 @@ import { mockUseCases } from '@/data/marketplace-data';
 import { toast } from 'sonner';
 
 // Filter mock data to simulate "my" use cases
-const initialUseCases = mockUseCases.slice(0, 3);
+const initialUseCases = mockUseCases.slice(0, 6);
 
 type UseCase = {
     id: string;
@@ -262,16 +262,17 @@ export default function ProviderCatalogPage() {
                                     </p>
                                 </div>
 
-                                <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between font-medium">
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] uppercase text-muted-foreground/50">KPI Principal</span>
-                                        <span className="text-sm text-primary flex items-center gap-1">
-                                            <Target className="h-3.5 w-3.5" />
-                                            {useCase.roi}
-                                        </span>
+                                <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div>
+                                            <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-bold block">KPI Principal</span>
+                                            <span className="text-sm font-bold text-primary">
+                                                {useCase.roi}
+                                            </span>
+                                        </div>
                                     </div>
-                                    <Button variant="ghost" size="sm" className="h-8 text-[11px] gap-1 hover:bg-primary/5">
-                                        Ver detalles <Sparkles className="h-3 w-3" />
+                                    <Button variant="ghost" size="sm" className="h-9 text-xs gap-1.5 hover:bg-primary/10 text-primary font-semibold">
+                                        Ver detalles
                                     </Button>
                                 </div>
                             </CardContent>

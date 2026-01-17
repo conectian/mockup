@@ -15,7 +15,7 @@ export default function OnboardingWizard() {
 
     const handleFinish = () => {
         completeOnboarding();
-        if (userType === 'client') navigate('/marketplace');
+        if (userType === 'client') navigate('/client/marketplace');
         else if (userType === 'provider') navigate('/provider/marketplace');
         else navigate('/');
     };
