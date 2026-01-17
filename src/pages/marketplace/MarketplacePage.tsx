@@ -30,7 +30,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -43,6 +42,8 @@ import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { MultiSelect } from '@/components/ui/multi-select';
 import PageHeader from '@/components/common/PageHeader';
+import StatusBadge, { type StatusType } from '@/components/common/StatusBadge';
+import CompanyAvatar from '@/components/common/CompanyAvatar';
 
 const SECTORS = [
     'Fintech & Banca',
@@ -263,9 +264,6 @@ export default function MarketplacePage() {
                     ))}
                 </div>
             </div>
-
-            {/* Other filters emitted for brevity in thought process but included in action */}
-            {/* ... keeping previous filters 3-17 ... */}
 
             <div className="space-y-3">
                 <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Coste (€)</Label>
@@ -535,9 +533,7 @@ export default function MarketplacePage() {
                                                 <TableRow key={proposal.id} className="border-white/5 hover:bg-muted/30 transition-colors">
                                                     <TableCell className="pl-8">
                                                         <div className="flex items-center gap-3">
-                                                            <div className="h-10 w-10 rounded-md bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/20">
-                                                                <FileText className="h-5 w-5" />
-                                                            </div>
+                                                            <CompanyAvatar alt={proposal.title} variant="brand" />
                                                             <div>
                                                                 <div className="font-bold line-clamp-1 max-w-[200px]">{proposal.title}</div>
                                                                 {proposal.isPrivate && (
@@ -550,9 +546,9 @@ export default function MarketplacePage() {
                                                     </TableCell>
                                                     <TableCell className="font-medium text-sm text-muted-foreground">{proposal.providerName}</TableCell>
                                                     <TableCell>
-                                                        <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 font-bold">
+                                                        <StatusBadge status="verified" variant="outline">
                                                             {proposal.savingEstimation}
-                                                        </Badge>
+                                                        </StatusBadge>
                                                     </TableCell>
                                                     <TableCell>
                                                         <div className="flex flex-wrap gap-1">
@@ -586,9 +582,7 @@ export default function MarketplacePage() {
                                         <div key={proposal.id} className="bg-white/5 rounded-lg border border-white/5 p-4 space-y-4">
                                             <div className="flex items-start justify-between gap-3">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="h-10 w-10 rounded-md bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/20 shrink-0">
-                                                        <FileText className="h-5 w-5" />
-                                                    </div>
+                                                    <CompanyAvatar alt={proposal.title} variant="brand" className="shrink-0" />
                                                     <div>
                                                         <h3 className="font-bold text-sm leading-tight line-clamp-2">{proposal.title}</h3>
                                                         <div className="flex items-center gap-2 mt-1">
@@ -604,9 +598,9 @@ export default function MarketplacePage() {
                                             </div>
 
                                             <div className="flex items-center justify-between border-t border-white/5 pt-3">
-                                                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 font-bold">
+                                                <StatusBadge status="verified" variant="outline">
                                                     Ahorro: {proposal.savingEstimation}
-                                                </Badge>
+                                                </StatusBadge>
                                                 <div className="flex items-center gap-2">
                                                     <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
                                                         <Eye className="h-4 w-4" />
@@ -658,26 +652,14 @@ export default function MarketplacePage() {
                                                 <TableRow key={request.id} className="border-white/5 hover:bg-muted/30 transition-colors">
                                                     <TableCell className="pl-8">
                                                         <div className="flex items-center gap-3">
-                                                            <Avatar className="h-10 w-10 rounded-md shadow-sm">
-                                                                <AvatarFallback className="bg-gradient-to-br from-violet-400 to-fuchsia-500 text-white font-bold rounded-md">
-                                                                    {request.title.charAt(0)}
-                                                                </AvatarFallback>
-                                                            </Avatar>
+                                                            <CompanyAvatar alt={request.title} variant="brand" />
                                                             <span className="font-bold line-clamp-1 max-w-[200px]">{request.title}</span>
                                                         </div>
                                                     </TableCell>
                                                     <TableCell>
-                                                        <Badge className={cn(
-                                                            "font-bold rounded-full border-0 gap-1.5",
-                                                            request.status === 'Active' && "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-                                                            request.status === 'Closed' && "bg-slate-500/10 text-slate-600 dark:text-slate-400",
-                                                        )}>
-                                                            <div className={cn(
-                                                                "h-1.5 w-1.5 rounded-full",
-                                                                request.status === 'Active' ? "bg-emerald-500" : "bg-slate-500"
-                                                            )} />
-                                                            {request.status === 'Active' ? 'Activo' : 'Cerrado'}
-                                                        </Badge>
+                                                        <StatusBadge status={request.status.toLowerCase() as StatusType}>
+                                                            {request.status === 'Active' ? 'Activo' : request.status === 'Closed' ? 'Cerrado' : 'Borrador'}
+                                                        </StatusBadge>
                                                     </TableCell>
                                                     <TableCell className="text-muted-foreground text-sm">{request.createdAt}</TableCell>
                                                     <TableCell className="font-medium text-sm">{request.budgetRange}</TableCell>
@@ -722,11 +704,7 @@ export default function MarketplacePage() {
                                         <div key={request.id} className="bg-white/5 rounded-lg border border-white/5 p-4 space-y-4">
                                             <div className="flex items-start justify-between gap-3">
                                                 <div className="flex items-center gap-3">
-                                                    <Avatar className="h-10 w-10 rounded-md shadow-sm shrink-0">
-                                                        <AvatarFallback className="bg-gradient-to-br from-violet-400 to-fuchsia-500 text-white font-bold rounded-md">
-                                                            {request.title.charAt(0)}
-                                                        </AvatarFallback>
-                                                    </Avatar>
+                                                    <CompanyAvatar alt={request.title} variant="brand" className="shrink-0" />
                                                     <div>
                                                         <h3 className="font-bold text-sm leading-tight line-clamp-2">{request.title}</h3>
                                                         <div className="text-xs text-muted-foreground mt-1">{request.createdAt}</div>
@@ -747,17 +725,9 @@ export default function MarketplacePage() {
                                             </div>
 
                                             <div className="flex items-center justify-between border-t border-white/5 pt-3">
-                                                <Badge className={cn(
-                                                    "font-bold rounded-full border-0 gap-1.5",
-                                                    request.status === 'Active' && "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-                                                    request.status === 'Closed' && "bg-slate-500/10 text-slate-600 dark:text-slate-400",
-                                                )}>
-                                                    <div className={cn(
-                                                        "h-1.5 w-1.5 rounded-full",
-                                                        request.status === 'Active' ? "bg-emerald-500" : "bg-slate-500"
-                                                    )} />
-                                                    {request.status === 'Active' ? 'Activo' : 'Cerrado'}
-                                                </Badge>
+                                                <StatusBadge status={request.status.toLowerCase() as StatusType}>
+                                                    {request.status === 'Active' ? 'Activo' : request.status === 'Closed' ? 'Cerrado' : 'Borrador'}
+                                                </StatusBadge>
                                                 <div className="flex items-center gap-4 text-xs font-medium">
                                                     <span>{request.budgetRange}</span>
                                                     <div className="flex items-center gap-1.5 text-muted-foreground">

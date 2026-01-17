@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { FileText, FolderKanban, Search, ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import StatsCard from '@/components/common/StatsCard';
+import CompanyAvatar from '@/components/common/CompanyAvatar';
 
 // Mock recommended use cases
 const mockRecommendations = [
@@ -146,9 +147,13 @@ export default function ClientHome() {
                                     {item.title}
                                 </h3>
                                 <div className="flex items-center gap-2 mt-auto">
-                                    <div className="h-6 w-6 rounded-full bg-muted flex items-center justify-center text-[10px] font-bold">
-                                        {item.provider.charAt(0)}
-                                    </div>
+                                    <CompanyAvatar
+                                        alt={item.provider}
+                                        size="sm"
+                                        variant="neutral"
+                                        className="h-6 w-6 text-[10px]"
+                                        fallbackClassName="text-[10px]"
+                                    />
                                     <p className="text-sm font-medium text-muted-foreground/80">{item.provider}</p>
                                 </div>
                             </CardContent>

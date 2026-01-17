@@ -1,20 +1,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Coins, Eye, FolderKanban, Plus, Search, TrendingUp, Building2, Clock, ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
 import PageHeader from '@/components/common/PageHeader';
 import StatsCard from '@/components/common/StatsCard';
+import StatusBadge, { type StatusType } from '@/components/common/StatusBadge';
+import CompanyAvatar from '@/components/common/CompanyAvatar';
 
 // Mock data for leads
 const mockLeads = [
-    { id: 1, company: 'Banco Santander', sector: 'Banca', date: 'Hace 2 horas', status: 'Vio tu caso', statusColor: 'bg-blue-500' },
-    { id: 2, company: 'Telefónica', sector: 'Telecomunicaciones', date: 'Hace 5 horas', status: 'Abrió chat', statusColor: 'bg-emerald-500' },
-    { id: 3, company: 'Repsol', sector: 'Energía', date: 'Ayer', status: 'Vio tu caso', statusColor: 'bg-blue-500' },
-    { id: 4, company: 'El Corte Inglés', sector: 'Retail', date: 'Ayer', status: 'Solicitó demo', statusColor: 'bg-violet-500' },
-    { id: 5, company: 'Mapfre', sector: 'Seguros', date: 'Hace 2 días', status: 'Vio tu caso', statusColor: 'bg-blue-500' },
+    { id: 1, company: 'Banco Santander', sector: 'Banca', date: 'Hace 2 horas', status: 'Vio tu caso', statusType: 'blue' as StatusType },
+    { id: 2, company: 'Telefónica', sector: 'Telecomunicaciones', date: 'Hace 5 horas', status: 'Abrió chat', statusType: 'active' as StatusType },
+    { id: 3, company: 'Repsol', sector: 'Energía', date: 'Ayer', status: 'Vio tu caso', statusType: 'blue' as StatusType },
+    { id: 4, company: 'El Corte Inglés', sector: 'Retail', date: 'Ayer', status: 'Solicitó demo', statusType: 'purple' as StatusType },
+    { id: 5, company: 'Mapfre', sector: 'Seguros', date: 'Hace 2 días', status: 'Vio tu caso', statusType: 'blue' as StatusType },
 ];
 
 export default function ProviderHome() {
@@ -114,11 +113,11 @@ export default function ProviderHome() {
                                     className="flex items-center justify-between p-4 rounded-md bg-muted/30 hover:bg-muted/60 transition-all duration-200 cursor-pointer border border-transparent hover:border-white/5 group"
                                 >
                                     <div className="flex items-center gap-4">
-                                        <Avatar className="h-12 w-12 rounded-md shadow-sm">
-                                            <AvatarFallback className="bg-gradient-to-br from-slate-200 to-slate-400 text-slate-700 text-base font-bold">
-                                                {lead.company.charAt(0)}
-                                            </AvatarFallback>
-                                        </Avatar>
+                                        <CompanyAvatar
+                                            alt={lead.company}
+                                            size="lg"
+                                            variant="neutral"
+                                        />
                                         <div>
                                             <div className="font-bold text-base group-hover:text-primary transition-colors">{lead.company}</div>
                                             <div className="text-xs text-muted-foreground/80 flex items-center gap-1.5 mt-0.5">
@@ -129,14 +128,9 @@ export default function ProviderHome() {
                                     </div>
 
                                     <div className="flex items-center gap-4">
-                                        <Badge variant="secondary" className={cn(
-                                            "gap-2 px-3 py-1 text-xs font-bold rounded-full border-0",
-                                            lead.statusColor.replace('bg-', 'bg-') + "/10",
-                                            lead.statusColor.replace('bg-', 'text-')
-                                        )}>
-                                            <div className={cn("h-2 w-2 rounded-full animate-pulse", lead.statusColor)} />
+                                        <StatusBadge status={lead.statusType} className="gap-2 px-3 py-1 text-xs">
                                             {lead.status}
-                                        </Badge>
+                                        </StatusBadge>
                                         <ArrowRight className="h-4 w-4 text-muted-foreground/20 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                                     </div>
                                 </div>

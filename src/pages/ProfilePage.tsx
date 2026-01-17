@@ -1,7 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -21,6 +19,8 @@ import {
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import PageHeader from '@/components/common/PageHeader';
+import CompanyAvatar from '@/components/common/CompanyAvatar';
+import StatusBadge, { type StatusType } from '@/components/common/StatusBadge';
 
 export default function ProfilePage() {
     const { userType } = useAuthStore();
@@ -42,6 +42,18 @@ export default function ProfilePage() {
             : 'Compañía multinacional del sector industrial con más de 50 años de experiencia. Buscamos constantemente innovar en nuestros procesos de producción.',
         verified: true,
         tier: userType === 'provider' ? 'Gold' : null,
+    };
+
+    const getAvatarVariant = () => {
+        if (userType === 'provider') return 'success';
+        if (userType === 'client') return 'info';
+        return 'warning'; // admin
+    };
+
+    const getRoleStatus = (): StatusType => {
+        if (userType === 'provider') return 'verified';
+        if (userType === 'client') return 'blue';
+        return 'pending'; // admin (amber)
     };
 
     return (
@@ -75,39 +87,31 @@ export default function ProfilePage() {
                         </Button>
                     </div>
                     <CardContent className="pt-0 -mt-12 text-center">
-                        <Avatar className="h-24 w-24 mx-auto rounded-md shadow-xl border-4 border-background">
-                            <AvatarFallback className={cn(
-                                "text-2xl font-bold rounded-md",
-                                userType === 'provider' && "bg-gradient-to-br from-emerald-400 to-teal-500 text-white",
-                                userType === 'client' && "bg-gradient-to-br from-blue-400 to-indigo-500 text-white",
-                                userType === 'admin' && "bg-gradient-to-br from-amber-400 to-orange-500 text-white"
-                            )}>
-                                {profile.company.charAt(0)}
-                            </AvatarFallback>
-                        </Avatar>
+                        <CompanyAvatar
+                            alt={profile.company}
+                            variant={getAvatarVariant()}
+                            className="h-24 w-24 mx-auto border-4 border-background text-2xl"
+                            fallbackClassName="text-2xl"
+                        />
 
                         <div className="mt-4 space-y-2">
                             <h2 className="text-xl font-display font-bold">{profile.company}</h2>
                             <div className="flex items-center justify-center gap-2">
-                                <Badge className={cn(
-                                    "font-bold rounded-full border-0",
-                                    userType === 'provider' && "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-                                    userType === 'client' && "bg-blue-500/10 text-blue-600 dark:text-blue-400",
-                                    userType === 'admin' && "bg-amber-500/10 text-amber-600 dark:text-amber-400"
-                                )}>
+                                <StatusBadge status={getRoleStatus()} variant="dot">
                                     {userType === 'provider' ? 'Proveedor' : userType === 'client' ? 'Cliente' : 'Administrador'}
-                                </Badge>
+                                </StatusBadge>
+
                                 {profile.verified && (
-                                    <Badge className="gap-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold rounded-full border-0">
+                                    <StatusBadge status="verified" variant="subtle" className="gap-1">
                                         <CheckCircle2 className="h-3 w-3" />
                                         Verificado
-                                    </Badge>
+                                    </StatusBadge>
                                 )}
                             </div>
                             {profile.tier && (
-                                <Badge className="bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold rounded-full border-0">
-                                    ● {profile.tier} Partner
-                                </Badge>
+                                <StatusBadge status="pending" variant="dot">
+                                    {profile.tier} Partner
+                                </StatusBadge>
                             )}
                         </div>
 
@@ -217,43 +221,43 @@ export default function ProfilePage() {
                         </div>
                     </CardContent>
                 </Card>
-            </div>
 
-            {/* Account Security */}
-            <Card className="border-white/5 rounded-md shadow-sm">
-                <CardHeader className="px-8 pt-8">
-                    <CardTitle className="text-xl font-display font-bold flex items-center gap-2">
-                        <Shield className="h-5 w-5 text-primary" />
-                        Seguridad de la Cuenta
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="px-8 pb-8">
-                    <div className="grid gap-6 md:grid-cols-2">
-                        <div className="p-4 rounded-md bg-muted/30 border border-white/5">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <h4 className="font-bold">Contraseña</h4>
-                                    <p className="text-sm text-muted-foreground">Última actualización hace 30 días</p>
+                {/* Account Security */}
+                <Card className="border-white/5 rounded-md shadow-sm">
+                    <CardHeader className="px-8 pt-8">
+                        <CardTitle className="text-xl font-display font-bold flex items-center gap-2">
+                            <Shield className="h-5 w-5 text-primary" />
+                            Seguridad de la Cuenta
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="px-8 pb-8">
+                        <div className="grid gap-6 md:grid-cols-2">
+                            <div className="p-4 rounded-md bg-muted/30 border border-white/5">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h4 className="font-bold">Contraseña</h4>
+                                        <p className="text-sm text-muted-foreground">Última actualización hace 30 días</p>
+                                    </div>
+                                    <Button variant="outline" size="sm" className="font-bold rounded-md border-white/10">
+                                        Cambiar
+                                    </Button>
                                 </div>
-                                <Button variant="outline" size="sm" className="font-bold rounded-md border-white/10">
-                                    Cambiar
-                                </Button>
+                            </div>
+                            <div className="p-4 rounded-md bg-muted/30 border border-white/5">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h4 className="font-bold">Autenticación 2FA</h4>
+                                        <p className="text-sm text-muted-foreground">Añade una capa extra de seguridad</p>
+                                    </div>
+                                    <Button variant="outline" size="sm" className="font-bold rounded-md border-white/10">
+                                        Activar
+                                    </Button>
+                                </div>
                             </div>
                         </div>
-                        <div className="p-4 rounded-md bg-muted/30 border border-white/5">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <h4 className="font-bold">Autenticación 2FA</h4>
-                                    <p className="text-sm text-muted-foreground">Añade una capa extra de seguridad</p>
-                                </div>
-                                <Button variant="outline" size="sm" className="font-bold rounded-md border-white/10">
-                                    Activar
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     );
 }

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import PageHeader from '@/components/common/PageHeader';
 import StatsCard from '@/components/common/StatsCard';
+import StatusBadge, { type StatusType } from '@/components/common/StatusBadge';
+import CompanyAvatar from '@/components/common/CompanyAvatar';
 import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
     Table,
     TableBody,
@@ -111,19 +111,13 @@ export default function DealRoomsList() {
         closed: mockDealRooms.filter(r => r.status === 'closed').length,
     };
 
-    const getStatusBadge = (status: string) => {
-        const config = {
-            active: { label: 'Activa', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
-            pending: { label: 'Pendiente', color: 'bg-amber-500/10 text-amber-600 dark:text-amber-400', dot: 'bg-amber-500 animate-pulse' },
-            closed: { label: 'Cerrada', color: 'bg-slate-500/10 text-slate-600 dark:text-slate-400', dot: 'bg-slate-500' },
-        }[status] || { label: status, color: 'bg-muted', dot: 'bg-muted-foreground' };
-
-        return (
-            <Badge className={cn("font-bold rounded-full border-0 gap-1.5", config.color)}>
-                <div className={cn("h-1.5 w-1.5 rounded-full", config.dot)} />
-                {config.label}
-            </Badge>
-        );
+    const getStatusLabel = (status: string) => {
+        switch (status) {
+            case 'active': return 'Activa';
+            case 'pending': return 'Pendiente';
+            case 'closed': return 'Cerrada';
+            default: return status;
+        }
     };
 
     return (
@@ -269,23 +263,21 @@ export default function DealRoomsList() {
                                     <TableRow key={room.id} className="border-white/5 hover:bg-muted/30 transition-colors">
                                         <TableCell className="pl-8">
                                             <Link to={`/deal-room/${room.id}`} className="flex items-center gap-3 group">
-                                                <Avatar className="h-10 w-10 rounded-md shadow-sm">
-                                                    <AvatarFallback className="bg-gradient-to-br from-violet-400 to-indigo-500 text-white font-bold rounded-md">
-                                                        {room.title.charAt(0)}
-                                                    </AvatarFallback>
-                                                </Avatar>
+                                                <CompanyAvatar alt={room.title} variant="brand" />
                                                 <span className="font-bold group-hover:text-primary transition-colors">{room.title}</span>
                                             </Link>
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-2">
-                                                <div className="h-6 w-6 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
-                                                    {room.counterparty.charAt(0)}
-                                                </div>
+                                                <CompanyAvatar alt={room.counterparty} size="sm" variant="neutral" className="h-6 w-6 text-[10px]" fallbackClassName="text-[10px]" />
                                                 <span className="text-muted-foreground">{room.counterparty}</span>
                                             </div>
                                         </TableCell>
-                                        <TableCell>{getStatusBadge(room.status)}</TableCell>
+                                        <TableCell>
+                                            <StatusBadge status={room.status as StatusType}>
+                                                {getStatusLabel(room.status)}
+                                            </StatusBadge>
+                                        </TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-2 text-sm">
                                                 <MessageSquare className="h-4 w-4 text-muted-foreground" />
@@ -336,17 +328,11 @@ export default function DealRoomsList() {
                             <div key={room.id} className="bg-white/5 rounded-lg border border-white/5 p-4 space-y-4">
                                 <div className="flex items-start justify-between">
                                     <Link to={`/deal-room/${room.id}`} className="flex items-center gap-3">
-                                        <Avatar className="h-10 w-10 rounded-md shadow-sm">
-                                            <AvatarFallback className="bg-gradient-to-br from-violet-400 to-indigo-500 text-white font-bold rounded-md">
-                                                {room.title.charAt(0)}
-                                            </AvatarFallback>
-                                        </Avatar>
+                                        <CompanyAvatar alt={room.title} variant="brand" />
                                         <div>
                                             <h3 className="font-bold text-sm leading-tight">{room.title}</h3>
                                             <div className="flex items-center gap-2 mt-1">
-                                                <div className="h-5 w-5 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
-                                                    {room.counterparty.charAt(0)}
-                                                </div>
+                                                <CompanyAvatar alt={room.counterparty} size="sm" variant="neutral" className="h-5 w-5" />
                                                 <span className="text-xs text-muted-foreground">{room.counterparty}</span>
                                             </div>
                                         </div>
@@ -368,7 +354,9 @@ export default function DealRoomsList() {
                                 </div>
 
                                 <div className="flex items-center justify-between border-t border-white/5 pt-3">
-                                    {getStatusBadge(room.status)}
+                                    <StatusBadge status={room.status as StatusType}>
+                                        {getStatusLabel(room.status)}
+                                    </StatusBadge>
                                     <div className="flex items-center gap-4 text-xs text-muted-foreground">
                                         <div className="flex items-center gap-1.5">
                                             <MessageSquare className="h-3.5 w-3.5" />
