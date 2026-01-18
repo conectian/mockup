@@ -81,41 +81,41 @@ export default function AdminUsersPage() {
             </div>
 
             {/* Stats */}
-            <div className="grid gap-6 md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
                 <Card className="border-0 bg-gradient-to-br from-slate-400/20 via-slate-500/10 to-transparent rounded-md shadow-xl shadow-slate-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <Users className="h-16 w-16 text-slate-500" />
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <Users className="h-12 w-12 md:h-16 md:w-16 text-slate-500" />
                     </div>
-                    <CardContent className="pt-6">
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-2">Total</div>
-                        <div className="text-4xl font-display font-bold">{stats.total}</div>
+                    <CardContent className="p-4 md:pt-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-1 md:mb-2">Total</div>
+                        <div className="text-2xl md:text-4xl font-display font-bold">{stats.total}</div>
                     </CardContent>
                 </Card>
                 <Card className="border-0 bg-gradient-to-br from-emerald-400/20 via-emerald-500/10 to-transparent rounded-md shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <CheckCircle className="h-16 w-16 text-emerald-500" />
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <CheckCircle className="h-12 w-12 md:h-16 md:w-16 text-emerald-500" />
                     </div>
-                    <CardContent className="pt-6">
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/70 mb-2">Activos</div>
-                        <div className="text-4xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.active}</div>
+                    <CardContent className="p-4 md:pt-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/70 mb-1 md:mb-2">Activos</div>
+                        <div className="text-2xl md:text-4xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.active}</div>
                     </CardContent>
                 </Card>
                 <Card className="border-0 bg-gradient-to-br from-amber-400/20 via-amber-500/10 to-transparent rounded-md shadow-xl shadow-amber-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <Clock className="h-16 w-16 text-amber-500" />
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <Clock className="h-12 w-12 md:h-16 md:w-16 text-amber-500" />
                     </div>
-                    <CardContent className="pt-6">
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70 mb-2">Pendientes</div>
-                        <div className="text-4xl font-display font-bold text-amber-700 dark:text-amber-400">{stats.pending}</div>
+                    <CardContent className="p-4 md:pt-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70 mb-1 md:mb-2">Pendientes</div>
+                        <div className="text-2xl md:text-4xl font-display font-bold text-amber-700 dark:text-amber-400">{stats.pending}</div>
                     </CardContent>
                 </Card>
                 <Card className="border-0 bg-gradient-to-br from-red-400/20 via-red-500/10 to-transparent rounded-md shadow-xl shadow-red-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <Ban className="h-16 w-16 text-red-500" />
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <Ban className="h-12 w-12 md:h-16 md:w-16 text-red-500" />
                     </div>
-                    <CardContent className="pt-6">
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-red-600 dark:text-red-400/70 mb-2">Bloqueados</div>
-                        <div className="text-4xl font-display font-bold text-red-700 dark:text-red-400">{stats.blocked}</div>
+                    <CardContent className="p-4 md:pt-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-red-600 dark:text-red-400/70 mb-1 md:mb-2">Bloqueados</div>
+                        <div className="text-2xl md:text-4xl font-display font-bold text-red-700 dark:text-red-400">{stats.blocked}</div>
                     </CardContent>
                 </Card>
             </div>
@@ -173,103 +173,175 @@ export default function AdminUsersPage() {
                 <CardHeader className="px-8 pt-8 pb-0">
                     <CardTitle className="text-xl font-display font-bold">Usuarios Registrados</CardTitle>
                 </CardHeader>
-                <CardContent className="p-0 mt-6">
-                    <Table>
-                        <TableHeader>
-                            <TableRow className="border-white/5">
-                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pl-8">Empresa</TableHead>
-                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Email</TableHead>
-                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Tipo</TableHead>
-                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Estado</TableHead>
-                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Nivel</TableHead>
-                                <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Registro</TableHead>
-                                <TableHead className="text-right text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pr-8">Acciones</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {filteredUsers.map((user) => (
-                                <TableRow key={user.id} className="border-white/5 hover:bg-muted/30 transition-colors">
-                                    <TableCell className="pl-8">
-                                        <div className="flex items-center gap-3">
-                                            <Avatar className="h-10 w-10 rounded-md shadow-sm">
-                                                <AvatarFallback className={cn(
-                                                    "text-sm font-bold rounded-md",
-                                                    user.type === 'Provider' ? "bg-gradient-to-br from-emerald-400 to-teal-500 text-white" : "bg-gradient-to-br from-blue-400 to-indigo-500 text-white"
-                                                )}>
-                                                    {user.company.charAt(0)}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <span className="font-bold">{user.company}</span>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="text-muted-foreground">{user.email}</TableCell>
-                                    <TableCell>
-                                        <Badge variant="outline" className={cn(
-                                            "font-bold rounded-full border-0",
-                                            user.type === 'Provider' ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" : "bg-blue-500/10 text-blue-600 dark:text-blue-400"
-                                        )}>
-                                            {user.type}
-                                        </Badge>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Badge className={cn(
-                                            "font-bold rounded-full border-0 gap-1.5",
-                                            user.status === 'Activo' && "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-                                            user.status === 'Bloqueado' && "bg-red-500/10 text-red-600 dark:text-red-400",
-                                            user.status === 'Pendiente' && "bg-amber-500/10 text-amber-600 dark:text-amber-400"
-                                        )}>
-                                            <div className={cn(
-                                                "h-1.5 w-1.5 rounded-full",
-                                                user.status === 'Activo' && "bg-emerald-500",
-                                                user.status === 'Bloqueado' && "bg-red-500",
-                                                user.status === 'Pendiente' && "bg-amber-500 animate-pulse"
-                                            )} />
-                                            {user.status}
-                                        </Badge>
-                                    </TableCell>
-                                    <TableCell>
-                                        {user.tier !== 'N/A' && (
-                                            <div className="flex items-center gap-1.5 text-sm font-bold">
-                                                {user.tier === 'Gold' && <span className="text-amber-500">●</span>}
-                                                {user.tier === 'Silver' && <span className="text-slate-400">●</span>}
-                                                {user.tier === 'Bronze' && <span className="text-orange-600">●</span>}
-                                                {user.tier}
-                                            </div>
-                                        )}
-                                    </TableCell>
-                                    <TableCell className="text-muted-foreground text-sm">{user.joinedAt}</TableCell>
-                                    <TableCell className="text-right pr-8">
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
-                                                    <span className="sr-only">Open menu</span>
-                                                    <MoreHorizontal className="h-4 w-4" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end" className="glass-card">
-                                                <DropdownMenuLabel className="font-display">Acciones</DropdownMenuLabel>
-                                                <DropdownMenuItem onClick={() => handleAction('Ver perfil', user.company)} className="cursor-pointer">
-                                                    Ver Perfil Completo
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => handleAction('Email enviado', user.company)} className="cursor-pointer">
-                                                    <Mail className="mr-2 h-4 w-4" /> Enviar Email
-                                                </DropdownMenuItem>
-                                                <DropdownMenuSeparator className="bg-white/5" />
-                                                {user.status === 'Pendiente' && (
-                                                    <DropdownMenuItem onClick={() => handleAction('Aprobado', user.company)} className="cursor-pointer">
-                                                        <CheckCircle className="mr-2 h-4 w-4 text-emerald-500" /> Aprobar
-                                                    </DropdownMenuItem>
-                                                )}
-                                                <DropdownMenuItem className="text-red-500 cursor-pointer" onClick={() => handleAction('Suspendido', user.company)}>
-                                                    <Ban className="mr-2 h-4 w-4" /> Suspender Cuenta
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                    </TableCell>
+                <CardContent className="p-0 md:mt-6">
+                    {/* Desktop Table */}
+                    <div className="hidden md:block">
+                        <Table>
+                            <TableHeader>
+                                <TableRow className="border-white/5">
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pl-8">Empresa</TableHead>
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Email</TableHead>
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Tipo</TableHead>
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Estado</TableHead>
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Nivel</TableHead>
+                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Registro</TableHead>
+                                    <TableHead className="text-right text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pr-8">Acciones</TableHead>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                            </TableHeader>
+                            <TableBody>
+                                {filteredUsers.map((user) => (
+                                    <TableRow key={user.id} className="border-white/5 hover:bg-muted/30 transition-colors">
+                                        <TableCell className="pl-8">
+                                            <div className="flex items-center gap-3">
+                                                <Avatar className="h-10 w-10 rounded-md shadow-sm">
+                                                    <AvatarFallback className={cn(
+                                                        "text-sm font-bold rounded-md",
+                                                        user.type === 'Provider' ? "bg-gradient-to-br from-emerald-400 to-teal-500 text-white" : "bg-gradient-to-br from-blue-400 to-indigo-500 text-white"
+                                                    )}>
+                                                        {user.company.charAt(0)}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <span className="font-bold">{user.company}</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="text-muted-foreground">{user.email}</TableCell>
+                                        <TableCell>
+                                            <Badge variant="outline" className={cn(
+                                                "font-bold rounded-full border-0",
+                                                user.type === 'Provider' ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" : "bg-blue-500/10 text-blue-600 dark:text-blue-400"
+                                            )}>
+                                                {user.type}
+                                            </Badge>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Badge className={cn(
+                                                "font-bold rounded-full border-0 gap-1.5",
+                                                user.status === 'Activo' && "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+                                                user.status === 'Bloqueado' && "bg-red-500/10 text-red-600 dark:text-red-400",
+                                                user.status === 'Pendiente' && "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                                            )}>
+                                                <div className={cn(
+                                                    "h-1.5 w-1.5 rounded-full",
+                                                    user.status === 'Activo' && "bg-emerald-500",
+                                                    user.status === 'Bloqueado' && "bg-red-500",
+                                                    user.status === 'Pendiente' && "bg-amber-500 animate-pulse"
+                                                )} />
+                                                {user.status}
+                                            </Badge>
+                                        </TableCell>
+                                        <TableCell>
+                                            {user.tier !== 'N/A' && (
+                                                <div className="flex items-center gap-1.5 text-sm font-bold">
+                                                    {user.tier === 'Gold' && <span className="text-amber-500">●</span>}
+                                                    {user.tier === 'Silver' && <span className="text-slate-400">●</span>}
+                                                    {user.tier === 'Bronze' && <span className="text-orange-600">●</span>}
+                                                    {user.tier}
+                                                </div>
+                                            )}
+                                        </TableCell>
+                                        <TableCell className="text-muted-foreground text-sm">{user.joinedAt}</TableCell>
+                                        <TableCell className="text-right pr-8">
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
+                                                        <span className="sr-only">Open menu</span>
+                                                        <MoreHorizontal className="h-4 w-4" />
+                                                    </Button>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent align="end" className="glass-card">
+                                                    <DropdownMenuLabel className="font-display">Acciones</DropdownMenuLabel>
+                                                    <DropdownMenuItem onClick={() => handleAction('Ver perfil', user.company)} className="cursor-pointer">
+                                                        Ver Perfil Completo
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem onClick={() => handleAction('Email enviado', user.company)} className="cursor-pointer">
+                                                        <Mail className="mr-2 h-4 w-4" /> Enviar Email
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuSeparator className="bg-white/5" />
+                                                    {user.status === 'Pendiente' && (
+                                                        <DropdownMenuItem onClick={() => handleAction('Aprobado', user.company)} className="cursor-pointer">
+                                                            <CheckCircle className="mr-2 h-4 w-4 text-emerald-500" /> Aprobar
+                                                        </DropdownMenuItem>
+                                                    )}
+                                                    <DropdownMenuItem className="text-red-500 cursor-pointer" onClick={() => handleAction('Suspendido', user.company)}>
+                                                        <Ban className="mr-2 h-4 w-4" /> Suspender Cuenta
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+
+                    {/* Mobile List View */}
+                    <div className="md:hidden divide-y divide-white/5">
+                        {filteredUsers.map((user) => (
+                            <div key={user.id} className="p-6 space-y-4">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <Avatar className="h-10 w-10 rounded-md shadow-sm">
+                                            <AvatarFallback className={cn(
+                                                "text-sm font-bold rounded-md",
+                                                user.type === 'Provider' ? "bg-gradient-to-br from-emerald-400 to-teal-500 text-white" : "bg-gradient-to-br from-blue-400 to-indigo-500 text-white"
+                                            )}>
+                                                {user.company.charAt(0)}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <div>
+                                            <div className="font-bold">{user.company}</div>
+                                            <div className="text-xs text-muted-foreground">{user.email}</div>
+                                        </div>
+                                    </div>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
+                                                <MoreHorizontal className="h-4 w-4" />
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end" className="glass-card">
+                                            <DropdownMenuItem onClick={() => handleAction('Ver perfil', user.company)}>Ver Perfil</DropdownMenuItem>
+                                            <DropdownMenuItem onClick={() => handleAction('Email enviado', user.company)}>Enviar Email</DropdownMenuItem>
+                                            {user.status === 'Pendiente' && (
+                                                <DropdownMenuItem onClick={() => handleAction('Aprobado', user.company)} className="text-emerald-500">Aprobar</DropdownMenuItem>
+                                            )}
+                                            <DropdownMenuItem className="text-red-500" onClick={() => handleAction('Suspendido', user.company)}>Suspender</DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    <Badge variant="outline" className={cn(
+                                        "font-bold rounded-full border-0",
+                                        user.type === 'Provider' ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" : "bg-blue-500/10 text-blue-600 dark:text-blue-400"
+                                    )}>
+                                        {user.type}
+                                    </Badge>
+                                    <Badge className={cn(
+                                        "font-bold rounded-full border-0 gap-1.5",
+                                        user.status === 'Activo' && "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+                                        user.status === 'Bloqueado' && "bg-red-500/10 text-red-600 dark:text-red-400",
+                                        user.status === 'Pendiente' && "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                                    )}>
+                                        <div className={cn(
+                                            "h-1.5 w-1.5 rounded-full",
+                                            user.status === 'Activo' && "bg-emerald-500",
+                                            user.status === 'Bloqueado' && "bg-red-500",
+                                            user.status === 'Pendiente' && "bg-amber-500 animate-pulse"
+                                        )} />
+                                        {user.status}
+                                    </Badge>
+                                    {user.tier !== 'N/A' && (
+                                        <Badge variant="secondary" className="font-bold rounded-full border-0">
+                                            {user.tier}
+                                        </Badge>
+                                    )}
+                                </div>
+                                <div className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">
+                                    Registrado: {user.joinedAt}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
 
                     {filteredUsers.length === 0 && (
                         <div className="text-center py-16">

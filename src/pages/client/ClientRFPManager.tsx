@@ -219,82 +219,84 @@ export default function ClientRFPManager() {
             </div>
 
             {/* Stats */}
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3">
                 <Card className="border-0 bg-gradient-to-br from-slate-400/20 via-slate-500/10 to-transparent rounded-md shadow-xl shadow-slate-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <FileText className="h-16 w-16 text-slate-500" />
+                    <div className="absolute top-0 right-0 p-3 md:p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <FileText className="h-12 w-12 md:h-20 md:w-20 text-slate-500" />
                     </div>
-                    <CardContent className="pt-6">
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-2">RFPs Activos</div>
-                        <div className="text-4xl font-display font-bold">{stats.active}</div>
+                    <CardContent className="p-4 md:p-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.15em] md:tracking-[0.2em] text-muted-foreground/60 mb-1 md:mb-2">RFPs Activos</div>
+                        <div className="text-2xl md:text-5xl font-display font-bold">{stats.active}</div>
                     </CardContent>
                 </Card>
                 <Card className="border-0 bg-gradient-to-br from-emerald-400/20 via-emerald-500/10 to-transparent rounded-md shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <MessageSquare className="h-16 w-16 text-emerald-500" />
+                    <div className="absolute top-0 right-0 p-3 md:p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <MessageSquare className="h-12 w-12 md:h-20 md:w-20 text-emerald-500" />
                     </div>
-                    <CardContent className="pt-6">
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/70 mb-2">Propuestas</div>
-                        <div className="text-4xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.proposals}</div>
+                    <CardContent className="p-4 md:p-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.15em] md:tracking-[0.2em] text-emerald-600 dark:text-emerald-400/70 mb-1 md:mb-2">Propuestas</div>
+                        <div className="text-2xl md:text-5xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.proposals}</div>
                     </CardContent>
                 </Card>
-                <Card className="border-0 bg-gradient-to-br from-blue-400/20 via-blue-500/10 to-transparent rounded-md shadow-xl shadow-blue-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <Eye className="h-16 w-16 text-blue-500" />
+                <Card className="col-span-2 lg:col-span-1 border-0 bg-gradient-to-br from-blue-400/20 via-blue-500/10 to-transparent rounded-md shadow-xl shadow-blue-500/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-3 md:p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <Eye className="h-12 w-12 md:h-20 md:w-20 text-blue-500" />
                     </div>
-                    <CardContent className="pt-6">
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400/70 mb-2">Vistas Totales</div>
-                        <div className="text-4xl font-display font-bold text-blue-700 dark:text-blue-400">{stats.views}</div>
+                    <CardContent className="p-4 md:p-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.15em] md:tracking-[0.2em] text-blue-600 dark:text-blue-400/70 mb-1 md:mb-2">Vistas Totales</div>
+                        <div className="text-2xl md:text-5xl font-display font-bold text-blue-700 dark:text-blue-400">{stats.views}</div>
                     </CardContent>
                 </Card>
             </div>
 
             {/* RFP List */}
             <Card className="border-white/5 rounded-md shadow-sm overflow-hidden">
-                <CardHeader className="px-8 pt-8">
-                    <CardTitle className="text-xl font-display font-bold flex items-center gap-2">
-                        <Briefcase className="h-5 w-5 text-primary" />
+                <CardHeader className="px-4 sm:px-8 pt-6 sm:pt-8">
+                    <CardTitle className="text-lg sm:text-xl font-display font-bold flex items-center gap-2">
+                        <Briefcase className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                         Mis RFPs Publicados
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="px-8 pb-8 space-y-4">
+                <CardContent className="px-4 sm:px-8 pb-6 sm:pb-8 space-y-4">
                     {clientRFPs.map((rfp) => (
                         <div
                             key={rfp.id}
-                            className="flex items-center justify-between p-4 bg-muted/30 border border-white/5 rounded-md hover:bg-muted/50 hover:border-white/10 transition-all cursor-pointer group"
+                            className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-muted/30 border border-white/5 rounded-md hover:bg-muted/50 hover:border-white/10 transition-all cursor-pointer group gap-4"
                         >
-                            <div className="flex-1">
-                                <div className="flex items-center gap-3 mb-1.5">
-                                    <h3 className="font-bold text-lg group-hover:text-primary transition-colors">{rfp.title}</h3>
-                                    <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border-0 gap-1.5 rounded-full px-2.5">
+                            <div className="flex-1 min-w-0">
+                                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5">
+                                    <h3 className="font-bold text-base sm:text-lg group-hover:text-primary transition-colors truncate">{rfp.title}</h3>
+                                    <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border-0 gap-1.5 rounded-full px-2.5 text-[10px] sm:text-xs shrink-0">
                                         <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                                         {rfp.status}
                                     </Badge>
                                 </div>
-                                <div className="flex items-center gap-4 text-sm text-muted-foreground/70">
+                                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground/70">
                                     <span className="flex items-center gap-1.5">
-                                        <Clock className="h-3.5 w-3.5" />
-                                        Publicado {rfp.postedAt}
+                                        <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                                        {rfp.postedAt}
                                     </span>
                                     <span className="flex items-center gap-1.5">
-                                        <Calendar className="h-3.5 w-3.5" />
-                                        Hasta {rfp.deadline}
+                                        <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                                        {rfp.deadline}
                                     </span>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-8">
-                                <div className="text-center min-w-[3rem]">
-                                    <div className="text-xl font-bold text-primary">{rfp.proposals}</div>
-                                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60">propuestas</div>
+                            <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-8 pt-3 sm:pt-0 border-t sm:border-0 border-white/5">
+                                <div className="flex gap-6 sm:gap-8">
+                                    <div className="text-center">
+                                        <div className="text-lg sm:text-xl font-bold text-primary">{rfp.proposals}</div>
+                                        <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60">propuestas</div>
+                                    </div>
+                                    <div className="text-center">
+                                        <div className="text-base sm:text-lg font-bold">{rfp.views}</div>
+                                        <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60">vistas</div>
+                                    </div>
                                 </div>
-                                <div className="text-center min-w-[3rem]">
-                                    <div className="text-lg font-bold">{rfp.views}</div>
-                                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60">vistas</div>
-                                </div>
-                                <Button variant="outline" size="sm" className="font-bold border-white/10 hover:bg-white/5 gap-2 group/btn">
-                                    Ver Propuestas
-                                    <ArrowRight className="h-4 w-4 text-muted-foreground group-hover/btn:translate-x-1 transition-transform" />
+                                <Button variant="outline" size="sm" className="font-bold border-white/10 hover:bg-white/5 gap-1.5 sm:gap-2 group/btn text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4">
+                                    <span className="hidden xs:inline">Ver</span> Propuestas
+                                    <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground group-hover/btn:translate-x-1 transition-transform" />
                                 </Button>
                             </div>
                         </div>

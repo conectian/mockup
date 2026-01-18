@@ -58,27 +58,27 @@ export default function ClientHome() {
             </Card>
 
             {/* Status Cards */}
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid grid-cols-2 gap-4 md:gap-6">
                 <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-white/5 relative overflow-hidden rounded-md">
-                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <FileText className="h-24 w-24 -mr-8 -mt-8" />
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <FileText className="h-12 w-12 md:h-24 md:w-24 -mr-4 md:-mr-8 -mt-4 md:-mt-8" />
                     </div>
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Mis RFPs Activos</CardTitle>
-                        <div className="p-2 rounded-md bg-blue-500/10 text-blue-500">
-                            <FileText className="h-5 w-5" />
+                    <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
+                        <CardTitle className="text-[10px] md:text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Mis RFPs Activos</CardTitle>
+                        <div className="p-1.5 md:p-2 rounded-md bg-blue-500/10 text-blue-500">
+                            <FileText className="h-4 w-4 md:h-5 md:w-5" />
                         </div>
                     </CardHeader>
-                    <CardContent>
-                        <div className="flex items-end justify-between">
+                    <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-2">
                             <div>
-                                <div className="text-5xl font-display font-bold text-foreground">2</div>
-                                <p className="text-sm font-medium text-muted-foreground mt-1 text-balance">Solicitudes de propuesta publicadas</p>
+                                <div className="text-2xl md:text-5xl font-display font-bold text-foreground">2</div>
+                                <p className="text-[10px] md:text-sm font-medium text-muted-foreground mt-0.5 md:mt-1 text-balance">Solicitudes publicadas</p>
                             </div>
                             <Link to="/client/rfps">
-                                <Button variant="ghost" size="sm" className="rounded-md gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                                <Button variant="ghost" size="sm" className="h-8 rounded-md gap-1.5 md:gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all text-[10px] md:text-sm">
                                     Ver todas
-                                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                    <ArrowRight className="h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
                                 </Button>
                             </Link>
                         </div>
@@ -86,25 +86,25 @@ export default function ClientHome() {
                 </Card>
 
                 <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-white/5 relative overflow-hidden rounded-md">
-                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <FolderKanban className="h-24 w-24 -mr-8 -mt-8" />
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <FolderKanban className="h-12 w-12 md:h-24 md:w-24 -mr-4 md:-mr-8 -mt-4 md:-mt-8" />
                     </div>
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Deal Rooms Abiertos</CardTitle>
-                        <div className="p-2 rounded-md bg-indigo-500/10 text-indigo-500">
-                            <FolderKanban className="h-5 w-5" />
+                    <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
+                        <CardTitle className="text-[10px] md:text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Deal Rooms</CardTitle>
+                        <div className="p-1.5 md:p-2 rounded-md bg-indigo-500/10 text-indigo-500">
+                            <FolderKanban className="h-4 w-4 md:h-5 md:w-5" />
                         </div>
                     </CardHeader>
-                    <CardContent>
-                        <div className="flex items-end justify-between">
+                    <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-2">
                             <div>
-                                <div className="text-5xl font-display font-bold text-foreground">1</div>
-                                <p className="text-sm font-medium text-muted-foreground mt-1 text-balance">Negociación técnica en curso</p>
+                                <div className="text-2xl md:text-5xl font-display font-bold text-foreground">1</div>
+                                <p className="text-[10px] md:text-sm font-medium text-muted-foreground mt-0.5 md:mt-1 text-balance">Negociación técnica</p>
                             </div>
                             <Link to="/client/deal-rooms">
-                                <Button variant="ghost" size="sm" className="rounded-md gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                                <Button variant="ghost" size="sm" className="h-8 rounded-md gap-1.5 md:gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all text-[10px] md:text-sm">
                                     Ir a salas
-                                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                    <ArrowRight className="h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
                                 </Button>
                             </Link>
                         </div>

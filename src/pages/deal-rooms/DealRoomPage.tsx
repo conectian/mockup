@@ -138,7 +138,7 @@ export default function DealRoomPage() {
     );
 
     return (
-        <div className="fixed inset-0 flex flex-col lg:flex-row bg-background/95 backdrop-blur-3xl">
+        <div className="fixed inset-0 flex flex-col lg:flex-row bg-background/95 backdrop-blur-3xl safe-area-top">
             {/* Mobile Header */}
             <div className="lg:hidden flex items-center justify-between h-14 px-4 border-b border-white/5 bg-card/40 backdrop-blur-xl shrink-0">
                 <div className="flex items-center gap-3">

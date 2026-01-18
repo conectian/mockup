@@ -31,22 +31,22 @@ export default function ProviderHome() {
             </div>
 
             {/* KPI Row */}
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
                 {/* Credits */}
-                <Card className="border-0 bg-gradient-to-br from-amber-400/20 via-orange-500/10 to-transparent relative overflow-hidden rounded-md shadow-xl shadow-amber-500/5 group">
-                    <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <Coins className="h-20 w-20 text-amber-500" />
+                <Card className="border-0 bg-gradient-to-br from-amber-400/20 via-orange-500/10 to-transparent relative overflow-hidden rounded-md shadow-xl shadow-amber-500/5 group col-span-2 lg:col-span-1">
+                    <div className="absolute top-0 right-0 p-3 md:p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <Coins className="h-12 w-12 md:h-20 md:w-20 text-amber-500" />
                     </div>
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70">Créditos Disponibles</CardTitle>
-                        <Coins className="h-5 w-5 text-amber-500" />
+                    <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
+                        <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70">Créditos Disponibles</CardTitle>
+                        <Coins className="h-4 w-4 md:h-5 md:w-5 text-amber-500" />
                     </CardHeader>
-                    <CardContent>
-                        <div className="text-5xl font-display font-bold text-amber-700 dark:text-amber-400 mb-4">150</div>
+                    <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
+                        <div className="text-3xl md:text-5xl font-display font-bold text-amber-700 dark:text-amber-400 mb-2 md:mb-4">150</div>
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-medium text-amber-600/70">Usa créditos para ver leads</span>
+                            <span className="text-[10px] md:text-xs font-medium text-amber-600/70">Usa créditos para ver leads</span>
                             <Link to="/settings?tab=billing">
-                                <Button size="sm" variant="outline" className="h-8 text-xs border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 rounded-md font-bold">
+                                <Button size="sm" variant="outline" className="h-7 md:h-8 px-2 md:px-3 text-[10px] md:text-xs border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 rounded-md font-bold">
                                     Recargar
                                 </Button>
                             </Link>
@@ -56,15 +56,15 @@ export default function ProviderHome() {
 
                 {/* Profile Views */}
                 <Card className="border-white/5 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden">
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Visitas al Perfil</CardTitle>
-                        <div className="p-2 rounded-md bg-primary/10 text-primary">
-                            <Eye className="h-5 w-5" />
+                    <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
+                        <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Visitas al Perfil</CardTitle>
+                        <div className="p-1.5 md:p-2 rounded-md bg-primary/10 text-primary">
+                            <Eye className="h-4 w-4 md:h-5 md:w-5" />
                         </div>
                     </CardHeader>
-                    <CardContent>
-                        <div className="text-5xl font-display font-bold mb-2">1,240</div>
-                        <div className="flex items-center gap-1.5 text-emerald-500 bg-emerald-500/10 w-fit px-2 py-0.5 rounded-full font-bold text-xs">
+                    <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
+                        <div className="text-3xl md:text-5xl font-display font-bold mb-1 md:mb-2">1,240</div>
+                        <div className="flex items-center gap-1.5 text-emerald-500 bg-emerald-500/10 w-fit px-2 py-0.5 rounded-full font-bold text-[10px] md:text-xs">
                             <TrendingUp className="h-3 w-3" />
                             <span>+12%</span>
                         </div>
@@ -73,15 +73,15 @@ export default function ProviderHome() {
 
                 {/* Active Deals */}
                 <Card className="border-white/5 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden">
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Deals Activos</CardTitle>
-                        <div className="p-2 rounded-md bg-indigo-500/10 text-indigo-500">
-                            <FolderKanban className="h-5 w-5" />
+                    <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
+                        <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Deals Activos</CardTitle>
+                        <div className="p-1.5 md:p-2 rounded-md bg-indigo-500/10 text-indigo-500">
+                            <FolderKanban className="h-4 w-4 md:h-5 md:w-5" />
                         </div>
                     </CardHeader>
-                    <CardContent>
-                        <div className="text-5xl font-display font-bold mb-2">3</div>
-                        <p className="text-sm font-medium text-muted-foreground">Oportunidades abiertas</p>
+                    <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
+                        <div className="text-3xl md:text-5xl font-display font-bold mb-1 md:mb-2">3</div>
+                        <p className="text-[10px] md:text-sm font-medium text-muted-foreground">Oportunidades abiertas</p>
                     </CardContent>
                 </Card>
             </div>

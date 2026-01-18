@@ -3,7 +3,7 @@ import ThemeToggle from '../components/ThemeToggle';
 
 export default function AuthLayout() {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 p-4">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 p-4 safe-area-top">
             {/* Theme Toggle in corner */}
             <div className="fixed top-4 right-4 z-50">
                 <ThemeToggle />

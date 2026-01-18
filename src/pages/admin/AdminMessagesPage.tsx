@@ -10,7 +10,6 @@ import {
     Sheet,
     SheetContent,
     SheetDescription,
-    SheetHeader,
     SheetTitle,
 } from '@/components/ui/sheet';
 import {
@@ -120,32 +119,32 @@ export default function AdminMessagesPage() {
             </div>
 
             {/* Stats */}
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
                 <Card className="border-0 bg-gradient-to-br from-violet-400/20 via-violet-500/10 to-transparent rounded-md shadow-xl shadow-violet-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <MessageSquare className="h-16 w-16 text-violet-500" />
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <MessageSquare className="h-12 w-12 md:h-16 md:w-16 text-violet-500" />
                     </div>
-                    <CardContent className="pt-6">
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-violet-600 dark:text-violet-400/70 mb-2">Conversaciones</div>
-                        <div className="text-4xl font-display font-bold text-violet-700 dark:text-violet-400">{stats.total}</div>
+                    <CardContent className="p-4 md:pt-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-violet-600 dark:text-violet-400/70 mb-1 md:mb-2">Conversaciones</div>
+                        <div className="text-2xl md:text-4xl font-display font-bold text-violet-700 dark:text-violet-400">{stats.total}</div>
                     </CardContent>
                 </Card>
                 <Card className="border-0 bg-gradient-to-br from-emerald-400/20 via-emerald-500/10 to-transparent rounded-md shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <CheckCheck className="h-16 w-16 text-emerald-500" />
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <CheckCheck className="h-12 w-12 md:h-16 md:w-16 text-emerald-500" />
                     </div>
-                    <CardContent className="pt-6">
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/70 mb-2">Activas Hoy</div>
-                        <div className="text-4xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.active}</div>
+                    <CardContent className="p-4 md:pt-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/70 mb-1 md:mb-2">Activas Hoy</div>
+                        <div className="text-2xl md:text-4xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.active}</div>
                     </CardContent>
                 </Card>
                 <Card className="border-0 bg-gradient-to-br from-amber-400/20 via-amber-500/10 to-transparent rounded-md shadow-xl shadow-amber-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <AlertCircle className="h-16 w-16 text-amber-500" />
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <AlertCircle className="h-12 w-12 md:h-16 md:w-16 text-amber-500" />
                     </div>
-                    <CardContent className="pt-6">
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70 mb-2">Sin Leer</div>
-                        <div className="text-4xl font-display font-bold text-amber-700 dark:text-amber-400">{stats.unread}</div>
+                    <CardContent className="p-4 md:pt-6">
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70 mb-1 md:mb-2">Sin Leer</div>
+                        <div className="text-2xl md:text-4xl font-display font-bold text-amber-700 dark:text-amber-400">{stats.unread}</div>
                     </CardContent>
                 </Card>
             </div>
@@ -173,39 +172,58 @@ export default function AdminMessagesPage() {
                     {filteredConversations.map((conv) => (
                         <div
                             key={conv.id}
-                            className="flex items-center gap-4 p-4 rounded-md hover:bg-muted/30 transition-all duration-200 cursor-pointer border border-transparent hover:border-white/5 group"
+                            className="flex items-start gap-3 md:gap-4 p-4 rounded-md hover:bg-muted/30 transition-all duration-200 cursor-pointer border border-transparent hover:border-white/5 group"
                             onClick={() => setSelectedConversation(conv)}
                         >
-                            <Avatar className="h-12 w-12 rounded-md shadow-sm shrink-0">
+                            <Avatar className="h-10 w-10 md:h-12 md:w-12 rounded-md shadow-sm shrink-0 mt-1 md:mt-0">
                                 <AvatarFallback className="bg-gradient-to-br from-violet-500 to-indigo-500 text-white font-bold rounded-md">
                                     {conv.participants[0].charAt(0)}
                                 </AvatarFallback>
                             </Avatar>
                             <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-bold text-sm group-hover:text-primary transition-colors">
-                                        {conv.participants[0]}
-                                    </span>
-                                    <ArrowRight className="h-3 w-3 text-muted-foreground/40" />
-                                    <span className="font-bold text-sm group-hover:text-primary transition-colors">
-                                        {conv.participants[1]}
-                                    </span>
-                                    <Badge variant="outline" className="text-xs ml-auto bg-white/5 border-white/10 font-bold">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-1">
+                                    <div className="flex items-center gap-1.5 min-w-0">
+                                        <span className="font-bold text-sm truncate group-hover:text-primary transition-colors">
+                                            {conv.participants[0]}
+                                        </span>
+                                        <ArrowRight className="h-3 w-3 text-muted-foreground/40 shrink-0" />
+                                        <span className="font-bold text-sm truncate group-hover:text-primary transition-colors">
+                                            {conv.participants[1]}
+                                        </span>
+                                    </div>
+                                    <Badge variant="outline" className="text-[10px] md:text-xs bg-white/5 border-white/10 font-bold w-fit">
                                         {conv.dealRoom}
                                     </Badge>
                                 </div>
                                 <p className="text-sm text-muted-foreground truncate">{conv.lastMessage}</p>
+
+                                {/* Mobile-only time and unread info */}
+                                <div className="flex items-center justify-between mt-2 md:hidden">
+                                    <div className="text-[10px] text-muted-foreground/60 flex items-center gap-1">
+                                        <Clock className="h-3 w-3" />
+                                        {conv.time}
+                                    </div>
+                                    {conv.unread > 0 && (
+                                        <Badge className="bg-primary hover:bg-primary font-bold rounded-full px-2 h-5 min-w-[20px] text-[10px] flex items-center justify-center">
+                                            {conv.unread}
+                                        </Badge>
+                                    )}
+                                </div>
                             </div>
-                            <div className="text-right shrink-0">
+
+                            {/* Desktop-only info and arrow */}
+                            <div className="hidden md:flex flex-col items-end shrink-0 gap-1.5 ml-2">
                                 <div className="text-xs text-muted-foreground/60 flex items-center gap-1">
                                     <Clock className="h-3 w-3" />
                                     {conv.time}
                                 </div>
                                 {conv.unread > 0 && (
-                                    <Badge className="mt-1.5 bg-primary font-bold rounded-full px-2">{conv.unread}</Badge>
+                                    <Badge className="bg-primary hover:bg-primary font-bold rounded-full px-2 h-5 min-w-[20px] flex items-center justify-center">
+                                        {conv.unread}
+                                    </Badge>
                                 )}
                             </div>
-                            <ArrowRight className="h-4 w-4 text-muted-foreground/20 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
+                            <ArrowRight className="hidden md:block h-4 w-4 text-muted-foreground/20 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 mt-3" />
                         </div>
                     ))}
 
@@ -223,74 +241,77 @@ export default function AdminMessagesPage() {
 
             {/* Conversation Detail Sheet */}
             <Sheet open={!!selectedConversation} onOpenChange={() => setSelectedConversation(null)}>
-                <SheetContent className="w-full sm:max-w-lg glass-card">
+                <SheetContent className="w-full sm:max-w-lg glass-card p-0 flex flex-col border-white/10 shadow-2xl">
                     {selectedConversation && (
                         <>
-                            <SheetHeader className="pb-4 border-b border-white/5">
-                                <div className="flex items-center gap-3">
-                                    <Avatar className="h-12 w-12 rounded-md shadow-lg">
+                            <div className="p-6 border-b border-white/5 bg-muted/20 backdrop-blur-md">
+                                <div className="flex items-center gap-4">
+                                    <Avatar className="h-12 w-12 rounded-md shadow-lg ring-2 ring-white/5">
                                         <AvatarFallback className="bg-gradient-to-br from-violet-500 to-indigo-500 text-white font-bold rounded-md">
                                             {selectedConversation.participants[0].charAt(0)}
                                         </AvatarFallback>
                                     </Avatar>
-                                    <div>
-                                        <SheetTitle className="text-lg font-display font-bold">
+                                    <div className="min-w-0">
+                                        <SheetTitle className="text-xl font-display font-bold truncate leading-tight">
                                             {selectedConversation.participants.join(' ↔ ')}
                                         </SheetTitle>
-                                        <SheetDescription>
+                                        <SheetDescription className="text-primary font-bold text-xs mt-0.5">
                                             {selectedConversation.dealRoom}
                                         </SheetDescription>
                                     </div>
                                 </div>
-                            </SheetHeader>
+                            </div>
 
-                            <ScrollArea className="h-[calc(100vh-280px)] py-4">
-                                <div className="space-y-4">
+                            <ScrollArea className="flex-1 px-6 bg-slate-50/50 dark:bg-slate-950/20">
+                                <div className="py-8 space-y-6">
                                     {selectedConversation.messages.map((msg, i) => (
                                         <div
                                             key={i}
                                             className={cn(
-                                                "flex flex-col",
-                                                msg.from === selectedConversation.participants[0] ? 'items-start' : 'items-end'
+                                                "flex flex-col max-w-[85%]",
+                                                msg.from === selectedConversation.participants[0] ? 'items-start' : 'items-end ml-auto'
                                             )}
                                         >
-                                            <div className="text-xs text-muted-foreground/60 mb-1">
+                                            <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/40 mb-1.5 px-1">
                                                 {msg.from} · {msg.time}
                                             </div>
                                             <div
                                                 className={cn(
-                                                    "max-w-[80%] p-3 rounded-md",
+                                                    "p-3.5 rounded-md shadow-sm border transition-shadow",
                                                     msg.from === selectedConversation.participants[0]
-                                                        ? 'bg-muted/50 rounded-bl-none'
-                                                        : 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-br-none shadow-lg shadow-violet-500/20'
+                                                        ? 'bg-white dark:bg-zinc-900 border-zinc-200 dark:border-white/5 rounded-bl-none text-zinc-800 dark:text-zinc-200'
+                                                        : 'bg-gradient-to-br from-violet-600 to-indigo-600 text-white border-violet-500/20 rounded-br-none shadow-lg shadow-violet-500/20'
                                                 )}
                                             >
-                                                <p className="text-sm">{msg.text}</p>
+                                                <p className="text-sm leading-relaxed">{msg.text}</p>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                             </ScrollArea>
 
-                            <div className="pt-4 border-t border-white/5">
-                                <div className="flex gap-2">
+                            <div className="p-6 bg-muted/30 border-t border-white/5 backdrop-blur-sm">
+                                <div className="flex gap-3">
                                     <Textarea
                                         placeholder="Enviar mensaje como moderador..."
                                         value={replyText}
                                         onChange={(e) => setReplyText(e.target.value)}
                                         rows={2}
-                                        className="resize-none bg-muted/30 border-white/10 rounded-md"
+                                        className="resize-none bg-background/50 border-white/10 rounded-md focus:ring-primary/20 transition-all text-sm"
                                     />
                                     <Button
                                         onClick={handleSendReply}
-                                        className="shrink-0 h-auto bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/20"
+                                        className="shrink-0 h-12 w-12 rounded-md bg-gradient-to-r from-violet-600 to-indigo-600 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-violet-500/20"
                                     >
-                                        <Send className="h-4 w-4" />
+                                        <Send className="h-5 w-5" />
                                     </Button>
                                 </div>
-                                <p className="text-xs text-muted-foreground/60 mt-2">
-                                    Los mensajes de moderador aparecerán marcados en la conversación
-                                </p>
+                                <div className="flex items-center gap-2 mt-3 text-muted-foreground/60">
+                                    <AlertCircle className="h-3 w-3" />
+                                    <p className="text-[10px] font-medium tracking-wide">
+                                        LOS MENSAJES DE MODERADOR SE MARCARÁN COMO OFICIALES
+                                    </p>
+                                </div>
                             </div>
                         </>
                     )}

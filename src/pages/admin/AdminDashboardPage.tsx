@@ -61,7 +61,7 @@ export default function AdminDashboardPage() {
             </div>
 
             {/* KPI Stats */}
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
                 {adminStats.map((stat, index) => (
                     <Card key={index} className={cn(
                         "border-0 relative overflow-hidden rounded-md shadow-xl group",
@@ -69,17 +69,17 @@ export default function AdminDashboardPage() {
                         stat.color === 'emerald' && "bg-gradient-to-br from-emerald-400/20 via-emerald-500/10 to-transparent shadow-emerald-500/5",
                         stat.color === 'violet' && "bg-gradient-to-br from-violet-400/20 via-violet-500/10 to-transparent shadow-violet-500/5"
                     )}>
-                        <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <div className="absolute top-0 right-0 p-3 md:p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
                             <stat.icon className={cn(
-                                "h-20 w-20",
+                                "h-12 w-12 md:h-20 md:w-20",
                                 stat.color === 'blue' && "text-blue-500",
                                 stat.color === 'emerald' && "text-emerald-500",
                                 stat.color === 'violet' && "text-violet-500"
                             )} />
                         </div>
-                        <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
                             <CardTitle className={cn(
-                                "text-xs font-bold uppercase tracking-[0.2em]",
+                                "text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]",
                                 stat.color === 'blue' && "text-blue-600 dark:text-blue-400/70",
                                 stat.color === 'emerald' && "text-emerald-600 dark:text-emerald-400/70",
                                 stat.color === 'violet' && "text-violet-600 dark:text-violet-400/70"
@@ -87,15 +87,15 @@ export default function AdminDashboardPage() {
                                 {stat.title}
                             </CardTitle>
                             <stat.icon className={cn(
-                                "h-5 w-5",
+                                "h-4 w-4 md:h-5 md:w-5",
                                 stat.color === 'blue' && "text-blue-500",
                                 stat.color === 'emerald' && "text-emerald-500",
                                 stat.color === 'violet' && "text-violet-500"
                             )} />
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
                             <div className={cn(
-                                "text-5xl font-display font-bold mb-4",
+                                "text-2xl md:text-5xl font-display font-bold mb-2 md:mb-4",
                                 stat.color === 'blue' && "text-blue-700 dark:text-blue-400",
                                 stat.color === 'emerald' && "text-emerald-700 dark:text-emerald-400",
                                 stat.color === 'violet' && "text-violet-700 dark:text-violet-400"
@@ -245,12 +245,12 @@ export default function AdminDashboardPage() {
                                         </div>
                                     </div>
                                     <p className="text-sm text-white/80">{task.task}</p>
-                                    <div className="flex gap-2">
-                                        <Button size="sm" className="flex-1 gap-1.5 h-9 bg-white text-indigo-600 hover:bg-white/95 font-bold rounded-md" onClick={() => handleAction('Aprobado', task.company)}>
+                                    <div className="flex gap-2 pt-1">
+                                        <Button size="sm" className="flex-1 gap-1.5 h-9 bg-white text-indigo-600 hover:bg-white/90 font-bold rounded-md shadow-sm" onClick={() => handleAction('Aprobado', task.company)}>
                                             <CheckCircle2 className="h-4 w-4" />
                                             Aprobar
                                         </Button>
-                                        <Button size="sm" variant="outline" className="flex-1 gap-1.5 h-9 border-white/20 text-white hover:bg-white/10 font-bold rounded-md" onClick={() => handleAction('Rechazado', task.company)}>
+                                        <Button size="sm" className="flex-1 gap-1.5 h-9 bg-white/20 hover:bg-white/30 text-white border-0 font-bold rounded-md" onClick={() => handleAction('Rechazado', task.company)}>
                                             <XCircle className="h-4 w-4" />
                                             Rechazar
                                         </Button>
