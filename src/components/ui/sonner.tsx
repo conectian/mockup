@@ -18,33 +18,33 @@ const Toaster = ({ ...props }: ToasterProps) => {
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
       position="top-right"
-      offset="calc(1rem + env(safe-area-inset-top, 0px))"
+      offset={56}
       icons={{
         success: <CircleCheckIcon className="size-4 text-emerald-600" />,
-        info: <InfoIcon className="size-4 text-indigo-600" />,
+        info: <InfoIcon className="size-4 text-blue-600" />,
         warning: <TriangleAlertIcon className="size-4 text-amber-600" />,
         error: <OctagonXIcon className="size-4 text-red-600" />,
-        loading: <Loader2Icon className="size-4 animate-spin text-indigo-600" />,
+        loading: <Loader2Icon className="size-4 animate-spin text-blue-600" />,
       }}
       toastOptions={{
         classNames: {
-          toast: "group-[.toaster]:bg-card group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:rounded-lg",
-          title: "group-[.toast]:text-foreground group-[.toast]:font-semibold",
-          description: "group-[.toast]:text-muted-foreground group-[.toast]:text-sm",
-          actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground group-[.toast]:font-semibold group-[.toast]:rounded-md",
-          cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground group-[.toast]:font-medium group-[.toast]:rounded-md",
-          success: "group-[.toaster]:border-emerald-200 dark:group-[.toaster]:border-emerald-800",
-          warning: "group-[.toaster]:border-amber-200 dark:group-[.toaster]:border-amber-800",
-          error: "group-[.toaster]:border-red-200 dark:group-[.toaster]:border-red-800",
-          info: "group-[.toaster]:border-indigo-200 dark:group-[.toaster]:border-indigo-800",
+          toast: "group-[.toaster]:bg-white dark:group-[.toaster]:bg-slate-900 group-[.toaster]:text-slate-900 dark:group-[.toaster]:text-white group-[.toaster]:border group-[.toaster]:border-slate-200 dark:group-[.toaster]:border-slate-700 group-[.toaster]:shadow-xl group-[.toaster]:rounded-xl",
+          title: "group-[.toast]:text-slate-900 dark:group-[.toast]:text-white group-[.toast]:font-semibold group-[.toast]:text-sm",
+          description: "group-[.toast]:text-slate-600 dark:group-[.toast]:text-slate-300 group-[.toast]:text-xs",
+          actionButton: "group-[.toast]:bg-primary group-[.toast]:text-white group-[.toast]:font-semibold group-[.toast]:rounded-md",
+          cancelButton: "group-[.toast]:bg-slate-100 dark:group-[.toast]:bg-slate-800 group-[.toast]:text-slate-600 dark:group-[.toast]:text-slate-300 group-[.toast]:font-medium group-[.toast]:rounded-md",
+          success: "group-[.toaster]:border-emerald-300 dark:group-[.toaster]:border-emerald-700 group-[.toaster]:bg-emerald-50 dark:group-[.toaster]:bg-emerald-950",
+          warning: "group-[.toaster]:border-amber-300 dark:group-[.toaster]:border-amber-700 group-[.toaster]:bg-amber-50 dark:group-[.toaster]:bg-amber-950",
+          error: "group-[.toaster]:border-red-300 dark:group-[.toaster]:border-red-700 group-[.toaster]:bg-red-50 dark:group-[.toaster]:bg-red-950",
+          info: "group-[.toaster]:border-blue-300 dark:group-[.toaster]:border-blue-700 group-[.toaster]:bg-blue-50 dark:group-[.toaster]:bg-blue-950",
         },
       }}
       style={
         {
-          "--normal-bg": "hsl(var(--card))",
-          "--normal-text": "hsl(var(--foreground))",
-          "--normal-border": "hsl(var(--border))",
-          "--border-radius": "0.5rem",
+          "--normal-bg": "#ffffff",
+          "--normal-text": "#1e293b",
+          "--normal-border": "#e2e8f0",
+          "--border-radius": "0.75rem",
         } as React.CSSProperties
       }
       {...props}

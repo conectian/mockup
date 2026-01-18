@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
+
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Send, ArrowRight, User, Cpu, TrendingUp, MessageSquare, Bot, X, Lightbulb, Zap, Star, ExternalLink } from 'lucide-react';
@@ -173,9 +173,9 @@ export default function AIChatbotModal({ open, onOpenChange, onSearchSuggestion 
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent showCloseButton={false} className="sm:max-w-[700px] h-[85vh] max-h-[800px] p-0 border-0 bg-transparent shadow-none overflow-hidden outline-none">
+            <DialogContent showCloseButton={false} className="w-full h-full max-w-full max-h-full sm:max-w-[700px] sm:h-[85vh] sm:max-h-[800px] p-0 border-0 sm:border bg-background sm:rounded-2xl rounded-none overflow-hidden outline-none">
 
-                <div className="relative w-full h-full flex flex-col bg-background border border-border rounded-2xl overflow-hidden shadow-2xl">
+                <div className="relative w-full h-full flex flex-col bg-background overflow-hidden safe-area-top">
 
                     {/* Header */}
                     <div className="relative z-10 flex items-center justify-between px-5 py-4 border-b border-border bg-card">
@@ -200,7 +200,7 @@ export default function AIChatbotModal({ open, onOpenChange, onSearchSuggestion 
                     </div>
 
                     {/* Chat Area */}
-                    <ScrollArea className="flex-1 px-5 py-6 relative z-10 bg-muted/30" ref={scrollRef}>
+                    <div className="flex-1 overflow-y-auto px-5 py-6 relative z-10 bg-muted/30" ref={scrollRef}>
                         {messages.length === 0 ? (
                             <div className="h-full flex flex-col justify-center items-center space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                                 <div className="text-center space-y-3">
@@ -355,10 +355,10 @@ export default function AIChatbotModal({ open, onOpenChange, onSearchSuggestion 
                                 <div ref={scrollRef} />
                             </div>
                         )}
-                    </ScrollArea>
+                    </div>
 
                     {/* Input Area */}
-                    <div className="p-4 relative z-10 bg-card border-t border-border">
+                    <div className="p-4 relative z-10 bg-card border-t border-border safe-area-bottom">
                         <form
                             onSubmit={(e) => { e.preventDefault(); handleSend(); }}
                             className="relative flex items-center gap-2 p-1 rounded-xl bg-muted/50 border border-border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20 transition-all"
