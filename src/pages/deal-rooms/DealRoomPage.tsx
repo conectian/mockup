@@ -148,7 +148,7 @@ export default function DealRoomPage() {
                                 <Menu className="h-5 w-5" />
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="left" className="w-72 p-0 bg-card/95 backdrop-blur-xl border-white/5">
+                        <SheetContent side="left" className="w-72 p-0 bg-card/95 backdrop-blur-xl border-white/5 safe-area-top">
                             <div className="h-16 flex items-center px-4 border-b border-white/5">
                                 <Link to={backPath} className="w-full">
                                     <Button variant="ghost" className="w-full justify-start gap-3 rounded-md hover:bg-white/5">
@@ -177,7 +177,7 @@ export default function DealRoomPage() {
                             <PanelRightOpen className="h-5 w-5" />
                         </Button>
                     </SheetTrigger>
-                    <SheetContent side="right" className="w-full sm:w-[340px] p-0 bg-card/95 backdrop-blur-xl border-white/5">
+                    <SheetContent side="right" className="w-full sm:w-[340px] p-0 bg-card/95 backdrop-blur-xl border-white/5 safe-area-top">
                         <DealRightSidebar />
                     </SheetContent>
                 </Sheet>

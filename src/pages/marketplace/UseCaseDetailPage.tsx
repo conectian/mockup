@@ -72,16 +72,16 @@ export default function UseCaseDetailPage() {
     const TierIcon = tier.icon;
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 min-w-0">
             {/* Breadcrumbs */}
-            <nav className="flex items-center text-sm text-muted-foreground">
-                <Link to="/client/marketplace" className="hover:text-foreground transition-colors">
+            <nav className="flex items-center text-xs md:text-sm text-muted-foreground overflow-x-auto scrollbar-none">
+                <Link to="/client/marketplace" className="hover:text-foreground transition-colors shrink-0">
                     Marketplace
                 </Link>
-                <ChevronRight className="h-4 w-4 mx-2" />
-                <span className="hover:text-foreground transition-colors">{useCase.industry}</span>
-                <ChevronRight className="h-4 w-4 mx-2" />
-                <span className="text-foreground font-medium truncate max-w-[200px]">{useCase.title}</span>
+                <ChevronRight className="h-3 w-3 md:h-4 md:w-4 mx-1 md:mx-2 shrink-0" />
+                <span className="hover:text-foreground transition-colors shrink-0">{useCase.industry}</span>
+                <ChevronRight className="h-3 w-3 md:h-4 md:w-4 mx-1 md:mx-2 shrink-0" />
+                <span className="text-foreground font-medium truncate">{useCase.title}</span>
             </nav>
 
             <div className="grid gap-6 lg:grid-cols-3">
@@ -109,20 +109,22 @@ export default function UseCaseDetailPage() {
 
                     {/* Tabs */}
                     <Tabs defaultValue="solution" className="w-full">
-                        <TabsList className="w-full justify-start h-auto p-1 bg-muted/50">
-                            <TabsTrigger value="solution" className="gap-2">
-                                <Target className="h-4 w-4" />
-                                Desafío y Solución
-                            </TabsTrigger>
-                            <TabsTrigger value="roi" className="gap-2">
-                                <TrendingUp className="h-4 w-4" />
-                                Resultados
-                            </TabsTrigger>
-                            <TabsTrigger value="technical" className="gap-2">
-                                <Settings className="h-4 w-4" />
-                                Detalles Técnicos
-                            </TabsTrigger>
-                        </TabsList>
+                        <div className="overflow-x-auto scrollbar-none -mx-1 px-1">
+                            <TabsList className="w-full justify-start h-auto p-1 bg-muted/50 min-w-max">
+                                <TabsTrigger value="solution" className="gap-1.5 md:gap-2 text-xs md:text-sm px-2 md:px-3">
+                                    <Target className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                                    <span className="hidden xs:inline">Desafío y</span> Solución
+                                </TabsTrigger>
+                                <TabsTrigger value="roi" className="gap-1.5 md:gap-2 text-xs md:text-sm px-2 md:px-3">
+                                    <TrendingUp className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                                    Resultados
+                                </TabsTrigger>
+                                <TabsTrigger value="technical" className="gap-1.5 md:gap-2 text-xs md:text-sm px-2 md:px-3">
+                                    <Settings className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                                    Detalles
+                                </TabsTrigger>
+                            </TabsList>
+                        </div>
 
                         <TabsContent value="solution" className="mt-6 space-y-6">
                             <Card>
