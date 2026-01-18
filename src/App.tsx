@@ -90,7 +90,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <DevToolbar />
-      <Toaster richColors position="top-right" />
+      <Toaster />
     </BrowserRouter>
   );
 }

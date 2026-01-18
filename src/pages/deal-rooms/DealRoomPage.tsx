@@ -8,7 +8,6 @@ import DealFinance from '@/components/deal-room/DealFinance';
 import DealDocs from '@/components/deal-room/DealDocs';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
     MessageSquare,
@@ -265,15 +264,17 @@ export default function DealRoomPage() {
             </aside>
 
             {/* Main Content Area */}
-            <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative bg-gradient-to-br from-background to-muted/20">
+            <main className="flex-1 flex flex-col min-w-0 min-h-0 relative bg-gradient-to-br from-background to-muted/20">
                 {activeView === 'chat' ? (
-                    <DealChat />
+                    <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+                        <DealChat />
+                    </div>
                 ) : (
-                    <ScrollArea className="flex-1">
+                    <div className="flex-1 overflow-y-auto">
                         <div className="pb-24">
                             {renderView()}
                         </div>
-                    </ScrollArea>
+                    </div>
                 )}
             </main>
 

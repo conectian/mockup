@@ -17,19 +17,34 @@ const Toaster = ({ ...props }: ToasterProps) => {
     <Sonner
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
+      position="top-right"
+      offset="calc(1rem + env(safe-area-inset-top, 0px))"
       icons={{
-        success: <CircleCheckIcon className="size-4" />,
-        info: <InfoIcon className="size-4" />,
-        warning: <TriangleAlertIcon className="size-4" />,
-        error: <OctagonXIcon className="size-4" />,
-        loading: <Loader2Icon className="size-4 animate-spin" />,
+        success: <CircleCheckIcon className="size-4 text-emerald-600" />,
+        info: <InfoIcon className="size-4 text-indigo-600" />,
+        warning: <TriangleAlertIcon className="size-4 text-amber-600" />,
+        error: <OctagonXIcon className="size-4 text-red-600" />,
+        loading: <Loader2Icon className="size-4 animate-spin text-indigo-600" />,
+      }}
+      toastOptions={{
+        classNames: {
+          toast: "group-[.toaster]:bg-card group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:rounded-lg",
+          title: "group-[.toast]:text-foreground group-[.toast]:font-semibold",
+          description: "group-[.toast]:text-muted-foreground group-[.toast]:text-sm",
+          actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground group-[.toast]:font-semibold group-[.toast]:rounded-md",
+          cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground group-[.toast]:font-medium group-[.toast]:rounded-md",
+          success: "group-[.toaster]:border-emerald-200 dark:group-[.toaster]:border-emerald-800",
+          warning: "group-[.toaster]:border-amber-200 dark:group-[.toaster]:border-amber-800",
+          error: "group-[.toaster]:border-red-200 dark:group-[.toaster]:border-red-800",
+          info: "group-[.toaster]:border-indigo-200 dark:group-[.toaster]:border-indigo-800",
+        },
       }}
       style={
         {
-          "--normal-bg": "var(--popover)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)",
-          "--border-radius": "var(--radius)",
+          "--normal-bg": "hsl(var(--card))",
+          "--normal-text": "hsl(var(--foreground))",
+          "--normal-border": "hsl(var(--border))",
+          "--border-radius": "0.5rem",
         } as React.CSSProperties
       }
       {...props}
