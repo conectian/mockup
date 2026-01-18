@@ -188,9 +188,11 @@ export default function MarketplacePage() {
     }, 0);
 
     const filteredUseCases = useMemo(() => {
+        const searchLower = filters.search.toLowerCase();
+        const stackSearch = filters.techStack.toLowerCase();
+
         return mockUseCases.filter((uc) => {
             if (filters.search) {
-                const searchLower = filters.search.toLowerCase();
                 const matches =
                     uc.title.toLowerCase().includes(searchLower) ||
                     uc.description.toLowerCase().includes(searchLower) ||
@@ -206,7 +208,6 @@ export default function MarketplacePage() {
                 if (!hasMatch) return false;
             }
             if (filters.techStack) {
-                const stackSearch = filters.techStack.toLowerCase();
                 if (!uc.techStack.some(t => t.toLowerCase().includes(stackSearch))) return false;
             }
             return true;
