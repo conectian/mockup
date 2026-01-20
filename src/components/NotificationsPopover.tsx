@@ -5,7 +5,7 @@ import {
 } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Bell, CheckCircle, AlertCircle, Info, TrendingUp, Users, FileText, Sparkles } from 'lucide-react';
+import { Bell, CheckCircle, AlertCircle, Info, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -108,25 +108,21 @@ export default function NotificationsPopover() {
     };
 
     const markAsRead = (id: number) => {
-        setNotifications(notifications.map((n) => 
+        setNotifications(notifications.map((n) =>
             n.id === id ? { ...n, read: true } : n
         ));
     };
 
-    const viewAllLink = userType === 'provider' 
-        ? '/provider/notifications' 
+    const viewAllLink = userType === 'provider'
+        ? '/provider/notifications'
         : userType === 'client'
-        ? '/client/notifications'
-        : '/admin/notifications';
+            ? '/client/notifications'
+            : '/admin/notifications';
 
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    className="relative rounded-full text-white/70 hover:text-white hover:bg-white/10"
-                >
+                <Button variant="ghost" size="icon" className="relative rounded-full text-muted-foreground hover:text-foreground hover:bg-accent">
                     <Bell className="h-5 w-5" />
                     {unreadCount > 0 && (
                         <span className="absolute top-0 right-0 h-4 w-4 text-[10px] font-bold flex items-center justify-center rounded-full bg-primary text-primary-foreground border-2 border-background animate-pulse">
@@ -136,7 +132,7 @@ export default function NotificationsPopover() {
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-96 p-0" align="end">
-                <div className="flex items-center justify-between p-4 border-b border-white/5">
+                <div className="flex items-center justify-between p-4 border-b border-border">
                     <h4 className="font-semibold text-base">Notificaciones</h4>
                     {unreadCount > 0 && (
                         <Button
@@ -151,7 +147,7 @@ export default function NotificationsPopover() {
                 </div>
                 <ScrollArea className="h-[400px]">
                     {notifications.length > 0 ? (
-                        <div className="divide-y divide-white/5">
+                        <div className="divide-y divide-border">
                             {notifications.map((notification) => {
                                 const config = notificationConfig[notification.type];
                                 const Icon = config.icon;
@@ -213,9 +209,9 @@ export default function NotificationsPopover() {
                         </div>
                     )}
                 </ScrollArea>
-                <div className="p-3 border-t border-white/5 text-center bg-muted/20">
-                    <Link 
-                        to={viewAllLink} 
+                <div className="p-3 border-t border-border text-center bg-muted/20">
+                    <Link
+                        to={viewAllLink}
                         className="text-xs text-primary hover:underline font-medium"
                     >
                         Ver todas las notificaciones

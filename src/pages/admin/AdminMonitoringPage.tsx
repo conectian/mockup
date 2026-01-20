@@ -1,13 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
     Activity,
-    Server,
     Database,
     Globe,
-    AlertTriangle,
-    CheckCircle2,
     Clock,
     Cpu,
     HardDrive,
@@ -58,8 +55,8 @@ export default function AdminMonitoringPage() {
                     <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Monitoreo del Sistema</h1>
                     <p className="text-muted-foreground text-lg">Estado de salud, logs y métricas de rendimiento en tiempo real</p>
                 </div>
-                <Button 
-                    onClick={refreshStats} 
+                <Button
+                    onClick={refreshStats}
                     disabled={isRefreshing}
                     className="gap-2 bg-slate-800 text-white hover:bg-slate-700 border border-white/10"
                 >
@@ -70,7 +67,7 @@ export default function AdminMonitoringPage() {
 
             {/* Health Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border-white/5 relative overflow-hidden group">
+                <Card className="bg-slate-900 border-white/5 relative overflow-hidden group">
                     <div className="absolute inset-0 bg-blue-500/5 group-hover:bg-blue-500/10 transition-colors" />
                     <CardContent className="p-6">
                         <div className="flex justify-between items-start mb-4">
@@ -89,7 +86,7 @@ export default function AdminMonitoringPage() {
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border-white/5 relative overflow-hidden group">
+                <Card className="bg-slate-900 border-white/5 relative overflow-hidden group">
                     <div className="absolute inset-0 bg-purple-500/5 group-hover:bg-purple-500/10 transition-colors" />
                     <CardContent className="p-6">
                         <div className="flex justify-between items-start mb-4">
@@ -108,7 +105,7 @@ export default function AdminMonitoringPage() {
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border-white/5 relative overflow-hidden group">
+                <Card className="bg-slate-900 border-white/5 relative overflow-hidden group">
                     <div className="absolute inset-0 bg-emerald-500/5 group-hover:bg-emerald-500/10 transition-colors" />
                     <CardContent className="p-6">
                         <div className="flex justify-between items-start mb-4">
@@ -127,7 +124,7 @@ export default function AdminMonitoringPage() {
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border-white/5 relative overflow-hidden group">
+                <Card className="bg-slate-900 border-white/5 relative overflow-hidden group">
                     <div className="absolute inset-0 bg-amber-500/5 group-hover:bg-amber-500/10 transition-colors" />
                     <CardContent className="p-6">
                         <div className="flex justify-between items-start mb-4">
@@ -245,8 +242,8 @@ export default function AdminMonitoringPage() {
                             {logs.map((log) => (
                                 <div key={log.id} className="flex items-center p-3 hover:bg-white/5 transition-colors gap-4">
                                     <span className="text-muted-foreground whitespace-nowrap opacity-60 w-20">{log.time}</span>
-                                    <Badge 
-                                        variant="outline" 
+                                    <Badge
+                                        variant="outline"
                                         className={cn(
                                             "w-16 justify-center text-[10px] border-none bg-transparent font-bold",
                                             log.level === 'INFO' && "text-blue-400",

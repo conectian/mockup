@@ -69,7 +69,7 @@ export default function ReferralsPage() {
         <div className="space-y-8">
             {/* Stats Cards */}
             <div className="grid sm:grid-cols-3 gap-4">
-                <Card className="p-5 border-border bg-gradient-to-br from-blue-500/10 to-blue-600/5">
+                <Card className="p-5 border-border bg-primary/5">
                     <div className="flex items-center gap-4">
                         <div className="h-12 w-12 rounded-xl bg-blue-500/20 flex items-center justify-center">
                             <Users className="h-6 w-6 text-blue-400" />
@@ -84,7 +84,7 @@ export default function ReferralsPage() {
                     </div>
                 </Card>
 
-                <Card className="p-5 border-border bg-gradient-to-br from-emerald-500/10 to-emerald-600/5">
+                <Card className="p-5 border-border bg-primary/5">
                     <div className="flex items-center gap-4">
                         <div className="h-12 w-12 rounded-xl bg-emerald-500/20 flex items-center justify-center">
                             <Handshake className="h-6 w-6 text-emerald-400" />
@@ -99,7 +99,7 @@ export default function ReferralsPage() {
                     </div>
                 </Card>
 
-                <Card className="p-5 border-border bg-gradient-to-br from-violet-500/10 to-violet-600/5">
+                <Card className="p-5 border-border bg-primary/5">
                     <div className="flex items-center gap-4">
                         <div className="h-12 w-12 rounded-xl bg-violet-500/20 flex items-center justify-center">
                             <Euro className="h-6 w-6 text-violet-400" />
@@ -150,7 +150,7 @@ export default function ReferralsPage() {
                             </div>
 
                             <div className="flex items-center gap-3 mb-3">
-                                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-bold">
+                                <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
                                     {opp.company.charAt(0)}
                                 </div>
                                 <div>
@@ -186,7 +186,7 @@ export default function ReferralsPage() {
             </div>
 
             {/* Referral Invite Section */}
-            <Card className="p-6 border-border bg-gradient-to-br from-primary/5 to-transparent">
+            <Card className="p-6 border-border bg-primary/5">
                 <div className="flex flex-col lg:flex-row lg:items-center gap-6">
                     <div className="flex-1">
                         <div className="flex items-center gap-3 mb-4">
@@ -256,7 +256,7 @@ export default function ReferralsPage() {
                     </div>
 
                     <div className="hidden lg:flex items-center justify-center">
-                        <div className="h-32 w-32 rounded-full bg-gradient-to-br from-primary/20 to-cyan-500/20 flex items-center justify-center">
+                        <div className="h-32 w-32 rounded-full bg-primary/10 flex items-center justify-center">
                             <Users className="h-16 w-16 text-primary/60" />
                         </div>
                     </div>

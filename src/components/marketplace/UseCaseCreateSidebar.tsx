@@ -31,21 +31,21 @@ type UseCaseFormData = {
     sectors: string[];
     clientSize: string[];
     offerFormat: string;
-    
+
     // PASO 2: MODELO DE NEGOCIO
     techModality: string[];
     priceMin: string;
     priceMax: string;
     pricePeriod: string;
     languages: string[];
-    
+
     // PASO 3: EL MOTOR
     aiModel: string;
     humanIntervention: string;
     techStack: string;
     integrations: string;
     integrationTime: string;
-    
+
     // PASO 4: CONFIANZA Y SEGURIDAD
     dataSovereignty: string;
     dataSecurity: string[];
@@ -75,7 +75,7 @@ export default function UseCaseCreateSidebar({ mode = 'rfp', onSuccess }: UseCas
     const [isTyping, setIsTyping] = useState(false);
     const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    
+
     const [formData, setFormData] = useState<UseCaseFormData>({
         title: '',
         description: '',
@@ -236,8 +236,8 @@ export default function UseCaseCreateSidebar({ mode = 'rfp', onSuccess }: UseCas
             toast.error("Completa los campos obligatorios", { description: "Título, descripción, sector y modalidad son requeridos" });
             return;
         }
-        toast.success(mode === 'rfp' ? "Solicitud creada" : "Caso de uso creado", { 
-            description: mode === 'rfp' ? "Tu RFP ha sido publicado correctamente" : "Tu caso de uso ha sido publicado correctamente" 
+        toast.success(mode === 'rfp' ? "Solicitud creada" : "Caso de uso creado", {
+            description: mode === 'rfp' ? "Tu RFP ha sido publicado correctamente" : "Tu caso de uso ha sido publicado correctamente"
         });
         localStorage.removeItem(storageKey);
         if (onSuccess) onSuccess();
@@ -304,14 +304,14 @@ export default function UseCaseCreateSidebar({ mode = 'rfp', onSuccess }: UseCas
                             {messages.map((msg) => (
                                 <div key={msg.id} className={cn("flex gap-2", msg.role === 'user' ? "justify-end" : "justify-start")}>
                                     {msg.role === 'assistant' && (
-                                        <div className="h-6 w-6 rounded-md bg-indigo-600 flex items-center justify-center shrink-0 mt-0.5">
+                                        <div className="h-6 w-6 rounded-md bg-primary flex items-center justify-center shrink-0 mt-0.5">
                                             <Bot className="h-3.5 w-3.5 text-white" />
                                         </div>
                                     )}
                                     <div className={cn(
                                         "max-w-[85%] rounded-lg px-3 py-2 text-xs",
                                         msg.role === 'user'
-                                            ? "bg-indigo-600 text-white"
+                                            ? "bg-primary text-primary-foreground"
                                             : "bg-white/10 text-foreground"
                                     )}>
                                         <ReactMarkdown>{msg.content}</ReactMarkdown>
@@ -325,7 +325,7 @@ export default function UseCaseCreateSidebar({ mode = 'rfp', onSuccess }: UseCas
                             ))}
                             {isTyping && (
                                 <div className="flex gap-2 justify-start">
-                                    <div className="h-6 w-6 rounded-md bg-indigo-600 flex items-center justify-center shrink-0">
+                                    <div className="h-6 w-6 rounded-md bg-primary flex items-center justify-center shrink-0">
                                         <Bot className="h-3.5 w-3.5 text-white animate-pulse" />
                                     </div>
                                     <div className="bg-white/10 rounded-lg px-3 py-2 flex gap-1">
@@ -374,106 +374,106 @@ export default function UseCaseCreateSidebar({ mode = 'rfp', onSuccess }: UseCas
                                 </CardHeader>
                                 <CardContent className="space-y-5">
 
-                                <div className="space-y-2">
-                                    <Label className="text-sm font-semibold">Título <span className="text-red-500">*</span></Label>
-                                    <Input
-                                        placeholder="Ej: Chatbot de Atención al Cliente 24/7"
-                                        value={formData.title}
-                                        onChange={(e) => updateField('title', e.target.value)}
-                                        className="h-11 bg-background/50 border-white/10 focus:border-primary/50"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <Label className="text-sm font-semibold">Descripción <span className="text-red-500">*</span></Label>
-                                    <Textarea
-                                        placeholder="Describe brevemente el valor que aporta..."
-                                        value={formData.description}
-                                        onChange={(e) => updateField('description', e.target.value)}
-                                        className="min-h-[100px] bg-background/50 border-white/10 focus:border-primary/50 resize-none"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <Label className="text-sm font-semibold">Tipo de Aplicación</Label>
-                                    <Select value={formData.appType} onValueChange={(v) => updateField('appType', v)}>
-                                        <SelectTrigger className="h-11 bg-background/50 border-white/10 focus:border-primary/50">
-                                            <SelectValue placeholder="Selecciona tipo" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="chatbot">Chatbot</SelectItem>
-                                            <SelectItem value="vision">Visión Artificial</SelectItem>
-                                            <SelectItem value="automation">Automatización</SelectItem>
-                                            <SelectItem value="prediction">Predicción</SelectItem>
-                                            <SelectItem value="content">Generación de Contenido</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-
-                                <div className="space-y-3">
-                                    <Label className="text-sm font-semibold">Sector / Industria <span className="text-red-500">*</span></Label>
-                                    <p className="text-xs text-muted-foreground">¿A qué verticales se dirige principalmente?</p>
-                                    <div className="grid grid-cols-2 gap-2.5">
-                                        {['Retail', 'Banca', 'Salud', 'Legal', 'Industria', 'Transversal/Todos'].map(sector => (
-                                            <div key={sector} className={cn(
-                                                "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
-                                                formData.sectors.includes(sector)
-                                                    ? "bg-primary/10 border-primary/30 shadow-sm"
-                                                    : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
-                                            )} onClick={() => toggleArrayItem('sectors', sector)}>
-                                                <Checkbox
-                                                    id={`sector-${sector}`}
-                                                    checked={formData.sectors.includes(sector)}
-                                                    onCheckedChange={() => toggleArrayItem('sectors', sector)}
-                                                />
-                                                <label htmlFor={`sector-${sector}`} className="text-xs font-medium cursor-pointer flex-1">{sector}</label>
-                                            </div>
-                                        ))}
+                                    <div className="space-y-2">
+                                        <Label className="text-sm font-semibold">Título <span className="text-red-500">*</span></Label>
+                                        <Input
+                                            placeholder="Ej: Chatbot de Atención al Cliente 24/7"
+                                            value={formData.title}
+                                            onChange={(e) => updateField('title', e.target.value)}
+                                            className="h-11 bg-background/50 border-white/10 focus:border-primary/50"
+                                        />
                                     </div>
-                                </div>
 
-                                <div className="space-y-3">
-                                    <Label className="text-sm font-semibold">Tamaño del Cliente Ideal</Label>
-                                    <p className="text-xs text-muted-foreground">¿Para qué tamaño de empresa está optimizado?</p>
-                                    <div className="flex flex-wrap gap-2.5">
-                                        {['Startup', 'Pyme', 'Corporate/Enterprise'].map(size => (
-                                            <div key={size} className={cn(
-                                                "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
-                                                formData.clientSize.includes(size)
-                                                    ? "bg-primary/10 border-primary/30 shadow-sm"
-                                                    : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
-                                            )} onClick={() => toggleArrayItem('clientSize', size)}>
-                                                <Checkbox
-                                                    id={`size-${size}`}
-                                                    checked={formData.clientSize.includes(size)}
-                                                    onCheckedChange={() => toggleArrayItem('clientSize', size)}
-                                                />
-                                                <label htmlFor={`size-${size}`} className="text-xs font-medium cursor-pointer">{size}</label>
-                                            </div>
-                                        ))}
+                                    <div className="space-y-2">
+                                        <Label className="text-sm font-semibold">Descripción <span className="text-red-500">*</span></Label>
+                                        <Textarea
+                                            placeholder="Describe brevemente el valor que aporta..."
+                                            value={formData.description}
+                                            onChange={(e) => updateField('description', e.target.value)}
+                                            className="min-h-[100px] bg-background/50 border-white/10 focus:border-primary/50 resize-none"
+                                        />
                                     </div>
-                                </div>
 
-                                <div className="space-y-3">
-                                    <Label className="text-sm font-semibold">Formato de la Oferta</Label>
-                                    <div className="flex flex-wrap gap-2.5">
-                                        {['Software (SaaS)', 'Consultoría/Servicios', 'Formación'].map(format => (
-                                            <Badge
-                                                key={format}
-                                                variant={formData.offerFormat === format ? "default" : "outline"}
-                                                className={cn(
-                                                    "cursor-pointer px-3 py-1.5 text-xs font-medium transition-all",
-                                                    formData.offerFormat === format
-                                                        ? "bg-primary text-primary-foreground border-primary"
-                                                        : "bg-background/30 border-white/10 hover:bg-primary/10 hover:border-primary/30"
-                                                )}
-                                                onClick={() => updateField('offerFormat', format)}
-                                            >
-                                                {format}
-                                            </Badge>
-                                        ))}
+                                    <div className="space-y-2">
+                                        <Label className="text-sm font-semibold">Tipo de Aplicación</Label>
+                                        <Select value={formData.appType} onValueChange={(v) => updateField('appType', v)}>
+                                            <SelectTrigger className="h-11 bg-background/50 border-white/10 focus:border-primary/50">
+                                                <SelectValue placeholder="Selecciona tipo" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="chatbot">Chatbot</SelectItem>
+                                                <SelectItem value="vision">Visión Artificial</SelectItem>
+                                                <SelectItem value="automation">Automatización</SelectItem>
+                                                <SelectItem value="prediction">Predicción</SelectItem>
+                                                <SelectItem value="content">Generación de Contenido</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
-                                </div>
+
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-semibold">Sector / Industria <span className="text-red-500">*</span></Label>
+                                        <p className="text-xs text-muted-foreground">¿A qué verticales se dirige principalmente?</p>
+                                        <div className="grid grid-cols-2 gap-2.5">
+                                            {['Retail', 'Banca', 'Salud', 'Legal', 'Industria', 'Transversal/Todos'].map(sector => (
+                                                <div key={sector} className={cn(
+                                                    "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
+                                                    formData.sectors.includes(sector)
+                                                        ? "bg-primary/10 border-primary/30 shadow-sm"
+                                                        : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
+                                                )} onClick={() => toggleArrayItem('sectors', sector)}>
+                                                    <Checkbox
+                                                        id={`sector-${sector}`}
+                                                        checked={formData.sectors.includes(sector)}
+                                                        onCheckedChange={() => toggleArrayItem('sectors', sector)}
+                                                    />
+                                                    <label htmlFor={`sector-${sector}`} className="text-xs font-medium cursor-pointer flex-1">{sector}</label>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-semibold">Tamaño del Cliente Ideal</Label>
+                                        <p className="text-xs text-muted-foreground">¿Para qué tamaño de empresa está optimizado?</p>
+                                        <div className="flex flex-wrap gap-2.5">
+                                            {['Startup', 'Pyme', 'Corporate/Enterprise'].map(size => (
+                                                <div key={size} className={cn(
+                                                    "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
+                                                    formData.clientSize.includes(size)
+                                                        ? "bg-primary/10 border-primary/30 shadow-sm"
+                                                        : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
+                                                )} onClick={() => toggleArrayItem('clientSize', size)}>
+                                                    <Checkbox
+                                                        id={`size-${size}`}
+                                                        checked={formData.clientSize.includes(size)}
+                                                        onCheckedChange={() => toggleArrayItem('clientSize', size)}
+                                                    />
+                                                    <label htmlFor={`size-${size}`} className="text-xs font-medium cursor-pointer">{size}</label>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-semibold">Formato de la Oferta</Label>
+                                        <div className="flex flex-wrap gap-2.5">
+                                            {['Software (SaaS)', 'Consultoría/Servicios', 'Formación'].map(format => (
+                                                <Badge
+                                                    key={format}
+                                                    variant={formData.offerFormat === format ? "default" : "outline"}
+                                                    className={cn(
+                                                        "cursor-pointer px-3 py-1.5 text-xs font-medium transition-all",
+                                                        formData.offerFormat === format
+                                                            ? "bg-primary text-primary-foreground border-primary"
+                                                            : "bg-background/30 border-white/10 hover:bg-primary/10 hover:border-primary/30"
+                                                    )}
+                                                    onClick={() => updateField('offerFormat', format)}
+                                                >
+                                                    {format}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </CardContent>
                             </Card>
                         )}
@@ -494,87 +494,87 @@ export default function UseCaseCreateSidebar({ mode = 'rfp', onSuccess }: UseCas
                                 </CardHeader>
                                 <CardContent className="space-y-5">
 
-                                <div className="space-y-3">
-                                    <Label className="text-sm font-semibold">Modalidad Técnica <span className="text-red-500">*</span></Label>
-                                    <p className="text-xs text-muted-foreground">¿Cómo se entrega la solución?</p>
-                                    <div className="flex flex-col gap-2.5">
-                                        {['SaaS (Nube)', 'On-premise (Local)', 'Híbrido'].map(modality => (
-                                            <div key={modality} className={cn(
-                                                "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
-                                                formData.techModality.includes(modality)
-                                                    ? "bg-primary/10 border-primary/30 shadow-sm"
-                                                    : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
-                                            )} onClick={() => toggleArrayItem('techModality', modality)}>
-                                                <Checkbox
-                                                    id={`mod-${modality}`}
-                                                    checked={formData.techModality.includes(modality)}
-                                                    onCheckedChange={() => toggleArrayItem('techModality', modality)}
-                                                />
-                                                <label htmlFor={`mod-${modality}`} className="text-sm cursor-pointer flex-1 font-medium">{modality}</label>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="space-y-3">
-                                    <Label className="text-sm font-semibold">Rango de Precios</Label>
-                                    <p className="text-xs text-muted-foreground">Opcional pero recomendado para SEO - Coste estimado anual</p>
-                                    <div className="flex items-center gap-2.5">
-                                        <div className="relative flex-1">
-                                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">€</span>
-                                            <Input
-                                                placeholder="Min"
-                                                type="number"
-                                                value={formData.priceMin}
-                                                onChange={(e) => updateField('priceMin', e.target.value)}
-                                                className="pl-8 h-11 bg-background/50 border-white/10 focus:border-primary/50"
-                                            />
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-semibold">Modalidad Técnica <span className="text-red-500">*</span></Label>
+                                        <p className="text-xs text-muted-foreground">¿Cómo se entrega la solución?</p>
+                                        <div className="flex flex-col gap-2.5">
+                                            {['SaaS (Nube)', 'On-premise (Local)', 'Híbrido'].map(modality => (
+                                                <div key={modality} className={cn(
+                                                    "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
+                                                    formData.techModality.includes(modality)
+                                                        ? "bg-primary/10 border-primary/30 shadow-sm"
+                                                        : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
+                                                )} onClick={() => toggleArrayItem('techModality', modality)}>
+                                                    <Checkbox
+                                                        id={`mod-${modality}`}
+                                                        checked={formData.techModality.includes(modality)}
+                                                        onCheckedChange={() => toggleArrayItem('techModality', modality)}
+                                                    />
+                                                    <label htmlFor={`mod-${modality}`} className="text-sm cursor-pointer flex-1 font-medium">{modality}</label>
+                                                </div>
+                                            ))}
                                         </div>
-                                        <span className="text-muted-foreground font-medium">-</span>
-                                        <div className="relative flex-1">
-                                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">€</span>
-                                            <Input
-                                                placeholder="Max"
-                                                type="number"
-                                                value={formData.priceMax}
-                                                onChange={(e) => updateField('priceMax', e.target.value)}
-                                                className="pl-8 h-11 bg-background/50 border-white/10 focus:border-primary/50"
-                                            />
-                                        </div>
-                                        <Select value={formData.pricePeriod} onValueChange={(v) => updateField('pricePeriod', v)}>
-                                            <SelectTrigger className="w-[110px] h-11 bg-background/50 border-white/10 focus:border-primary/50">
-                                                <SelectValue />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="month">/ mes</SelectItem>
-                                                <SelectItem value="year">/ año</SelectItem>
-                                                <SelectItem value="project">/ proyecto</SelectItem>
-                                            </SelectContent>
-                                        </Select>
                                     </div>
-                                </div>
 
-                                <div className="space-y-3">
-                                    <Label className="text-sm font-semibold">Idiomas Soportados</Label>
-                                    <p className="text-xs text-muted-foreground">¿En qué idiomas dais soporte e interfaz?</p>
-                                    <div className="grid grid-cols-2 gap-2.5">
-                                        {['Español', 'Inglés', 'Francés', 'Alemán', 'Italiano', 'Portugués'].map(lang => (
-                                            <div key={lang} className={cn(
-                                                "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
-                                                formData.languages.includes(lang)
-                                                    ? "bg-primary/10 border-primary/30 shadow-sm"
-                                                    : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
-                                            )} onClick={() => toggleArrayItem('languages', lang)}>
-                                                <Checkbox
-                                                    id={`lang-${lang}`}
-                                                    checked={formData.languages.includes(lang)}
-                                                    onCheckedChange={() => toggleArrayItem('languages', lang)}
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-semibold">Rango de Precios</Label>
+                                        <p className="text-xs text-muted-foreground">Opcional pero recomendado para SEO - Coste estimado anual</p>
+                                        <div className="flex items-center gap-2.5">
+                                            <div className="relative flex-1">
+                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">€</span>
+                                                <Input
+                                                    placeholder="Min"
+                                                    type="number"
+                                                    value={formData.priceMin}
+                                                    onChange={(e) => updateField('priceMin', e.target.value)}
+                                                    className="pl-8 h-11 bg-background/50 border-white/10 focus:border-primary/50"
                                                 />
-                                                <label htmlFor={`lang-${lang}`} className="text-xs font-medium cursor-pointer flex-1">{lang}</label>
                                             </div>
-                                        ))}
+                                            <span className="text-muted-foreground font-medium">-</span>
+                                            <div className="relative flex-1">
+                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">€</span>
+                                                <Input
+                                                    placeholder="Max"
+                                                    type="number"
+                                                    value={formData.priceMax}
+                                                    onChange={(e) => updateField('priceMax', e.target.value)}
+                                                    className="pl-8 h-11 bg-background/50 border-white/10 focus:border-primary/50"
+                                                />
+                                            </div>
+                                            <Select value={formData.pricePeriod} onValueChange={(v) => updateField('pricePeriod', v)}>
+                                                <SelectTrigger className="w-[110px] h-11 bg-background/50 border-white/10 focus:border-primary/50">
+                                                    <SelectValue />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="month">/ mes</SelectItem>
+                                                    <SelectItem value="year">/ año</SelectItem>
+                                                    <SelectItem value="project">/ proyecto</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
                                     </div>
-                                </div>
+
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-semibold">Idiomas Soportados</Label>
+                                        <p className="text-xs text-muted-foreground">¿En qué idiomas dais soporte e interfaz?</p>
+                                        <div className="grid grid-cols-2 gap-2.5">
+                                            {['Español', 'Inglés', 'Francés', 'Alemán', 'Italiano', 'Portugués'].map(lang => (
+                                                <div key={lang} className={cn(
+                                                    "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
+                                                    formData.languages.includes(lang)
+                                                        ? "bg-primary/10 border-primary/30 shadow-sm"
+                                                        : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
+                                                )} onClick={() => toggleArrayItem('languages', lang)}>
+                                                    <Checkbox
+                                                        id={`lang-${lang}`}
+                                                        checked={formData.languages.includes(lang)}
+                                                        onCheckedChange={() => toggleArrayItem('languages', lang)}
+                                                    />
+                                                    <label htmlFor={`lang-${lang}`} className="text-xs font-medium cursor-pointer flex-1">{lang}</label>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </CardContent>
                             </Card>
                         )}
@@ -595,95 +595,95 @@ export default function UseCaseCreateSidebar({ mode = 'rfp', onSuccess }: UseCas
                                 </CardHeader>
                                 <CardContent className="space-y-5">
 
-                                <div className="space-y-3">
-                                    <Label className="text-sm font-semibold">Tipo de IA (Modelo)</Label>
-                                    <RadioGroup value={formData.aiModel} onValueChange={(v) => updateField('aiModel', v)}>
-                                        <div className={cn(
-                                            "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
-                                            formData.aiModel === 'open' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
-                                        )} onClick={() => updateField('aiModel', 'open')}>
-                                            <RadioGroupItem value="open" id="ai-open" />
-                                            <Label htmlFor="ai-open" className="font-medium text-sm cursor-pointer flex-1">Open Source (Abierta)</Label>
-                                        </div>
-                                        <div className={cn(
-                                            "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
-                                            formData.aiModel === 'prop' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
-                                        )} onClick={() => updateField('aiModel', 'prop')}>
-                                            <RadioGroupItem value="prop" id="ai-prop" />
-                                            <Label htmlFor="ai-prop" className="font-medium text-sm cursor-pointer flex-1">Propietaria/Cerrada</Label>
-                                        </div>
-                                        <div className={cn(
-                                            "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
-                                            formData.aiModel === 'hybrid' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
-                                        )} onClick={() => updateField('aiModel', 'hybrid')}>
-                                            <RadioGroupItem value="hybrid" id="ai-hybrid" />
-                                            <Label htmlFor="ai-hybrid" className="font-medium text-sm cursor-pointer flex-1">Híbrida</Label>
-                                        </div>
-                                    </RadioGroup>
-                                </div>
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-semibold">Tipo de IA (Modelo)</Label>
+                                        <RadioGroup value={formData.aiModel} onValueChange={(v) => updateField('aiModel', v)}>
+                                            <div className={cn(
+                                                "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
+                                                formData.aiModel === 'open' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
+                                            )} onClick={() => updateField('aiModel', 'open')}>
+                                                <RadioGroupItem value="open" id="ai-open" />
+                                                <Label htmlFor="ai-open" className="font-medium text-sm cursor-pointer flex-1">Open Source (Abierta)</Label>
+                                            </div>
+                                            <div className={cn(
+                                                "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
+                                                formData.aiModel === 'prop' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
+                                            )} onClick={() => updateField('aiModel', 'prop')}>
+                                                <RadioGroupItem value="prop" id="ai-prop" />
+                                                <Label htmlFor="ai-prop" className="font-medium text-sm cursor-pointer flex-1">Propietaria/Cerrada</Label>
+                                            </div>
+                                            <div className={cn(
+                                                "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
+                                                formData.aiModel === 'hybrid' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
+                                            )} onClick={() => updateField('aiModel', 'hybrid')}>
+                                                <RadioGroupItem value="hybrid" id="ai-hybrid" />
+                                                <Label htmlFor="ai-hybrid" className="font-medium text-sm cursor-pointer flex-1">Híbrida</Label>
+                                            </div>
+                                        </RadioGroup>
+                                    </div>
 
-                                <div className="space-y-3">
-                                    <Label className="text-sm font-semibold">Nivel de Intervención Humana</Label>
-                                    <RadioGroup value={formData.humanIntervention} onValueChange={(v) => updateField('humanIntervention', v)}>
-                                        <div className={cn(
-                                            "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
-                                            formData.humanIntervention === '0' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
-                                        )} onClick={() => updateField('humanIntervention', '0')}>
-                                            <RadioGroupItem value="0" id="hi-auto" />
-                                            <Label htmlFor="hi-auto" className="font-medium text-sm cursor-pointer flex-1">100% Automático</Label>
-                                        </div>
-                                        <div className={cn(
-                                            "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
-                                            formData.humanIntervention === '50' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
-                                        )} onClick={() => updateField('humanIntervention', '50')}>
-                                            <RadioGroupItem value="50" id="hi-supervised" />
-                                            <Label htmlFor="hi-supervised" className="font-medium text-sm cursor-pointer flex-1">Human-in-the-loop (Supervisado)</Label>
-                                        </div>
-                                        <div className={cn(
-                                            "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
-                                            formData.humanIntervention === '100' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
-                                        )} onClick={() => updateField('humanIntervention', '100')}>
-                                            <RadioGroupItem value="100" id="hi-copilot" />
-                                            <Label htmlFor="hi-copilot" className="font-medium text-sm cursor-pointer flex-1">Copiloto (Asiste al humano)</Label>
-                                        </div>
-                                    </RadioGroup>
-                                </div>
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-semibold">Nivel de Intervención Humana</Label>
+                                        <RadioGroup value={formData.humanIntervention} onValueChange={(v) => updateField('humanIntervention', v)}>
+                                            <div className={cn(
+                                                "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
+                                                formData.humanIntervention === '0' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
+                                            )} onClick={() => updateField('humanIntervention', '0')}>
+                                                <RadioGroupItem value="0" id="hi-auto" />
+                                                <Label htmlFor="hi-auto" className="font-medium text-sm cursor-pointer flex-1">100% Automático</Label>
+                                            </div>
+                                            <div className={cn(
+                                                "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
+                                                formData.humanIntervention === '50' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
+                                            )} onClick={() => updateField('humanIntervention', '50')}>
+                                                <RadioGroupItem value="50" id="hi-supervised" />
+                                                <Label htmlFor="hi-supervised" className="font-medium text-sm cursor-pointer flex-1">Human-in-the-loop (Supervisado)</Label>
+                                            </div>
+                                            <div className={cn(
+                                                "flex items-center space-x-3 border rounded-lg p-3.5 transition-all cursor-pointer",
+                                                formData.humanIntervention === '100' ? "bg-primary/10 border-primary/30 shadow-sm" : "bg-background/30 border-white/10 hover:bg-muted/30"
+                                            )} onClick={() => updateField('humanIntervention', '100')}>
+                                                <RadioGroupItem value="100" id="hi-copilot" />
+                                                <Label htmlFor="hi-copilot" className="font-medium text-sm cursor-pointer flex-1">Copiloto (Asiste al humano)</Label>
+                                            </div>
+                                        </RadioGroup>
+                                    </div>
 
-                                <div className="space-y-2">
-                                    <Label className="text-sm font-semibold">Stack Tecnológico / Compatibilidad</Label>
-                                    <p className="text-xs text-muted-foreground">¿Qué tecnologías usa o requiere?</p>
-                                    <Input
-                                        placeholder="Ej: Python, Azure, AWS, TensorFlow (separados por comas)"
-                                        value={formData.techStack}
-                                        onChange={(e) => updateField('techStack', e.target.value)}
-                                        className="h-11 bg-background/50 border-white/10 focus:border-primary/50"
-                                    />
-                                </div>
+                                    <div className="space-y-2">
+                                        <Label className="text-sm font-semibold">Stack Tecnológico / Compatibilidad</Label>
+                                        <p className="text-xs text-muted-foreground">¿Qué tecnologías usa o requiere?</p>
+                                        <Input
+                                            placeholder="Ej: Python, Azure, AWS, TensorFlow (separados por comas)"
+                                            value={formData.techStack}
+                                            onChange={(e) => updateField('techStack', e.target.value)}
+                                            className="h-11 bg-background/50 border-white/10 focus:border-primary/50"
+                                        />
+                                    </div>
 
-                                <div className="space-y-2">
-                                    <Label className="text-sm font-semibold">Integraciones Nativas</Label>
-                                    <p className="text-xs text-muted-foreground">¿Con qué se conecta 'out of the box'?</p>
-                                    <Input
-                                        placeholder="Ej: Salesforce, SAP, HubSpot, Slack (separados por comas)"
-                                        value={formData.integrations}
-                                        onChange={(e) => updateField('integrations', e.target.value)}
-                                        className="h-11 bg-background/50 border-white/10 focus:border-primary/50"
-                                    />
-                                </div>
+                                    <div className="space-y-2">
+                                        <Label className="text-sm font-semibold">Integraciones Nativas</Label>
+                                        <p className="text-xs text-muted-foreground">¿Con qué se conecta 'out of the box'?</p>
+                                        <Input
+                                            placeholder="Ej: Salesforce, SAP, HubSpot, Slack (separados por comas)"
+                                            value={formData.integrations}
+                                            onChange={(e) => updateField('integrations', e.target.value)}
+                                            className="h-11 bg-background/50 border-white/10 focus:border-primary/50"
+                                        />
+                                    </div>
 
-                                <div className="space-y-2">
-                                    <Label className="text-sm font-semibold">Tiempo de Integración estimado</Label>
-                                    <Select value={formData.integrationTime} onValueChange={(v) => updateField('integrationTime', v)}>
-                                        <SelectTrigger className="h-11 bg-background/50 border-white/10 focus:border-primary/50">
-                                            <SelectValue placeholder="Selecciona tiempo" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="<1-week">&lt; 1 semana</SelectItem>
-                                            <SelectItem value="1-3-months">1-3 meses</SelectItem>
-                                            <SelectItem value=">3-months">&gt; 3 meses</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
+                                    <div className="space-y-2">
+                                        <Label className="text-sm font-semibold">Tiempo de Integración estimado</Label>
+                                        <Select value={formData.integrationTime} onValueChange={(v) => updateField('integrationTime', v)}>
+                                            <SelectTrigger className="h-11 bg-background/50 border-white/10 focus:border-primary/50">
+                                                <SelectValue placeholder="Selecciona tiempo" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="<1-week">&lt; 1 semana</SelectItem>
+                                                <SelectItem value="1-3-months">1-3 meses</SelectItem>
+                                                <SelectItem value=">3-months">&gt; 3 meses</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
                                 </CardContent>
                             </Card>
                         )}
@@ -704,107 +704,107 @@ export default function UseCaseCreateSidebar({ mode = 'rfp', onSuccess }: UseCas
                                 </CardHeader>
                                 <CardContent className="space-y-5">
 
-                                <div className="space-y-2">
-                                    <Label className="text-sm font-semibold">Ubicación / Soberanía del Dato</Label>
-                                    <p className="text-xs text-muted-foreground">¿Dónde se alojan los datos?</p>
-                                    <Select value={formData.dataSovereignty} onValueChange={(v) => updateField('dataSovereignty', v)}>
-                                        <SelectTrigger className="h-11 bg-background/50 border-white/10 focus:border-primary/50">
-                                            <SelectValue placeholder="Selecciona ubicación" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="eu">Unión Europea (Frankfurt/Dublín)</SelectItem>
-                                            <SelectItem value="usa">EEUU</SelectItem>
-                                            <SelectItem value="onprem">On-premise del cliente</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
+                                    <div className="space-y-2">
+                                        <Label className="text-sm font-semibold">Ubicación / Soberanía del Dato</Label>
+                                        <p className="text-xs text-muted-foreground">¿Dónde se alojan los datos?</p>
+                                        <Select value={formData.dataSovereignty} onValueChange={(v) => updateField('dataSovereignty', v)}>
+                                            <SelectTrigger className="h-11 bg-background/50 border-white/10 focus:border-primary/50">
+                                                <SelectValue placeholder="Selecciona ubicación" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="eu">Unión Europea (Frankfurt/Dublín)</SelectItem>
+                                                <SelectItem value="usa">EEUU</SelectItem>
+                                                <SelectItem value="onprem">On-premise del cliente</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
 
-                                <div className="space-y-3">
-                                    <Label className="text-sm font-semibold">Seguridad de Datos</Label>
-                                    <div className="grid grid-cols-2 gap-2.5">
-                                        {['Encriptación en reposo', 'Encriptación en tránsito', 'SSO', 'Anonimización'].map(sec => (
-                                            <div key={sec} className={cn(
-                                                "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
-                                                formData.dataSecurity.includes(sec)
-                                                    ? "bg-primary/10 border-primary/30 shadow-sm"
-                                                    : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
-                                            )} onClick={() => toggleArrayItem('dataSecurity', sec)}>
-                                                <Checkbox
-                                                    id={`sec-${sec}`}
-                                                    checked={formData.dataSecurity.includes(sec)}
-                                                    onCheckedChange={() => toggleArrayItem('dataSecurity', sec)}
-                                                />
-                                                <label htmlFor={`sec-${sec}`} className="text-xs font-medium cursor-pointer flex-1">{sec}</label>
-                                            </div>
-                                        ))}
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-semibold">Seguridad de Datos</Label>
+                                        <div className="grid grid-cols-2 gap-2.5">
+                                            {['Encriptación en reposo', 'Encriptación en tránsito', 'SSO', 'Anonimización'].map(sec => (
+                                                <div key={sec} className={cn(
+                                                    "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
+                                                    formData.dataSecurity.includes(sec)
+                                                        ? "bg-primary/10 border-primary/30 shadow-sm"
+                                                        : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
+                                                )} onClick={() => toggleArrayItem('dataSecurity', sec)}>
+                                                    <Checkbox
+                                                        id={`sec-${sec}`}
+                                                        checked={formData.dataSecurity.includes(sec)}
+                                                        onCheckedChange={() => toggleArrayItem('dataSecurity', sec)}
+                                                    />
+                                                    <label htmlFor={`sec-${sec}`} className="text-xs font-medium cursor-pointer flex-1">{sec}</label>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="space-y-3">
-                                    <Label className="text-sm font-semibold">Regulación (Compliance)</Label>
-                                    <div className="grid grid-cols-2 gap-2.5">
-                                        {['GDPR (Europa)', 'AI Act', 'HIPAA (Salud)', 'SOC2'].map(comp => (
-                                            <div key={comp} className={cn(
-                                                "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
-                                                formData.compliance.includes(comp)
-                                                    ? "bg-primary/10 border-primary/30 shadow-sm"
-                                                    : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
-                                            )} onClick={() => toggleArrayItem('compliance', comp)}>
-                                                <Checkbox
-                                                    id={`comp-${comp}`}
-                                                    checked={formData.compliance.includes(comp)}
-                                                    onCheckedChange={() => toggleArrayItem('compliance', comp)}
-                                                />
-                                                <label htmlFor={`comp-${comp}`} className="text-xs font-medium cursor-pointer flex-1">{comp}</label>
-                                            </div>
-                                        ))}
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-semibold">Regulación (Compliance)</Label>
+                                        <div className="grid grid-cols-2 gap-2.5">
+                                            {['GDPR (Europa)', 'AI Act', 'HIPAA (Salud)', 'SOC2'].map(comp => (
+                                                <div key={comp} className={cn(
+                                                    "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
+                                                    formData.compliance.includes(comp)
+                                                        ? "bg-primary/10 border-primary/30 shadow-sm"
+                                                        : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
+                                                )} onClick={() => toggleArrayItem('compliance', comp)}>
+                                                    <Checkbox
+                                                        id={`comp-${comp}`}
+                                                        checked={formData.compliance.includes(comp)}
+                                                        onCheckedChange={() => toggleArrayItem('compliance', comp)}
+                                                    />
+                                                    <label htmlFor={`comp-${comp}`} className="text-xs font-medium cursor-pointer flex-1">{comp}</label>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="space-y-3">
-                                    <Label className="text-sm font-semibold">Certificaciones</Label>
-                                    <div className="grid grid-cols-2 gap-2.5">
-                                        {['ISO 27001', 'Esquema Nacional de Seguridad (ENS)', 'ISO 9001', 'ISO 14001', 'CMMI', 'ITIL'].map(cert => (
-                                            <div key={cert} className={cn(
-                                                "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
-                                                formData.certifications.includes(cert)
-                                                    ? "bg-primary/10 border-primary/30 shadow-sm"
-                                                    : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
-                                            )} onClick={() => toggleArrayItem('certifications', cert)}>
-                                                <Checkbox
-                                                    id={`cert-${cert}`}
-                                                    checked={formData.certifications.includes(cert)}
-                                                    onCheckedChange={() => toggleArrayItem('certifications', cert)}
-                                                />
-                                                <label htmlFor={`cert-${cert}`} className="text-xs font-medium cursor-pointer flex-1">{cert}</label>
-                                            </div>
-                                        ))}
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-semibold">Certificaciones</Label>
+                                        <div className="grid grid-cols-2 gap-2.5">
+                                            {['ISO 27001', 'Esquema Nacional de Seguridad (ENS)', 'ISO 9001', 'ISO 14001', 'CMMI', 'ITIL'].map(cert => (
+                                                <div key={cert} className={cn(
+                                                    "flex items-center space-x-2 border rounded-lg p-2.5 transition-all cursor-pointer",
+                                                    formData.certifications.includes(cert)
+                                                        ? "bg-primary/10 border-primary/30 shadow-sm"
+                                                        : "bg-background/30 border-white/10 hover:bg-muted/30 hover:border-white/20"
+                                                )} onClick={() => toggleArrayItem('certifications', cert)}>
+                                                    <Checkbox
+                                                        id={`cert-${cert}`}
+                                                        checked={formData.certifications.includes(cert)}
+                                                        onCheckedChange={() => toggleArrayItem('certifications', cert)}
+                                                    />
+                                                    <label htmlFor={`cert-${cert}`} className="text-xs font-medium cursor-pointer flex-1">{cert}</label>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="bg-gradient-to-br from-primary/10 to-indigo-500/10 p-5 rounded-xl border border-primary/20 flex flex-col items-center justify-center text-center gap-4 mt-4">
-                                    <div className="h-14 w-14 bg-primary/20 rounded-full flex items-center justify-center">
-                                        <Video className="h-7 w-7 text-primary" />
+                                    <div className="bg-gradient-to-br from-primary/10 to-indigo-500/10 p-5 rounded-xl border border-primary/20 flex flex-col items-center justify-center text-center gap-4 mt-4">
+                                        <div className="h-14 w-14 bg-primary/20 rounded-full flex items-center justify-center">
+                                            <Video className="h-7 w-7 text-primary" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <h3 className="font-bold text-base">Potencia tu venta con Video</h3>
+                                            <p className="text-xs text-muted-foreground max-w-xs">
+                                                Genera automáticamente un video explicativo de 30 segundos basado en los datos.
+                                            </p>
+                                        </div>
+                                        <Button
+                                            variant="outline"
+                                            className="gap-2 border-primary/50 hover:bg-primary/10 hover:border-primary font-semibold"
+                                            onClick={handleGenerateVideo}
+                                            disabled={isGeneratingVideo}
+                                        >
+                                            {isGeneratingVideo ? (
+                                                <><Loader2 className="h-4 w-4 animate-spin" /> Generando guión y video...</>
+                                            ) : (
+                                                <><Wand2 className="h-4 w-4" /> Generar Video con IA</>
+                                            )}
+                                        </Button>
                                     </div>
-                                    <div className="space-y-1">
-                                        <h3 className="font-bold text-base">Potencia tu venta con Video</h3>
-                                        <p className="text-xs text-muted-foreground max-w-xs">
-                                            Genera automáticamente un video explicativo de 30 segundos basado en los datos.
-                                        </p>
-                                    </div>
-                                    <Button
-                                        variant="outline"
-                                        className="gap-2 border-primary/50 hover:bg-primary/10 hover:border-primary font-semibold"
-                                        onClick={handleGenerateVideo}
-                                        disabled={isGeneratingVideo}
-                                    >
-                                        {isGeneratingVideo ? (
-                                            <><Loader2 className="h-4 w-4 animate-spin" /> Generando guión y video...</>
-                                        ) : (
-                                            <><Wand2 className="h-4 w-4" /> Generar Video con IA</>
-                                        )}
-                                    </Button>
-                                </div>
                                 </CardContent>
                             </Card>
                         )}
@@ -821,11 +821,11 @@ export default function UseCaseCreateSidebar({ mode = 'rfp', onSuccess }: UseCas
                             </Button>
 
                             {step < 4 ? (
-                                <Button onClick={nextStep} className="w-28 bg-primary/90 hover:bg-primary">
+                                <Button onClick={nextStep} className="w-28 bg-primary text-primary-foreground hover:bg-primary/90">
                                     Siguiente <ArrowRight className="ml-2 h-4 w-4" />
                                 </Button>
                             ) : (
-                                <Button onClick={handleSubmit} className="w-36 bg-green-600 hover:bg-green-700">
+                                <Button onClick={handleSubmit} className="w-36 bg-primary text-primary-foreground hover:bg-primary/90">
                                     {mode === 'rfp' ? 'Crear Solicitud' : 'Publicar Caso'}
                                 </Button>
                             )}

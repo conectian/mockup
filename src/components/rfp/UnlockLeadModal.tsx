@@ -114,10 +114,10 @@ export default function UnlockLeadModal({
                     <Button
                         onClick={handleConfirm}
                         disabled={!canAfford}
-                        className="gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
+                        className="h-auto py-2 px-4 gap-2 bg-primary text-primary-foreground hover:bg-primary/90 whitespace-normal leading-tight"
                     >
-                        <Unlock className="h-4 w-4" />
-                        Confirmar y Desbloquear
+                        <Unlock className="h-4 w-4 shrink-0" />
+                        <span>Confirmar y Desbloquear</span>
                     </Button>
                 </DialogFooter>
             </DialogContent>

@@ -99,7 +99,7 @@ export default function ClientRFPManager() {
 
                 <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
                     <SheetTrigger asChild>
-                        <Button className="h-12 px-6 premium-gradient hover:opacity-90 font-bold rounded-md shadow-lg shadow-indigo-500/20 gap-2 text-white">
+                        <Button className="h-12 px-6 bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-md shadow-lg shadow-primary/20 gap-2">
                             <Plus className="h-5 w-5" />
                             Publicar Nueva Necesidad
                         </Button>
@@ -107,7 +107,7 @@ export default function ClientRFPManager() {
                     <SheetContent className="w-full sm:max-w-lg overflow-y-auto glass-card border-l border-white/10">
                         <SheetHeader className="pb-6 border-b border-white/5">
                             <div className="flex items-center gap-3">
-                                <div className="h-12 w-12 rounded-md bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                                <div className="h-12 w-12 rounded-md bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
                                     <FileText className="h-6 w-6 text-white" />
                                 </div>
                                 <div>
@@ -195,7 +195,7 @@ export default function ClientRFPManager() {
                             </div>
 
                             {/* Info Banner */}
-                            <div className="p-4 rounded-md bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/10">
+                            <div className="p-4 rounded-md bg-primary/5 border border-primary/10">
                                 <p className="text-sm text-blue-600 dark:text-blue-300 flex items-start gap-2">
                                     <Sparkles className="h-4 w-4 shrink-0 mt-0.5" />
                                     <span><span className="font-bold">Consejo:</span> Los RFPs con presupuesto definido reciben un 40% más de propuestas cualificadas.</span>
@@ -209,7 +209,7 @@ export default function ClientRFPManager() {
                             </Button>
                             <Button
                                 onClick={handleSubmit}
-                                className="flex-1 h-11 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 font-bold shadow-lg shadow-blue-500/20"
+                                className="flex-1 h-11 bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-lg shadow-primary/20"
                             >
                                 Publicar RFP
                             </Button>
@@ -220,7 +220,7 @@ export default function ClientRFPManager() {
 
             {/* Stats */}
             <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3">
-                <Card className="border-0 bg-gradient-to-br from-slate-400/20 via-slate-500/10 to-transparent rounded-md shadow-xl shadow-slate-500/5 relative overflow-hidden group">
+                <Card className="border-0 bg-muted/50 rounded-md shadow-xl shadow-slate-500/5 relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-3 md:p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
                         <FileText className="h-12 w-12 md:h-20 md:w-20 text-slate-500" />
                     </div>
@@ -229,7 +229,7 @@ export default function ClientRFPManager() {
                         <div className="text-2xl md:text-5xl font-display font-bold">{stats.active}</div>
                     </CardContent>
                 </Card>
-                <Card className="border-0 bg-gradient-to-br from-emerald-400/20 via-emerald-500/10 to-transparent rounded-md shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
+                <Card className="border-0 bg-primary/10 rounded-md shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-3 md:p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
                         <MessageSquare className="h-12 w-12 md:h-20 md:w-20 text-emerald-500" />
                     </div>
@@ -238,7 +238,7 @@ export default function ClientRFPManager() {
                         <div className="text-2xl md:text-5xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.proposals}</div>
                     </CardContent>
                 </Card>
-                <Card className="col-span-2 lg:col-span-1 border-0 bg-gradient-to-br from-blue-400/20 via-blue-500/10 to-transparent rounded-md shadow-xl shadow-blue-500/5 relative overflow-hidden group">
+                <Card className="col-span-2 lg:col-span-1 border-0 bg-[#243A57]/10 rounded-md shadow-xl shadow-blue-500/5 relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-3 md:p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
                         <Eye className="h-12 w-12 md:h-20 md:w-20 text-blue-500" />
                     </div>
@@ -309,7 +309,7 @@ export default function ClientRFPManager() {
                             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
                                 Publica tu primera necesidad y recibe propuestas de proveedores verificados en menos de 48h.
                             </p>
-                            <Button onClick={() => setSheetOpen(true)} className="h-12 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 font-bold rounded-md shadow-lg shadow-blue-500/20">
+                            <Button onClick={() => setSheetOpen(true)} className="h-12 px-6 bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-md shadow-lg shadow-primary/20">
                                 <Plus className="mr-2 h-5 w-5" />
                                 Publicar Primera Necesidad
                             </Button>

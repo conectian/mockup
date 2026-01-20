@@ -132,7 +132,7 @@ export default function DealRoomsList() {
                     <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Deal Rooms</h1>
                     <p className="text-muted-foreground text-lg">Gestiona tus negociaciones y alianzas estratégicas</p>
                 </div>
-                <Button className="gap-2 h-12 px-6 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 font-bold rounded-md shadow-lg shadow-violet-500/20">
+                <Button className="gap-2 h-12 px-6 bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-md shadow-lg shadow-primary/20">
                     <Plus className="h-5 w-5" />
                     Nueva Deal Room
                 </Button>

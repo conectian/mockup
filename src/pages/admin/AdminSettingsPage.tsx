@@ -164,7 +164,7 @@ export default function AdminSettingsPage() {
                     {/* Security Tab (using Feature Flags visual for now as placeholder for security toggles) */}
                     {activeTab === 'security' && (
                         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                             <Card className="border-white/5">
+                            <Card className="border-white/5">
                                 <CardHeader>
                                     <CardTitle className="text-lg font-display font-bold">Seguridad y Acceso</CardTitle>
                                     <CardDescription>Configura las políticas de acceso y seguridad.</CardDescription>
@@ -193,7 +193,7 @@ export default function AdminSettingsPage() {
                                     </div>
                                 </CardContent>
                             </Card>
-                             <Card className="border-white/5">
+                            <Card className="border-white/5">
                                 <CardHeader>
                                     <CardTitle className="text-lg font-display font-bold">Mantenimiento</CardTitle>
                                 </CardHeader>
@@ -287,10 +287,10 @@ export default function AdminSettingsPage() {
                                 <CardContent className="space-y-4">
                                     <div className="space-y-2">
                                         <Label>Tiempo de Retención (días)</Label>
-                                        <Input 
-                                            type="number" 
-                                            defaultValue="30" 
-                                            className="bg-white/5 border-white/10 max-w-[200px]" 
+                                        <Input
+                                            type="number"
+                                            defaultValue="30"
+                                            className="bg-white/5 border-white/10 max-w-[200px]"
                                         />
                                         <p className="text-xs text-muted-foreground">
                                             Las notificaciones se eliminarán automáticamente después de este periodo
@@ -319,18 +319,18 @@ export default function AdminSettingsPage() {
                                     </div>
                                     <div className="space-y-2">
                                         <Label>Stripe API Key</Label>
-                                        <Input 
-                                            type="password" 
-                                            defaultValue="sk_live_••••••••••••••••" 
-                                            className="bg-white/5 border-white/10 font-mono text-sm" 
+                                        <Input
+                                            type="password"
+                                            defaultValue="sk_live_••••••••••••••••"
+                                            className="bg-white/5 border-white/10 font-mono text-sm"
                                         />
                                     </div>
                                     <div className="space-y-2">
                                         <Label>Stripe Webhook Secret</Label>
-                                        <Input 
-                                            type="password" 
-                                            defaultValue="whsec_••••••••••••••••" 
-                                            className="bg-white/5 border-white/10 font-mono text-sm" 
+                                        <Input
+                                            type="password"
+                                            defaultValue="whsec_••••••••••••••••"
+                                            className="bg-white/5 border-white/10 font-mono text-sm"
                                         />
                                     </div>
                                 </CardContent>
@@ -345,10 +345,10 @@ export default function AdminSettingsPage() {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <Label>Comisión Proveedor (%)</Label>
-                                            <Input 
-                                                type="number" 
-                                                defaultValue="15" 
-                                                className="bg-white/5 border-white/10" 
+                                            <Input
+                                                type="number"
+                                                defaultValue="15"
+                                                className="bg-white/5 border-white/10"
                                             />
                                             <p className="text-xs text-muted-foreground">
                                                 Porcentaje que cobra la plataforma por venta
@@ -356,10 +356,10 @@ export default function AdminSettingsPage() {
                                         </div>
                                         <div className="space-y-2">
                                             <Label>Tarifa Unlock Lead (€)</Label>
-                                            <Input 
-                                                type="number" 
-                                                defaultValue="50" 
-                                                className="bg-white/5 border-white/10" 
+                                            <Input
+                                                type="number"
+                                                defaultValue="50"
+                                                className="bg-white/5 border-white/10"
                                             />
                                             <p className="text-xs text-muted-foreground">
                                                 Coste por desbloquear información de un lead
@@ -368,10 +368,10 @@ export default function AdminSettingsPage() {
                                     </div>
                                     <div className="space-y-2">
                                         <Label>Umbral de Pago Mínimo (€)</Label>
-                                        <Input 
-                                            type="number" 
-                                            defaultValue="100" 
-                                            className="bg-white/5 border-white/10 max-w-[200px]" 
+                                        <Input
+                                            type="number"
+                                            defaultValue="100"
+                                            className="bg-white/5 border-white/10 max-w-[200px]"
                                         />
                                         <p className="text-xs text-muted-foreground">
                                             Monto mínimo para procesar un pago a proveedores
@@ -394,9 +394,9 @@ export default function AdminSettingsPage() {
                                     </div>
                                     <div className="space-y-2">
                                         <Label>Prefijo de Factura</Label>
-                                        <Input 
-                                            defaultValue="CNT-" 
-                                            className="bg-white/5 border-white/10 max-w-[200px]" 
+                                        <Input
+                                            defaultValue="CNT-"
+                                            className="bg-white/5 border-white/10 max-w-[200px]"
                                         />
                                     </div>
                                 </CardContent>
@@ -415,7 +415,7 @@ export default function AdminSettingsPage() {
                                 <CardContent className="space-y-6">
                                     <div className="flex items-center justify-between p-4 border border-white/5 rounded-lg">
                                         <div className="flex items-center gap-4">
-                                            <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                                            <div className="h-12 w-12 rounded-lg bg-blue-600 flex items-center justify-center">
                                                 <span className="text-white font-bold text-lg">SF</span>
                                             </div>
                                             <div>
@@ -427,7 +427,7 @@ export default function AdminSettingsPage() {
                                     </div>
                                     <div className="flex items-center justify-between p-4 border border-white/5 rounded-lg">
                                         <div className="flex items-center gap-4">
-                                            <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
+                                            <div className="h-12 w-12 rounded-lg bg-orange-600 flex items-center justify-center">
                                                 <span className="text-white font-bold text-lg">HS</span>
                                             </div>
                                             <div>
@@ -436,7 +436,7 @@ export default function AdminSettingsPage() {
                                             </div>
                                         </div>
                                         <Switch defaultChecked />
-                            </div>
+                                    </div>
                                 </CardContent>
                             </Card>
 
@@ -448,9 +448,9 @@ export default function AdminSettingsPage() {
                                 <CardContent className="space-y-6">
                                     <div className="space-y-2">
                                         <Label>Webhook URL para Eventos</Label>
-                                        <Input 
-                                            placeholder="https://api.tudominio.com/webhook" 
-                                            className="bg-white/5 border-white/10 font-mono text-sm" 
+                                        <Input
+                                            placeholder="https://api.tudominio.com/webhook"
+                                            className="bg-white/5 border-white/10 font-mono text-sm"
                                         />
                                         <p className="text-xs text-muted-foreground">
                                             Enviaremos notificaciones de eventos importantes a esta URL
@@ -473,7 +473,7 @@ export default function AdminSettingsPage() {
                                 <CardContent className="space-y-6">
                                     <div className="flex items-center justify-between p-4 border border-white/5 rounded-lg">
                                         <div className="flex items-center gap-4">
-                                            <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                                            <div className="h-12 w-12 rounded-lg bg-purple-600 flex items-center justify-center">
                                                 <span className="text-white font-bold text-lg">SL</span>
                                             </div>
                                             <div>
@@ -485,7 +485,7 @@ export default function AdminSettingsPage() {
                                     </div>
                                     <div className="flex items-center justify-between p-4 border border-white/5 rounded-lg">
                                         <div className="flex items-center gap-4">
-                                            <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
+                                            <div className="h-12 w-12 rounded-lg bg-emerald-600 flex items-center justify-center">
                                                 <span className="text-white font-bold text-lg">TW</span>
                                             </div>
                                             <div>
@@ -512,34 +512,34 @@ export default function AdminSettingsPage() {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <Label>Host SMTP</Label>
-                                            <Input 
-                                                defaultValue="smtp.gmail.com" 
-                                                className="bg-white/5 border-white/10" 
+                                            <Input
+                                                defaultValue="smtp.gmail.com"
+                                                className="bg-white/5 border-white/10"
                                             />
                                         </div>
                                         <div className="space-y-2">
                                             <Label>Puerto</Label>
-                                            <Input 
-                                                type="number" 
-                                                defaultValue="587" 
-                                                className="bg-white/5 border-white/10" 
+                                            <Input
+                                                type="number"
+                                                defaultValue="587"
+                                                className="bg-white/5 border-white/10"
                                             />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <Label>Usuario</Label>
-                                            <Input 
-                                                defaultValue="noreply@conectian.com" 
-                                                className="bg-white/5 border-white/10" 
+                                            <Input
+                                                defaultValue="noreply@conectian.com"
+                                                className="bg-white/5 border-white/10"
                                             />
                                         </div>
                                         <div className="space-y-2">
                                             <Label>Contraseña</Label>
-                                            <Input 
-                                                type="password" 
-                                                defaultValue="••••••••" 
-                                                className="bg-white/5 border-white/10" 
+                                            <Input
+                                                type="password"
+                                                defaultValue="••••••••"
+                                                className="bg-white/5 border-white/10"
                                             />
                                         </div>
                                     </div>
@@ -600,20 +600,20 @@ export default function AdminSettingsPage() {
                                 <CardContent className="space-y-4">
                                     <div className="space-y-2">
                                         <Label>Nombre del Remitente</Label>
-                                        <Input 
-                                            defaultValue="Equipo Conectian" 
-                                            className="bg-white/5 border-white/10" 
+                                        <Input
+                                            defaultValue="Equipo Conectian"
+                                            className="bg-white/5 border-white/10"
                                         />
                                     </div>
                                     <div className="space-y-2">
                                         <Label>Firma</Label>
-                                        <Textarea 
-                                            className="bg-white/5 border-white/10 min-h-[100px]" 
+                                        <Textarea
+                                            className="bg-white/5 border-white/10 min-h-[100px]"
                                             defaultValue="Saludos,&#10;El equipo de Conectian&#10;&#10;conectian.com"
                                         />
                                     </div>
                                 </CardContent>
-                        </Card>
+                            </Card>
                         </div>
                     )}
                 </div>

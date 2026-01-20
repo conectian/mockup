@@ -49,10 +49,10 @@ type DealView = 'chat' | 'finance' | 'docs' | 'spec' | 'participants' | 'milesto
 export default function DealRoomPage() {
     const { dealTitle, participants } = useDealStore();
     const { userType } = useAuthStore();
-    
+
     // Group definitions
     type DealGroup = 'documentation' | 'communication' | 'milestones' | 'closing';
-    
+
     interface GroupDef {
         id: DealGroup;
         label: string;
@@ -60,7 +60,7 @@ export default function DealRoomPage() {
         views: { id: DealView; label: string; icon: any }[];
     }
 
-    
+
     const groups: GroupDef[] = [
         {
             id: 'documentation',
@@ -96,8 +96,8 @@ export default function DealRoomPage() {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const viewParam = searchParams.get('view') as DealView;
-    const initialView = (viewParam && ['chat', 'finance', 'docs', 'spec', 'participants', 'milestones', 'legal', 'reviews', 'support', 'proposal'].includes(viewParam)) 
-        ? viewParam 
+    const initialView = (viewParam && ['chat', 'finance', 'docs', 'spec', 'participants', 'milestones', 'legal', 'reviews', 'support', 'proposal'].includes(viewParam))
+        ? viewParam
         : 'chat';
 
     const [activeView, setActiveView] = useState<DealView>(initialView);
@@ -393,8 +393,6 @@ export default function DealRoomPage() {
                         </Card>
                     </div>
                 );
-            case 'spec':
-
             case 'participants':
                 return (
                     <div className="p-4 md:p-8 space-y-8">
@@ -406,7 +404,7 @@ export default function DealRoomPage() {
                         {/* Cliente Team */}
                         <div>
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                                <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
                                     <Users className="h-4 w-4 text-white" />
                                 </div>
                                 <h3 className="font-semibold">Equipo Cliente</h3>
@@ -416,7 +414,7 @@ export default function DealRoomPage() {
                                 {participants.filter(p => p.company === 'client').map((p) => (
                                     <Card key={p.id} className="p-4 border-border hover:border-primary/30 transition-colors group relative">
                                         <div className="flex items-start gap-3">
-                                            <div className="h-11 w-11 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-md shrink-0">
+                                            <div className="h-11 w-11 rounded-full bg-primary flex items-center justify-center text-white font-bold shadow-md shrink-0">
                                                 {p.name.charAt(0)}
                                             </div>
                                             <div className="min-w-0 flex-1">
@@ -426,9 +424,9 @@ export default function DealRoomPage() {
                                             </div>
                                         </div>
                                         <div className="mt-4 pt-3 border-t border-border flex justify-end">
-                                            <Button 
-                                                variant="ghost" 
-                                                size="sm" 
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
                                                 className="h-8 gap-2 text-muted-foreground hover:text-primary"
                                                 onClick={() => updateActiveView('chat')}
                                             >
@@ -444,7 +442,7 @@ export default function DealRoomPage() {
                         {/* Provider Team */}
                         <div>
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                                <div className="h-8 w-8 rounded-lg bg-[#243A57] flex items-center justify-center">
                                     <Users className="h-4 w-4 text-white" />
                                 </div>
                                 <h3 className="font-semibold">Equipo Partner</h3>
@@ -454,7 +452,7 @@ export default function DealRoomPage() {
                                 {participants.filter(p => p.company === 'provider').map((p) => (
                                     <Card key={p.id} className="p-4 border-border hover:border-emerald-500/30 transition-colors group relative">
                                         <div className="flex items-start gap-3">
-                                            <div className="h-11 w-11 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold shadow-md shrink-0">
+                                            <div className="h-11 w-11 rounded-full bg-[#243A57] flex items-center justify-center text-white font-bold shadow-md shrink-0">
                                                 {p.name.charAt(0)}
                                             </div>
                                             <div className="min-w-0 flex-1">
@@ -464,9 +462,9 @@ export default function DealRoomPage() {
                                             </div>
                                         </div>
                                         <div className="mt-4 pt-3 border-t border-border flex justify-end">
-                                            <Button 
-                                                variant="ghost" 
-                                                size="sm" 
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
                                                 className="h-8 gap-2 text-muted-foreground hover:text-emerald-600 dark:hover:text-emerald-400"
                                                 onClick={() => updateActiveView('chat')}
                                             >
@@ -514,7 +512,7 @@ export default function DealRoomPage() {
                         </div>
 
                         {/* Progress Overview */}
-                        <Card className="p-5 border-border bg-gradient-to-br from-primary/5 to-transparent">
+                        <Card className="p-5 border-border bg-primary/5">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
                                     <Flag className="h-5 w-5 text-primary" />
@@ -616,7 +614,7 @@ export default function DealRoomPage() {
                                             </p>
                                             <div className="space-y-2">
                                                 <div className="flex items-center gap-3 p-2 rounded-lg bg-muted/30">
-                                                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">C</div>
+                                                    <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold">C</div>
                                                     <div className="flex-1">
                                                         <p className="text-sm font-medium">Carlos Martínez</p>
                                                         <p className="text-xs text-muted-foreground">Project Manager</p>
@@ -624,7 +622,7 @@ export default function DealRoomPage() {
                                                     <CheckCircle className="h-5 w-5 text-emerald-500" />
                                                 </div>
                                                 <div className="flex items-center gap-3 p-2 rounded-lg bg-muted/30">
-                                                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white text-sm font-bold">A</div>
+                                                    <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm font-bold">A</div>
                                                     <div className="flex-1">
                                                         <p className="text-sm font-medium">Ana García</p>
                                                         <p className="text-xs text-muted-foreground">Technical Lead</p>
@@ -632,7 +630,7 @@ export default function DealRoomPage() {
                                                     <Clock className="h-5 w-5 text-amber-500" />
                                                 </div>
                                                 <div className="flex items-center gap-3 p-2 rounded-lg bg-muted/30">
-                                                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white text-sm font-bold">M</div>
+                                                    <div className="h-8 w-8 rounded-full bg-[#243A57] flex items-center justify-center text-white text-sm font-bold">M</div>
                                                     <div className="flex-1">
                                                         <p className="text-sm font-medium">María López</p>
                                                         <p className="text-xs text-muted-foreground">Project Manager</p>
@@ -891,7 +889,7 @@ export default function DealRoomPage() {
             {/* Top Bar */}
             <header className="h-14 border-b border-border bg-card flex items-center justify-between px-4 shrink-0 z-20">
                 <div className="flex items-center gap-3">
-                    <Link 
+                    <Link
                         to={backPath}
                         className="p-2 hover:bg-muted rounded-full transition-colors"
                     >
@@ -901,7 +899,7 @@ export default function DealRoomPage() {
                         <div className="flex items-center gap-2">
                             <span className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">DEAL ROOM ACTIVA</span>
                         </div>
-                        <h1 className="text-sm font-semibold truncate max-w-[200px] md:max-w-md">{dealTitle}</h1>
+                        <h1 className="text-sm font-semibold truncate max-w-[200px] xs:max-w-[280px] md:max-w-md">{dealTitle}</h1>
                     </div>
                 </div>
 
@@ -910,7 +908,7 @@ export default function DealRoomPage() {
                         <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                         <span className="text-xs font-medium">Activo</span>
                     </Badge>
-                    
+
                     <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon" className="md:hidden">
@@ -957,7 +955,7 @@ export default function DealRoomPage() {
 
             <div className="flex flex-1 overflow-hidden">
                 {/* Left Sidebar - Desktop */}
-                <aside 
+                <aside
                     className={cn(
                         "hidden md:flex flex-col border-r border-border bg-card transition-all duration-300 ease-in-out relative z-10",
                         leftMenuExpanded ? "w-64" : "w-[70px]"
@@ -990,14 +988,14 @@ export default function DealRoomPage() {
                                         )}
                                         title={!leftMenuExpanded ? item.label : undefined}
                                     >
-                                        <item.icon 
+                                        <item.icon
                                             className={cn(
-                                                "h-4 w-4 shrink-0 transition-colors", 
+                                                "h-4 w-4 shrink-0 transition-colors",
                                                 activeView === item.id ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
-                                            )} 
+                                            )}
                                         />
                                         {leftMenuExpanded && <span>{item.label}</span>}
-                                        
+
                                         {activeView === item.id && (
                                             <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r-full" />
                                         )}
@@ -1009,9 +1007,9 @@ export default function DealRoomPage() {
                     </div>
 
                     <div className="p-4 border-t border-border mt-auto">
-                        <Button 
-                            variant="ghost" 
-                            size="sm" 
+                        <Button
+                            variant="ghost"
+                            size="sm"
                             className={cn("w-full gap-2", !leftMenuExpanded && "justify-center px-0")}
                             onClick={() => setLeftMenuExpanded(!leftMenuExpanded)}
                         >
@@ -1040,7 +1038,7 @@ export default function DealRoomPage() {
                                 {groups.flatMap(g => g.views).find(v => v.id === activeView)?.label}
                             </span>
                         </div>
-                        
+
                         {/* Right sidebar toggle for mobile/tablet if needed, or extra actions */}
                     </div>
 
@@ -1050,7 +1048,7 @@ export default function DealRoomPage() {
                         </div>
                     </div>
                 </main>
-                
+
                 {/* Right Sidebar - Desktop */}
                 <aside className="w-[340px] shrink-0 hidden xl:block border-l border-border bg-card">
                     <DealRightSidebar />

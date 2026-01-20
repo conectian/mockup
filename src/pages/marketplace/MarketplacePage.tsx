@@ -25,7 +25,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Search, X, SlidersHorizontal, Filter, Globe, Inbox, Lightbulb, Bot, Sparkles, FileText } from 'lucide-react';
+import { Search, X, SlidersHorizontal, Filter, Globe, Inbox, Lightbulb, Bot, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { MultiSelect } from '@/components/ui/multi-select';
@@ -156,6 +156,7 @@ export default function MarketplacePage() {
     const [activeTab, setActiveTab] = useState(tabFromUrl || 'mercado');
 
     const [filters, setFilters] = useState<FilterState>(initialFilters);
+    const [sortBy, setSortBy] = useState<string>('match-high');
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
     const [filterMode, setFilterMode] = useState<'filters' | 'chatbot'>('filters');
 
@@ -197,7 +198,7 @@ export default function MarketplacePage() {
         const searchLower = filters.search.toLowerCase();
         const stackSearch = filters.techStack.toLowerCase();
 
-        return mockUseCases.filter((uc) => {
+        const filtered = mockUseCases.filter((uc) => {
             if (filters.search) {
                 const matches =
                     uc.title.toLowerCase().includes(searchLower) ||
@@ -218,12 +219,26 @@ export default function MarketplacePage() {
             }
             return true;
         });
-    }, [filters]);
+
+        return [...filtered].sort((a, b) => {
+            switch (sortBy) {
+                case 'name-asc':
+                    return a.title.localeCompare(b.title);
+                case 'name-desc':
+                    return b.title.localeCompare(a.title);
+                case 'match-high':
+                    // In a real app we'd have a real match score, here we just return stable order for mock
+                    return 0;
+                default:
+                    return 0;
+            }
+        });
+    }, [filters, sortBy]);
 
     const filteredProposals = useMemo(() => {
         const searchLower = filters.search.toLowerCase();
 
-        return MOCK_PROPOSALS.filter((proposal) => {
+        const filtered = MOCK_PROPOSALS.filter((proposal) => {
             if (filters.search) {
                 const matches =
                     proposal.title.toLowerCase().includes(searchLower) ||
@@ -233,12 +248,24 @@ export default function MarketplacePage() {
             }
             return true;
         });
-    }, [filters]);
+
+        return [...filtered].sort((a, b) => {
+            switch (sortBy) {
+                case 'name-asc':
+                    return a.title.localeCompare(b.title);
+                case 'name-desc':
+                    return b.title.localeCompare(a.title);
+                case 'match-high':
+                default:
+                    return 0;
+            }
+        });
+    }, [filters, sortBy]);
 
     const filteredRequests = useMemo(() => {
         const searchLower = filters.search.toLowerCase();
 
-        return MOCK_REQUESTS.filter((request) => {
+        const filtered = MOCK_REQUESTS.filter((request) => {
             if (filters.search) {
                 const matches =
                     request.title.toLowerCase().includes(searchLower) ||
@@ -248,7 +275,19 @@ export default function MarketplacePage() {
             }
             return true;
         });
-    }, [filters]);
+
+        return [...filtered].sort((a, b) => {
+            switch (sortBy) {
+                case 'name-asc':
+                    return a.title.localeCompare(b.title);
+                case 'name-desc':
+                    return b.title.localeCompare(a.title);
+                case 'match-high':
+                default:
+                    return 0;
+            }
+        });
+    }, [filters, sortBy]);
 
     const SidebarContent = () => (
         <div className="space-y-6 pb-20">
@@ -301,133 +340,133 @@ export default function MarketplacePage() {
                         )}
                     </div>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Sector</Label>
-                <MultiSelect
-                    options={SECTORS}
-                    selected={filters.sector}
-                    onChange={(selected) => setFilters({ ...filters, sector: selected })}
-                    placeholder="Seleccionar sectores..."
-                />
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Sector</Label>
+                        <MultiSelect
+                            options={SECTORS}
+                            selected={filters.sector}
+                            onChange={(selected) => setFilters({ ...filters, sector: selected })}
+                            placeholder="Seleccionar sectores..."
+                        />
+                    </div>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Servicio / Producto</Label>
-                <div className="flex flex-wrap gap-2">
-                    {OFFERING_TYPES.map((type) => (
-                        <Badge
-                            key={type}
-                            variant="outline"
-                            className={cn(
-                                "cursor-pointer px-3 py-1.5 hover:bg-muted transition-colors",
-                                filters.offeringType.includes(type)
-                                    ? "bg-primary text-primary-foreground border-primary hover:bg-primary/90"
-                                    : "bg-transparent border-white/20 text-muted-foreground"
-                            )}
-                            onClick={() => setFilters({ ...filters, offeringType: toggleArrayItem(filters.offeringType, type) })}
-                        >
-                            {type}
-                        </Badge>
-                    ))}
-                </div>
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Servicio / Producto</Label>
+                        <div className="flex flex-wrap gap-2">
+                            {OFFERING_TYPES.map((type) => (
+                                <Badge
+                                    key={type}
+                                    variant="outline"
+                                    className={cn(
+                                        "cursor-pointer px-3 py-1.5 hover:bg-muted transition-colors",
+                                        filters.offeringType.includes(type)
+                                            ? "bg-primary text-primary-foreground border-primary hover:bg-primary/90"
+                                            : "bg-transparent border-white/20 text-muted-foreground"
+                                    )}
+                                    onClick={() => setFilters({ ...filters, offeringType: toggleArrayItem(filters.offeringType, type) })}
+                                >
+                                    {type}
+                                </Badge>
+                            ))}
+                        </div>
+                    </div>
 
-            {/* Other filters emitted for brevity in thought process but included in action */}
-            {/* ... keeping previous filters 3-17 ... */}
+                    {/* Other filters emitted for brevity in thought process but included in action */}
+                    {/* ... keeping previous filters 3-17 ... */}
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Coste (€)</Label>
-                <div className="flex items-center gap-2">
-                    <Input
-                        type="number"
-                        placeholder="Min"
-                        className="bg-muted/30 border-white/10 h-9"
-                        value={filters.costMin}
-                        onChange={(e) => setFilters({ ...filters, costMin: e.target.value })}
-                    />
-                    <span className="text-muted-foreground">-</span>
-                    <Input
-                        type="number"
-                        placeholder="Max"
-                        className="bg-muted/30 border-white/10 h-9"
-                        value={filters.costMax}
-                        onChange={(e) => setFilters({ ...filters, costMax: e.target.value })}
-                    />
-                </div>
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Coste (€)</Label>
+                        <div className="flex items-center gap-2">
+                            <Input
+                                type="number"
+                                placeholder="Min"
+                                className="bg-muted/30 border-white/10 h-9"
+                                value={filters.costMin}
+                                onChange={(e) => setFilters({ ...filters, costMin: e.target.value })}
+                            />
+                            <span className="text-muted-foreground">-</span>
+                            <Input
+                                type="number"
+                                placeholder="Max"
+                                className="bg-muted/30 border-white/10 h-9"
+                                value={filters.costMax}
+                                onChange={(e) => setFilters({ ...filters, costMax: e.target.value })}
+                            />
+                        </div>
+                    </div>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Tamaño Proveedor</Label>
-                <MultiSelect options={PROVIDER_SIZES} selected={filters.providerSize} onChange={(s) => setFilters({ ...filters, providerSize: s })} placeholder="Seleccionar..." />
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Tamaño Proveedor</Label>
+                        <MultiSelect options={PROVIDER_SIZES} selected={filters.providerSize} onChange={(s) => setFilters({ ...filters, providerSize: s })} placeholder="Seleccionar..." />
+                    </div>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Madurez Use Case</Label>
-                <MultiSelect options={USE_CASE_MATURITY} selected={filters.maturity} onChange={(s) => setFilters({ ...filters, maturity: s })} placeholder="Seleccionar..." />
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Madurez Use Case</Label>
+                        <MultiSelect options={USE_CASE_MATURITY} selected={filters.maturity} onChange={(s) => setFilters({ ...filters, maturity: s })} placeholder="Seleccionar..." />
+                    </div>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Tipo de IA</Label>
-                <div className="flex flex-wrap gap-2">
-                    {AI_TYPES.map(type => (
-                        <Badge key={type} variant="outline" className={cn("cursor-pointer px-3 py-1.5 rounded-full", filters.aiType.includes(type) ? "bg-indigo-600/20 text-indigo-400 border-indigo-500/50" : "bg-transparent border-white/20 text-muted-foreground")} onClick={() => setFilters({ ...filters, aiType: toggleArrayItem(filters.aiType, type) })}>{type}</Badge>
-                    ))}
-                </div>
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Tipo de IA</Label>
+                        <div className="flex flex-wrap gap-2">
+                            {AI_TYPES.map(type => (
+                                <Badge key={type} variant="outline" className={cn("cursor-pointer px-3 py-1.5 rounded-full", filters.aiType.includes(type) ? "bg-indigo-600/20 text-indigo-400 border-indigo-500/50" : "bg-transparent border-white/20 text-muted-foreground")} onClick={() => setFilters({ ...filters, aiType: toggleArrayItem(filters.aiType, type) })}>{type}</Badge>
+                            ))}
+                        </div>
+                    </div>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Modalidad Técnica</Label>
-                <MultiSelect options={TECH_MODALITIES} selected={filters.techModality} onChange={s => setFilters({ ...filters, techModality: s })} placeholder="Seleccionar..." />
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Modalidad Técnica</Label>
+                        <MultiSelect options={TECH_MODALITIES} selected={filters.techModality} onChange={s => setFilters({ ...filters, techModality: s })} placeholder="Seleccionar..." />
+                    </div>
 
-            <div className="flex items-center justify-between p-3 rounded-md bg-muted/20 border border-white/5">
-                <Label className="text-sm font-medium">Intervención Humana</Label>
-                <Switch checked={filters.humanIntervention} onCheckedChange={c => setFilters({ ...filters, humanIntervention: c })} />
-            </div>
+                    <div className="flex items-center justify-between p-3 rounded-md bg-muted/20 border border-white/5">
+                        <Label className="text-sm font-medium">Intervención Humana</Label>
+                        <Switch checked={filters.humanIntervention} onCheckedChange={c => setFilters({ ...filters, humanIntervention: c })} />
+                    </div>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Stack Tecnológico</Label>
-                <Input placeholder="Buscar..." className="bg-muted/30 border-white/10 h-9" value={filters.techStack} onChange={e => setFilters({ ...filters, techStack: e.target.value })} />
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Stack Tecnológico</Label>
+                        <Input placeholder="Buscar..." className="bg-muted/30 border-white/10 h-9" value={filters.techStack} onChange={e => setFilters({ ...filters, techStack: e.target.value })} />
+                    </div>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Integraciones</Label>
-                <Input placeholder="Buscar..." className="bg-muted/30 border-white/10 h-9" value={filters.integrations} onChange={e => setFilters({ ...filters, integrations: e.target.value })} />
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Integraciones</Label>
+                        <Input placeholder="Buscar..." className="bg-muted/30 border-white/10 h-9" value={filters.integrations} onChange={e => setFilters({ ...filters, integrations: e.target.value })} />
+                    </div>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Tiempo Integración</Label>
-                <Select value={filters.integrationTime} onValueChange={v => setFilters({ ...filters, integrationTime: v })}>
-                    <SelectTrigger className="w-full bg-muted/30 border-white/10"><SelectValue /></SelectTrigger>
-                    <SelectContent>{INTEGRATION_TIMES.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
-                </Select>
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Tiempo Integración</Label>
+                        <Select value={filters.integrationTime} onValueChange={v => setFilters({ ...filters, integrationTime: v })}>
+                            <SelectTrigger className="w-full bg-muted/30 border-white/10"><SelectValue /></SelectTrigger>
+                            <SelectContent>{INTEGRATION_TIMES.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
+                        </Select>
+                    </div>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Idiomas</Label>
-                <MultiSelect options={LANGUAGES} selected={filters.language} onChange={s => setFilters({ ...filters, language: s })} placeholder="Seleccionar..." />
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Idiomas</Label>
+                        <MultiSelect options={LANGUAGES} selected={filters.language} onChange={s => setFilters({ ...filters, language: s })} placeholder="Seleccionar..." />
+                    </div>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Ubicación</Label>
-                <MultiSelect options={LOCATIONS} selected={filters.location} onChange={s => setFilters({ ...filters, location: s })} placeholder="Seleccionar..." />
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Ubicación</Label>
+                        <MultiSelect options={LOCATIONS} selected={filters.location} onChange={s => setFilters({ ...filters, location: s })} placeholder="Seleccionar..." />
+                    </div>
 
-            <div className="h-px bg-white/10 my-6" />
-            <h4 className="font-display font-bold text-sm mb-4">Compliance & Seguridad</h4>
+                    <div className="h-px bg-white/10 my-6" />
+                    <h4 className="font-display font-bold text-sm mb-4">Compliance & Seguridad</h4>
 
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Regulaciones</Label>
-                <MultiSelect options={REGULATIONS} selected={filters.regulations} onChange={s => setFilters({ ...filters, regulations: s })} placeholder="Seleccionar..." />
-            </div>
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Certificaciones</Label>
-                <MultiSelect options={CERTIFICATIONS} selected={filters.certifications} onChange={s => setFilters({ ...filters, certifications: s })} placeholder="Seleccionar..." />
-            </div>
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Seguridad de Datos</Label>
-                <MultiSelect options={DATA_SECURITY} selected={filters.dataSecurity} onChange={s => setFilters({ ...filters, dataSecurity: s })} placeholder="Seleccionar..." />
-            </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Regulaciones</Label>
+                        <MultiSelect options={REGULATIONS} selected={filters.regulations} onChange={s => setFilters({ ...filters, regulations: s })} placeholder="Seleccionar..." />
+                    </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Certificaciones</Label>
+                        <MultiSelect options={CERTIFICATIONS} selected={filters.certifications} onChange={s => setFilters({ ...filters, certifications: s })} placeholder="Seleccionar..." />
+                    </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Seguridad de Datos</Label>
+                        <MultiSelect options={DATA_SECURITY} selected={filters.dataSecurity} onChange={s => setFilters({ ...filters, dataSecurity: s })} placeholder="Seleccionar..." />
+                    </div>
                 </div>
             )}
         </div>
@@ -465,8 +504,9 @@ export default function MarketplacePage() {
                             <div className="flex gap-2 w-full md:w-auto">
                                 <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
                                     <SheetTrigger asChild>
-                                        <Button variant="outline" className="lg:hidden flex-1 gap-2">
-                                            <SlidersHorizontal className="h-4 w-4" /> Filtros
+                                        <Button variant="outline" className="lg:hidden w-auto gap-2 px-3">
+                                            <SlidersHorizontal className="h-4 w-4" />
+                                            <span className="hidden sm:inline">Filtros</span>
                                             {activeFilterCount > 0 && <Badge className="ml-1 h-5 w-5 p-0 flex items-center justify-center bg-primary text-xs">{activeFilterCount}</Badge>}
                                         </Button>
                                     </SheetTrigger>
@@ -474,9 +514,22 @@ export default function MarketplacePage() {
                                         <div className="py-6 px-6"><SidebarContent /></div>
                                     </SheetContent>
                                 </Sheet>
+
+                                {/* Sort Dropdown */}
+                                <Select value={sortBy} onValueChange={setSortBy}>
+                                    <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
+                                        <SelectValue placeholder="Ordenar por" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="match-high">Mejor Match</SelectItem>
+                                        <SelectItem value="name-asc">Nombre (A-Z)</SelectItem>
+                                        <SelectItem value="name-desc">Nombre (Z-A)</SelectItem>
+                                    </SelectContent>
+                                </Select>
+
                                 <div className="relative flex-1 md:w-[300px]">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                    <Input placeholder="Buscar solución, proveedor..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10" />
+                                    <Input placeholder="Buscar solución, proveedor..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10 h-10" />
                                 </div>
 
                             </div>
@@ -500,11 +553,11 @@ export default function MarketplacePage() {
                                         // Vary slightly between cards
                                         matchScore = Math.min(98, matchScore + (index % 3) * 2);
                                     }
-                                    
+
                                     return (
-                                        <UseCaseCard 
-                                            key={useCase.id} 
-                                            useCase={useCase} 
+                                        <UseCaseCard
+                                            key={useCase.id}
+                                            useCase={useCase}
                                             matchScore={matchScore > 0 ? matchScore : undefined}
                                             hasFilters={activeFilterCount > 0}
                                         />
@@ -548,9 +601,22 @@ export default function MarketplacePage() {
                                         <div className="py-6 px-6"><SidebarContent /></div>
                                     </SheetContent>
                                 </Sheet>
+
+                                {/* Sort Dropdown */}
+                                <Select value={sortBy} onValueChange={setSortBy}>
+                                    <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
+                                        <SelectValue placeholder="Ordenar por" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="match-high">Mejor Match</SelectItem>
+                                        <SelectItem value="name-asc">Nombre (A-Z)</SelectItem>
+                                        <SelectItem value="name-desc">Nombre (Z-A)</SelectItem>
+                                    </SelectContent>
+                                </Select>
+
                                 <div className="relative flex-1 md:w-[300px]">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                    <Input placeholder="Buscar propuesta..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10" />
+                                    <Input placeholder="Buscar propuesta..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10 h-10" />
                                 </div>
                             </div>
                         </div>
@@ -597,9 +663,22 @@ export default function MarketplacePage() {
                                         <div className="py-6 px-6"><UseCaseCreateSidebar mode="rfp" /></div>
                                     </SheetContent>
                                 </Sheet>
+
+                                {/* Sort Dropdown */}
+                                <Select value={sortBy} onValueChange={setSortBy}>
+                                    <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
+                                        <SelectValue placeholder="Ordenar por" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="match-high">Mejor Match</SelectItem>
+                                        <SelectItem value="name-asc">Nombre (A-Z)</SelectItem>
+                                        <SelectItem value="name-desc">Nombre (Z-A)</SelectItem>
+                                    </SelectContent>
+                                </Select>
+
                                 <div className="relative flex-1 md:w-[300px]">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                    <Input placeholder="Buscar solicitud..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10" />
+                                    <Input placeholder="Buscar solicitud..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10 h-10" />
                                 </div>
                             </div>
                         </div>

@@ -37,10 +37,10 @@ export default function MagicWriter({ onSuggest, context, isWriting = false }: M
                 onClick={handleMagic}
                 disabled={thinking || isWriting}
                 className={cn(
-                    "gap-2 bg-gradient-to-r hover:text-white transition-all border-violet-200 dark:border-violet-800",
+                    "gap-2 transition-all border-primary/20",
                     thinking
-                        ? "from-violet-100 to-fuchsia-100 dark:from-violet-900/50 dark:to-fuchsia-900/50"
-                        : "hover:from-violet-500 hover:to-fuchsia-500 text-violet-600 dark:text-violet-400"
+                        ? "bg-muted"
+                        : "text-primary hover:text-primary-foreground hover:bg-primary"
                 )}
             >
                 {thinking ? (

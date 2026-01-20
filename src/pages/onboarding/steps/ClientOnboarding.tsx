@@ -102,7 +102,7 @@ export default function ClientOnboarding({ step, setStep, onFinish }: Props) {
                         <ArrowLeft className="h-4 w-4" />
                         Atrás
                     </Button>
-                    <Button type="submit" className="gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700">
+                    <Button type="submit" className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
                         Finalizar
                         <Check className="h-4 w-4" />
                     </Button>

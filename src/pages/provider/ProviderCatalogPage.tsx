@@ -45,227 +45,227 @@ import { MultiSelect } from '@/components/ui/multi-select';
 import { mockUseCases } from '@/data/marketplace-data';
 import { toast } from 'sonner';
 
-    // Filter mock data to simulate "my" use cases
-    const initialUseCases = mockUseCases.slice(0, 6);
+// Filter mock data to simulate "my" use cases
+const initialUseCases = mockUseCases.slice(0, 6);
 
-    type UseCase = {
-        id: string;
-        title: string;
-        description: string;
-        industry: string;
-        roi: string;
-        image: string;
-        status?: string;
-    };
+type UseCase = {
+    id: string;
+    title: string;
+    description: string;
+    industry: string;
+    roi: string;
+    image: string;
+    status?: string;
+};
 
-    export default function ProviderCatalogPage() {
+export default function ProviderCatalogPage() {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
-        const [useCases, setUseCases] = useState<UseCase[]>(initialUseCases.map(uc => ({
-            id: uc.id,
-            title: uc.title,
-            description: uc.description,
-            industry: uc.industry,
-            roi: uc.roi,
-            image: uc.image,
+    const [useCases, setUseCases] = useState<UseCase[]>(initialUseCases.map(uc => ({
+        id: uc.id,
+        title: uc.title,
+        description: uc.description,
+        industry: uc.industry,
+        roi: uc.roi,
+        image: uc.image,
+        status: 'Publicado'
+    })));
+    const [isCreateOpen, setIsCreateOpen] = useState(false);
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [currentUseCase, setCurrentUseCase] = useState<UseCase | null>(null);
+    const [formData, setFormData] = useState({
+        title: '',
+        description: '',
+        industry: '',
+        roi: '',
+    });
+
+    // Filters state
+    const [filters, setFilters] = useState({
+        industries: [] as string[],
+        status: ['Publicado'] as string[]
+    });
+
+    const toggleStatus = (status: string) => {
+        setFilters(prev => {
+            const newStatus = prev.status.includes(status)
+                ? prev.status.filter(s => s !== status)
+                : [...prev.status, status];
+            return { ...prev, status: newStatus };
+        });
+    };
+
+    const handleCreate = () => {
+        if (!formData.title || !formData.description || !formData.industry) {
+            toast.error('Completa todos los campos requeridos');
+            return;
+        }
+        const newUseCase: UseCase = {
+            id: `uc-${Date.now()}`,
+            title: formData.title,
+            description: formData.description,
+            industry: formData.industry,
+            roi: formData.roi || '+20% Eficiencia',
+            image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop',
             status: 'Publicado'
-        })));
-        const [isCreateOpen, setIsCreateOpen] = useState(false);
-        const [isEditOpen, setIsEditOpen] = useState(false);
-        const [currentUseCase, setCurrentUseCase] = useState<UseCase | null>(null);
-        const [formData, setFormData] = useState({
-            title: '',
-            description: '',
-            industry: '',
-            roi: '',
+        };
+        setUseCases([...useCases, newUseCase]);
+        setIsCreateOpen(false);
+        setFormData({ title: '', description: '', industry: '', roi: '' });
+        toast.success('Caso de uso creado', {
+            description: 'Tu nuevo caso ya está visible en el marketplace.'
         });
+    };
 
-        // Filters state
-        const [filters, setFilters] = useState({
-            industries: [] as string[],
-            status: ['Publicado'] as string[]
+    const handleEdit = () => {
+        if (!currentUseCase) return;
+        setUseCases(useCases.map(uc =>
+            uc.id === currentUseCase.id
+                ? { ...uc, ...formData }
+                : uc
+        ));
+        setIsEditOpen(false);
+        setCurrentUseCase(null);
+        toast.success('Caso de uso actualizado');
+    };
+
+    const handleDelete = (id: string) => {
+        setUseCases(useCases.filter(uc => uc.id !== id));
+        toast.success('Caso de uso eliminado');
+    };
+
+    const openEdit = (useCase: UseCase) => {
+        setCurrentUseCase(useCase);
+        setFormData({
+            title: useCase.title,
+            description: useCase.description,
+            industry: useCase.industry,
+            roi: useCase.roi
         });
+        setIsEditOpen(true);
+    };
 
-        const toggleStatus = (status: string) => {
-            setFilters(prev => {
-                const newStatus = prev.status.includes(status)
-                    ? prev.status.filter(s => s !== status)
-                    : [...prev.status, status];
-                return { ...prev, status: newStatus };
-            });
-        };
+    const filteredUseCases = useCases.filter(uc => {
+        const matchesSearch = uc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            uc.industry.toLowerCase().includes(searchTerm.toLowerCase());
 
-        const handleCreate = () => {
-            if (!formData.title || !formData.description || !formData.industry) {
-                toast.error('Completa todos los campos requeridos');
-                return;
-            }
-            const newUseCase: UseCase = {
-                id: `uc-${Date.now()}`,
-                title: formData.title,
-                description: formData.description,
-                industry: formData.industry,
-                roi: formData.roi || '+20% Eficiencia',
-                image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop',
-                status: 'Publicado'
-            };
-            setUseCases([...useCases, newUseCase]);
-            setIsCreateOpen(false);
-            setFormData({ title: '', description: '', industry: '', roi: '' });
-            toast.success('Caso de uso creado', {
-                description: 'Tu nuevo caso ya está visible en el marketplace.'
-            });
-        };
+        const matchesIndustry = filters.industries.length === 0 || filters.industries.includes(uc.industry);
+        const matchesStatus = filters.status.length === 0 || (uc.status && filters.status.includes(uc.status));
 
-        const handleEdit = () => {
-            if (!currentUseCase) return;
-            setUseCases(useCases.map(uc =>
-                uc.id === currentUseCase.id
-                    ? { ...uc, ...formData }
-                    : uc
-            ));
-            setIsEditOpen(false);
-            setCurrentUseCase(null);
-            toast.success('Caso de uso actualizado');
-        };
+        return matchesSearch && matchesIndustry && matchesStatus;
+    });
 
-        const handleDelete = (id: string) => {
-            setUseCases(useCases.filter(uc => uc.id !== id));
-            toast.success('Caso de uso eliminado');
-        };
+    const SidebarContent = () => (
+        <div className="space-y-8">
+            <h3 className="text-lg font-display font-bold flex items-center gap-2">
+                <Filter className="h-4 w-4" /> Filtros
+            </h3>
 
-        const openEdit = (useCase: UseCase) => {
-            setCurrentUseCase(useCase);
-            setFormData({
-                title: useCase.title,
-                description: useCase.description,
-                industry: useCase.industry,
-                roi: useCase.roi
-            });
-            setIsEditOpen(true);
-        };
-
-        const filteredUseCases = useCases.filter(uc => {
-            const matchesSearch = uc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                uc.industry.toLowerCase().includes(searchTerm.toLowerCase());
-
-            const matchesIndustry = filters.industries.length === 0 || filters.industries.includes(uc.industry);
-            const matchesStatus = filters.status.length === 0 || (uc.status && filters.status.includes(uc.status));
-
-            return matchesSearch && matchesIndustry && matchesStatus;
-        });
-
-        const SidebarContent = () => (
-            <div className="space-y-8">
-                <h3 className="text-lg font-display font-bold flex items-center gap-2">
-                    <Filter className="h-4 w-4" /> Filtros
-                </h3>
-
-                <div className="space-y-3">
-                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Estado</Label>
-                    <div className="space-y-2">
-                        {['Publicado', 'Borrador', 'Archivado'].map(status => (
-                            <div key={status} className="flex items-center space-x-2">
-                                <input
-                                    type="checkbox"
-                                    id={`uc_${status}`}
-                                    className="rounded border-white/10 bg-white/5 text-primary focus:ring-primary"
-                                    checked={filters.status.includes(status)}
-                                    onChange={() => toggleStatus(status)}
-                                />
-                                <Label htmlFor={`uc_${status}`} className="text-sm font-normal cursor-pointer">{status}</Label>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                <div className="space-y-3">
-                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Industria</Label>
-                    <MultiSelect
-                        options={['Retail', 'Fintech', 'Healthcare', 'Logistics', 'Insurance']}
-                        selected={filters.industries}
-                        onChange={(val) => setFilters({ ...filters, industries: val })}
-                        placeholder="Seleccionar..."
-                    />
+            <div className="space-y-3">
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Estado</Label>
+                <div className="space-y-2">
+                    {['Publicado', 'Borrador', 'Archivado'].map(status => (
+                        <div key={status} className="flex items-center space-x-2">
+                            <input
+                                type="checkbox"
+                                id={`uc_${status}`}
+                                className="rounded border-white/10 bg-white/5 text-primary focus:ring-primary"
+                                checked={filters.status.includes(status)}
+                                onChange={() => toggleStatus(status)}
+                            />
+                            <Label htmlFor={`uc_${status}`} className="text-sm font-normal cursor-pointer">{status}</Label>
+                        </div>
+                    ))}
                 </div>
             </div>
-        );
 
-        return (
-            <div className="flex gap-8">
-                {/* Sidebar */}
-                <div className="hidden lg:block zoom-fixed-sidebar">
-                    <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-                        <UseCaseCreateSidebar mode="usecase" onSuccess={() => {
-                            toast.success("Caso de uso creado", { description: "El caso de uso se ha añadido a tu catálogo." });
-                            // Refresh the list or navigate
-                        }} />
-                    </div>
+            <div className="space-y-3">
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Industria</Label>
+                <MultiSelect
+                    options={['Retail', 'Fintech', 'Healthcare', 'Logistics', 'Insurance']}
+                    selected={filters.industries}
+                    onChange={(val) => setFilters({ ...filters, industries: val })}
+                    placeholder="Seleccionar..."
+                />
+            </div>
+        </div>
+    );
+
+    return (
+        <div className="flex gap-8">
+            {/* Sidebar */}
+            <div className="hidden lg:block zoom-fixed-sidebar">
+                <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                    <UseCaseCreateSidebar mode="usecase" onSuccess={() => {
+                        toast.success("Caso de uso creado", { description: "El caso de uso se ha añadido a tu catálogo." });
+                        // Refresh the list or navigate
+                    }} />
                 </div>
+            </div>
 
-                <div className="space-y-6 flex-1 min-w-0">
-                    {/* Header / Actions bar */}
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div>
-                            <h2 className="text-2xl font-bold tracking-tight">Mi Catálogo</h2>
-                            <p className="text-muted-foreground">Gestiona los casos de uso visibles para clientes</p>
+            <div className="space-y-6 flex-1 min-w-0">
+                {/* Header / Actions bar */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight">Mi Catálogo</h2>
+                        <p className="text-muted-foreground">Gestiona los casos de uso visibles para clientes</p>
+                    </div>
+
+                    <div className="flex gap-2 w-full md:w-auto">
+                        <div className="relative flex-1 max-w-sm">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                placeholder="Buscar en mi catálogo..."
+                                className="pl-10 bg-white/50 dark:bg-white/5 border-white/10"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
                         </div>
-
-                        <div className="flex gap-2 w-full md:w-auto">
-                            <div className="relative flex-1 max-w-sm">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                <Input
-                                    placeholder="Buscar en mi catálogo..."
-                                    className="pl-10 bg-white/50 dark:bg-white/5 border-white/10"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                            </div>
-                            <Button
-                            className="premium-gradient gap-2 px-6 h-10"
+                        <Button
+                            className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 px-6 h-10"
                             onClick={() => navigate('/provider/marketplace/create')}
                         >
                             <Plus className="h-4 w-4" />
                             <span className="hidden sm:inline">Nuevo Caso</span>
                         </Button>
-                        </div>
+                    </div>
+                </div>
+
+                {/* Top Filters Bar */}
+                <div className="flex flex-wrap items-center gap-4 py-4 border-y border-white/5 bg-white/5 rounded-lg px-4 backdrop-blur-sm">
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                        <Filter className="h-4 w-4" />
+                        <span className="text-sm font-medium">Filtros:</span>
                     </div>
 
-                    {/* Top Filters Bar */}
-                    <div className="flex flex-wrap items-center gap-4 py-4 border-y border-white/5 bg-white/5 rounded-lg px-4 backdrop-blur-sm">
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                            <Filter className="h-4 w-4" />
-                            <span className="text-sm font-medium">Filtros:</span>
-                        </div>
-
-                        <div className="w-[200px]">
-                            <MultiSelect
-                                options={['Retail', 'Fintech', 'Healthcare', 'Logistics', 'Insurance']}
-                                selected={filters.industries}
-                                onChange={(val) => setFilters({ ...filters, industries: val })}
-                                placeholder="Industria..."
-                            />
-                        </div>
-
-                        <div className="h-6 w-px bg-white/10 mx-2 hidden sm:block" />
-
-                        <div className="flex flex-wrap items-center gap-4">
-                            {['Publicado', 'Borrador', 'Archivado'].map(status => (
-                                <div key={`top-${status}`} className="flex items-center space-x-2">
-                                    <input
-                                        type="checkbox"
-                                        id={`uc_top_${status}`}
-                                        className="rounded border-white/10 bg-white/5 text-primary focus:ring-primary"
-                                        checked={filters.status.includes(status)}
-                                        onChange={() => toggleStatus(status)}
-                                    />
-                                    <Label htmlFor={`uc_top_${status}`} className="text-sm font-normal cursor-pointer select-none">
-                                        {status}
-                                    </Label>
-                                </div>
-                            ))}
-                        </div>
+                    <div className="w-[200px]">
+                        <MultiSelect
+                            options={['Retail', 'Fintech', 'Healthcare', 'Logistics', 'Insurance']}
+                            selected={filters.industries}
+                            onChange={(val) => setFilters({ ...filters, industries: val })}
+                            placeholder="Industria..."
+                        />
                     </div>
+
+                    <div className="h-6 w-px bg-white/10 mx-2 hidden sm:block" />
+
+                    <div className="flex flex-wrap items-center gap-4">
+                        {['Publicado', 'Borrador', 'Archivado'].map(status => (
+                            <div key={`top-${status}`} className="flex items-center space-x-2">
+                                <input
+                                    type="checkbox"
+                                    id={`uc_top_${status}`}
+                                    className="rounded border-white/10 bg-white/5 text-primary focus:ring-primary"
+                                    checked={filters.status.includes(status)}
+                                    onChange={() => toggleStatus(status)}
+                                />
+                                <Label htmlFor={`uc_top_${status}`} className="text-sm font-normal cursor-pointer select-none">
+                                    {status}
+                                </Label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
 
                 {/* Grid display */}
                 <div className="zoom-adaptive-grid">
@@ -341,7 +341,7 @@ import { toast } from 'sonner';
                             <FileText className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
                             <h3 className="text-xl font-bold text-[#243A57] dark:text-white mb-2">No se encontraron casos</h3>
                             <p className="text-muted-foreground mb-6">Prueba a buscar con otros términos o añade uno nuevo.</p>
-                            <Button onClick={() => navigate('/provider/marketplace/create')} className="premium-gradient">
+                            <Button onClick={() => navigate('/provider/marketplace/create')} className="bg-primary text-primary-foreground hover:bg-primary/90">
                                 <Plus className="mr-2 h-4 w-4" />
                                 Añadir mi primer caso
                             </Button>
@@ -429,7 +429,7 @@ import { toast } from 'sonner';
                             </Button>
                             <Button
                                 onClick={handleCreate}
-                                className="premium-gradient px-8"
+                                className="bg-primary text-primary-foreground hover:bg-primary/90 px-8"
                             >
                                 Publicar Caso
                             </Button>

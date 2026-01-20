@@ -103,7 +103,7 @@ export default function AdminUsersPage() {
                     <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Gestión de Usuarios</h1>
                     <p className="text-muted-foreground text-lg">Administra empresas registradas en la plataforma</p>
                 </div>
-                <Button className="gap-2 h-12 px-6 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 font-bold rounded-md shadow-lg shadow-violet-500/20">
+                <Button className="gap-2 h-12 px-6 bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-md shadow-lg shadow-primary/20">
                     <UserPlus className="h-5 w-5" />
                     Invitar Usuario
                 </Button>
@@ -219,8 +219,8 @@ export default function AdminUsersPage() {
                             </TableHeader>
                             <TableBody>
                                 {filteredUsers.map((user) => (
-                                    <TableRow 
-                                        key={user.id} 
+                                    <TableRow
+                                        key={user.id}
                                         className="border-white/5 hover:bg-muted/30 transition-colors cursor-pointer group"
                                         onClick={() => handleRowClick(user)}
                                     >
@@ -419,7 +419,7 @@ export default function AdminUsersPage() {
                                     <TabsTrigger value="activity">Actividad</TabsTrigger>
                                     <TabsTrigger value="billing">Facturación</TabsTrigger>
                                 </TabsList>
-                                
+
                                 <TabsContent value="overview" className="space-y-4">
                                     <div className="grid grid-cols-2 gap-4">
                                         <Card className="p-4 bg-muted/30 border-0">
@@ -442,7 +442,7 @@ export default function AdminUsersPage() {
                                             <p className="font-mono text-sm">USR-{selectedUser.id.toString().padStart(4, '0')}</p>
                                         </Card>
                                     </div>
-                                    
+
                                     <div className="pt-4 border-t border-border">
                                         <h4 className="font-semibold mb-3">Información de Contacto</h4>
                                         <div className="space-y-3 text-sm">

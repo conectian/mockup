@@ -24,7 +24,7 @@ export default function DealRoomsPopover() {
 
     return (
         <Link to={linkTo}>
-            <Button variant="ghost" size="icon" className="relative rounded-full text-white/70 hover:text-white hover:bg-white/10">
+            <Button variant="ghost" size="icon" className="relative rounded-full text-muted-foreground hover:text-foreground hover:bg-accent">
                 <Handshake className="h-5 w-5" />
                 {unreadCount > 0 && (
                     <span className="absolute top-0 right-0 h-4 w-4 text-[10px] font-bold flex items-center justify-center rounded-full bg-red-600 text-white border-2 border-background">

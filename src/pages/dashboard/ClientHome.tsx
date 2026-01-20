@@ -1,9 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { FileText, FolderKanban, Search, ArrowRight, Sparkles, TrendingUp, Euro, Clock, Zap, Users, Target } from 'lucide-react';
+import { FolderKanban, Search, ArrowRight, Sparkles, TrendingUp, Euro, Clock, Zap, Users, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
 
 // Mock recommended use cases
 const mockRecommendations = [
@@ -36,7 +35,7 @@ export default function ClientHome() {
     return (
         <div className="space-y-10">
             {/* Hero Banner */}
-            <Card className="border-0 mesh-gradient text-white overflow-hidden relative rounded-md shadow-2xl shadow-indigo-500/20">
+            <Card className="border-0 bg-[#243A57] text-white overflow-hidden relative rounded-md shadow-2xl shadow-indigo-500/20">
                 <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]" />
                 <CardContent className="py-12 px-8 md:px-12 relative z-10">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
@@ -49,7 +48,7 @@ export default function ClientHome() {
                             </p>
                         </div>
                         <Link to="/client/marketplace" className="shrink-0">
-                            <Button size="lg" className="premium-gradient text-white hover:opacity-90 gap-3 shadow-xl shadow-black/20 px-8 py-7 text-lg font-bold rounded-md transition-all hover:scale-105 active:scale-95 border border-white/10">
+                            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 gap-3 shadow-xl shadow-primary/20 px-8 py-7 text-lg font-bold rounded-md transition-all hover:scale-105 active:scale-95 border border-white/10">
                                 <Search className="h-6 w-6" />
                                 Explorar Soluciones
                             </Button>
@@ -184,7 +183,7 @@ export default function ClientHome() {
                                     alt={item.title}
                                     className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                                     <Badge className="bg-white/20 backdrop-blur-md text-white border-white/20 hover:bg-white/30">
                                         Explorar detalles
                                     </Badge>

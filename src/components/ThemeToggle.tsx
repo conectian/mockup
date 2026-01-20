@@ -10,7 +10,7 @@ export default function ThemeToggle() {
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
-            className="rounded-full text-white/70 hover:text-white hover:bg-white/10"
+            className="rounded-full text-muted-foreground hover:text-foreground hover:bg-accent"
         >
             {theme === 'light' ? (
                 <Moon className="h-5 w-5" />

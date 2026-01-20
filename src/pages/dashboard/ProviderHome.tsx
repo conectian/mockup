@@ -62,7 +62,7 @@ export default function ProviderHome() {
             {/* KPI Row */}
             <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
                 {/* Credits */}
-                <Card className="border-0 bg-gradient-to-br from-amber-400/20 via-orange-500/10 to-transparent relative overflow-hidden rounded-md shadow-xl shadow-amber-500/5 group col-span-2 lg:col-span-1">
+                <Card className="border-0 bg-primary/10 relative overflow-hidden rounded-md shadow-xl shadow-amber-500/5 group col-span-2 lg:col-span-1">
                     <div className="absolute top-0 right-0 p-3 md:p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
                         <Coins className="h-12 w-12 md:h-20 md:w-20 text-amber-500" />
                     </div>
@@ -158,7 +158,7 @@ export default function ProviderHome() {
                                 >
                                     <div className="flex items-center gap-4">
                                         <Avatar className="h-12 w-12 rounded-md shadow-sm">
-                                            <AvatarFallback className="bg-gradient-to-br from-slate-200 to-slate-400 text-slate-700 text-base font-bold">
+                                            <AvatarFallback className="bg-primary/20 text-primary text-base font-bold">
                                                 {lead.company.charAt(0)}
                                             </AvatarFallback>
                                         </Avatar>
@@ -190,14 +190,14 @@ export default function ProviderHome() {
 
                 {/* Quick Actions */}
                 <div className="space-y-6">
-                    <Card className="border-0 premium-gradient rounded-md shadow-2xl shadow-indigo-500/20 text-white overflow-hidden relative">
-                        <div className="absolute inset-0 bg-black/5 backdrop-blur-[1px]" />
+                    <Card className="border-0 bg-[#243A57] rounded-md shadow-2xl shadow-primary/20 text-white overflow-hidden relative">
+                        <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
                         <CardHeader className="relative z-10 px-8 pt-8">
                             <CardTitle className="text-lg font-display font-bold">Impulsa tu catálogo</CardTitle>
                         </CardHeader>
                         <CardContent className="relative z-10 px-8 pb-8 space-y-4">
                             <Link to="/provider/marketplace/create" className="block">
-                                <Button className="w-full gap-3 h-14 bg-white text-indigo-600 hover:bg-white/95 scale-100 hover:scale-[1.02] active:scale-[0.98] transition-all font-bold text-base rounded-md shadow-xl shadow-black/10">
+                                <Button className="w-full gap-3 h-14 bg-primary text-white hover:bg-primary/90 scale-100 hover:scale-[1.02] active:scale-[0.98] transition-all font-bold text-base rounded-md shadow-xl shadow-primary/20">
                                     <Plus className="h-6 w-6" />
                                     Nuevo Caso de Uso
                                 </Button>

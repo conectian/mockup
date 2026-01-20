@@ -1,12 +1,13 @@
+import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useAuthStore, type UserType } from '../store/useAuthStore';
 import ThemeToggle from './ThemeToggle';
 import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
@@ -22,7 +23,9 @@ import {
     Lightbulb,
     Users,
     CreditCard,
-    LayoutDashboard
+    LayoutDashboard,
+    Menu,
+    ChevronRight
 } from 'lucide-react';
 import { ExpandingNav } from './navigation/ExpandingNav';
 import MessagesPopover from './MessagesPopover';
@@ -45,16 +48,232 @@ function getMenuForRole(role: UserType): MenuItem[] {
     }
 }
 
+// Mobile navigation items configuration
+const MOBILE_NAV_PROVIDER = [
+    {
+        group: "Crecimiento",
+        icon: Store,
+        items: [
+            { name: "Marketplace", href: "/provider/marketplace?tab=empresas", icon: Building2 },
+            { name: "RFIP", href: "/provider/marketplace?tab=rfip", icon: FileText },
+            { name: "Casos de Uso", href: "/provider/marketplace?tab=casos-de-uso", icon: Store },
+        ]
+    },
+    {
+        group: "Ventas",
+        icon: FolderKanban,
+        items: [
+            { name: "Leads", href: "/provider/deal-rooms?tab=leads", icon: Users },
+            { name: "Deal Rooms", href: "/provider/deal-rooms?tab=dealrooms", icon: FolderKanban },
+            { name: "Dashboard", href: "/provider/deal-rooms?tab=dashboard", icon: LayoutDashboard },
+        ]
+    }
+];
+
+const MOBILE_NAV_CLIENT = [
+    {
+        group: "Crecimiento",
+        icon: Store,
+        items: [
+            { name: "Marketplace", href: "/client/marketplace?tab=mercado", icon: Globe },
+            { name: "Marketplace Privado", href: "/client/marketplace?tab=propuestas", icon: Inbox },
+            { name: "RFIP", href: "/client/marketplace?tab=innovacion", icon: Lightbulb },
+        ]
+    },
+    {
+        group: "ROI",
+        icon: LayoutDashboard,
+        items: [
+            { name: "Deal Rooms", href: "/client/deal-rooms", icon: FolderKanban },
+            { name: "Dashboard", href: "/client/dashboard", icon: LayoutDashboard },
+        ]
+    }
+];
+
 export default function AppHeader() {
     const location = useLocation();
     const { logout, userType } = useAuthStore();
     const menuItems = getMenuForRole(userType);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const mobileNavGroups = userType === 'provider' ? MOBILE_NAV_PROVIDER :
+        userType === 'client' ? MOBILE_NAV_CLIENT : [];
+
+    // Helper function to check if a nav item is active
+    const isNavItemActive = (itemHref: string) => {
+        const currentFullUrl = location.pathname + location.search;
+
+        // Check exact match first
+        if (currentFullUrl === itemHref) return true;
+
+        // Check if URL has query params
+        if (itemHref.includes('?')) {
+            const [basePath, queryString] = itemHref.split('?');
+            const itemParams = new URLSearchParams(queryString);
+            const currentParams = new URLSearchParams(location.search);
+
+            // Path must match and the specific tab param must match
+            if (location.pathname === basePath) {
+                const itemTab = itemParams.get('tab');
+                const currentTab = currentParams.get('tab');
+                if (itemTab && currentTab) {
+                    return itemTab === currentTab;
+                }
+            }
+            return false;
+        }
+
+        // For URLs without query params, check exact path match
+        return location.pathname === itemHref;
+    };
 
     return (
         <>
-            <header className="h-14 md:h-16 border-b border-white/5 bg-[#0F172A] sticky top-0 z-30 flex items-center justify-between px-3 md:px-4 lg:px-8">
-                {/* Left: Logo + Navigation */}
-                <div className="flex items-center gap-4 md:gap-6">
+            <header className="h-14 md:h-16 border-b border-border bg-card sticky top-0 z-30 flex items-center justify-between px-3 md:px-4 lg:px-8">
+                {/* Left: Mobile Menu + Logo + Navigation */}
+                <div className="flex items-center gap-2 md:gap-6">
+                    {/* Mobile Menu Button */}
+                    <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                        <SheetTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="md:hidden rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent"
+                            >
+                                <Menu className="h-5 w-5" />
+                                <span className="sr-only">Abrir menú</span>
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent side="left" className="w-80 p-0 border-r border-border">
+                            {/* Mobile Menu Header */}
+                            <div className="flex items-center justify-between p-4 border-b border-border bg-muted/30">
+                                <Link
+                                    to="/"
+                                    className="flex items-center gap-2"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                >
+                                    <img src="/conectian.png" alt="Conectian" className="h-8 w-8 object-contain" />
+                                    <span className="font-display font-bold text-lg tracking-tight text-foreground">
+                                        Conectian
+                                    </span>
+                                </Link>
+                            </div>
+
+                            {/* User Badge */}
+                            <div className="px-4 py-3 border-b border-border bg-muted/20">
+                                <div className="flex items-center gap-3">
+                                    <div className={cn(
+                                        "h-10 w-10 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-md",
+                                        userType === 'provider' && "bg-gradient-to-br from-emerald-400 to-teal-500",
+                                        userType === 'client' && "bg-gradient-to-br from-blue-400 to-indigo-500",
+                                        userType === 'admin' && "bg-gradient-to-br from-amber-400 to-orange-500"
+                                    )}>
+                                        {userType?.charAt(0).toUpperCase() || 'U'}
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold capitalize text-foreground">{userType}</p>
+                                        <p className="text-xs text-muted-foreground">Cuenta Activa</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Navigation Groups */}
+                            <div className="flex-1 overflow-y-auto py-4">
+                                {mobileNavGroups.map((group) => (
+                                    <div key={group.group} className="mb-4">
+                                        <div className="px-4 py-2 flex items-center gap-2">
+                                            <group.icon className="h-4 w-4 text-muted-foreground" />
+                                            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                                                {group.group}
+                                            </span>
+                                        </div>
+                                        <div className="space-y-1 px-2">
+                                            {group.items.map((item) => {
+                                                const isActive = isNavItemActive(item.href);
+                                                return (
+                                                    <Link
+                                                        key={item.href}
+                                                        to={item.href}
+                                                        onClick={() => setMobileMenuOpen(false)}
+                                                        className={cn(
+                                                            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                                                            isActive
+                                                                ? "bg-primary/10 text-primary"
+                                                                : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                                                        )}
+                                                    >
+                                                        <item.icon className={cn(
+                                                            "h-4 w-4",
+                                                            isActive ? "text-primary" : "text-muted-foreground"
+                                                        )} />
+                                                        {item.name}
+                                                        <ChevronRight className="h-4 w-4 ml-auto opacity-50" />
+                                                    </Link>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                ))}
+
+                                {/* Admin navigation */}
+                                {userType === 'admin' && menuItems.length > 0 && (
+                                    <div className="mb-4">
+                                        <div className="px-4 py-2">
+                                            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                                                Administración
+                                            </span>
+                                        </div>
+                                        <div className="space-y-1 px-2">
+                                            {menuItems.map((item) => {
+                                                const Icon = item.icon;
+                                                const isActive = location.pathname.startsWith(item.href);
+                                                return (
+                                                    <Link
+                                                        key={item.href}
+                                                        to={item.href}
+                                                        onClick={() => setMobileMenuOpen(false)}
+                                                        className={cn(
+                                                            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                                                            isActive
+                                                                ? "bg-primary/10 text-primary"
+                                                                : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                                                        )}
+                                                    >
+                                                        <Icon className={cn(
+                                                            "h-4 w-4",
+                                                            isActive ? "text-primary" : "text-muted-foreground"
+                                                        )} />
+                                                        {item.name}
+                                                        <ChevronRight className="h-4 w-4 ml-auto opacity-50" />
+                                                    </Link>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Mobile Menu Footer */}
+                            <div className="border-t border-border p-4 space-y-2 bg-muted/20">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm text-muted-foreground">Tema</span>
+                                    <ThemeToggle />
+                                </div>
+                                <Button
+                                    variant="ghost"
+                                    className="w-full justify-start gap-3 text-destructive hover:text-destructive hover:bg-destructive/10"
+                                    onClick={() => {
+                                        logout();
+                                        setMobileMenuOpen(false);
+                                    }}
+                                >
+                                    <LogOut className="h-4 w-4" />
+                                    Cerrar Sesión
+                                </Button>
+                            </div>
+                        </SheetContent>
+                    </Sheet>
+
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-2 group">
                         <div className="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center shrink-0 transition-all duration-300">
@@ -66,118 +285,119 @@ export default function AppHeader() {
                     </Link>
 
                     {/* Desktop Navigation */}
-                <nav className="hidden md:flex items-center gap-1">
-                    {userType === 'provider' ? (
-                        <>
-                            <ExpandingNav 
-                                items={[
-                                    {
-                                        name: "Crecimiento",
-                                        basePath: "/provider/marketplace",
-                                        icon: Store,
-                                        subItems: [
-                                            { name: "Marketplace", value: "empresas", icon: Building2 },
-                                            { name: "RFIP", value: "rfip", icon: FileText },
-                                            { name: "Casos de Uso", value: "casos-de-uso", icon: Store },
-                                        ]
-                                    },
-                                    {
-                                        name: "Ventas",
-                                        basePath: "/provider/deal-rooms",
-                                        icon: FolderKanban,
-                                        subItems: [
-                                            { name: "Leads", value: "leads", icon: Users },
-                                            { name: "Deal Rooms", value: "dealrooms", icon: FolderKanban },
-                                            { name: "Dashboard", value: "dashboard", icon: LayoutDashboard },
-                                        ]
-                                    }
-                                ]}
-                            />
-                        </>
-                    ) : userType === 'client' ? (
-                        <>
-                            <ExpandingNav 
-                                items={[
-                                    {
-                                        name: "Crecimiento",
-                                        basePath: "/client/marketplace",
-                                        icon: Store,
-                                        subItems: [
-                                            { name: "Marketplace", value: "mercado", icon: Globe },
-                                            { name: "Marketplace Privado", value: "propuestas", icon: Inbox },
-                                            { name: "RFIP", value: "innovacion", icon: Lightbulb },
-                                        ]
-                                    },
-                                    {
-                                        name: "ROI",
-                                        basePath: "/client",
-                                        icon: LayoutDashboard,
-                                        subItems: [
-                                            { name: "Deal Rooms", value: "deal-rooms", icon: FolderKanban, href: "/client/deal-rooms" },
-                                            { name: "Dashboard", value: "dashboard", icon: LayoutDashboard, href: "/client/dashboard" },
-                                        ]
-                                    }
-                                ]}
-                            />
-                        </>
-                    ) : (
-                        // ADMIN NAVIGATION (Keep as is or simple map)
-                        menuItems.map((item) => {
-                            const Icon = item.icon;
-                            const isActive = location.pathname.startsWith(item.href);
-                            return (
-                                <Link
-                                    key={item.href}
-                                    to={item.href}
-                                    className={cn(
-                                        "flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
-                                        isActive
-                                            ? "bg-white/10 text-white shadow-sm border border-white/5"
-                                            : "text-muted-foreground hover:text-white hover:bg-white/5"
-                                    )}
-                                >
-                                    <Icon className="h-4 w-4" />
-                                    {item.name}
-                                </Link>
-                            );
-                        })
-                    )}
-                </nav>
+                    <nav className="hidden md:flex items-center gap-1">
+                        {userType === 'provider' ? (
+                            <>
+                                <ExpandingNav
+                                    items={[
+                                        {
+                                            name: "Crecimiento",
+                                            basePath: "/provider/marketplace",
+                                            icon: Store,
+                                            subItems: [
+                                                { name: "Marketplace", value: "empresas", icon: Building2 },
+                                                { name: "RFIP", value: "rfip", icon: FileText },
+                                                { name: "Casos de Uso", value: "casos-de-uso", icon: Store },
+                                            ]
+                                        },
+                                        {
+                                            name: "Ventas",
+                                            basePath: "/provider/deal-rooms",
+                                            icon: FolderKanban,
+                                            subItems: [
+                                                { name: "Leads", value: "leads", icon: Users },
+                                                { name: "Deal Rooms", value: "dealrooms", icon: FolderKanban },
+                                                { name: "Dashboard", value: "dashboard", icon: LayoutDashboard },
+                                            ]
+                                        }
+                                    ]}
+                                />
+                            </>
+                        ) : userType === 'client' ? (
+                            <>
+                                <ExpandingNav
+                                    items={[
+                                        {
+                                            name: "Crecimiento",
+                                            basePath: "/client/marketplace",
+                                            icon: Store,
+                                            subItems: [
+                                                { name: "Marketplace", value: "mercado", icon: Globe },
+                                                { name: "Marketplace Privado", value: "propuestas", icon: Inbox },
+                                                { name: "RFIP", value: "innovacion", icon: Lightbulb },
+                                            ]
+                                        },
+                                        {
+                                            name: "ROI",
+                                            basePath: "/client",
+                                            icon: LayoutDashboard,
+                                            subItems: [
+                                                { name: "Deal Rooms", value: "deal-rooms", icon: FolderKanban, href: "/client/deal-rooms" },
+                                                { name: "Dashboard", value: "dashboard", icon: LayoutDashboard, href: "/client/dashboard" },
+                                            ]
+                                        }
+                                    ]}
+                                />
+                            </>
+                        ) : (
+                            // ADMIN NAVIGATION (Keep as is or simple map)
+                            menuItems.map((item) => {
+                                const Icon = item.icon;
+                                const isActive = location.pathname.startsWith(item.href);
+                                return (
+                                    <Link
+                                        key={item.href}
+                                        to={item.href}
+                                        className={cn(
+                                            "flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
+                                            isActive
+                                                ? "bg-primary/10 text-primary shadow-sm border border-primary/20"
+                                                : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                                        )}
+                                    >
+                                        <Icon className="h-4 w-4" />
+                                        {item.name}
+                                    </Link>
+                                );
+                            })
+                        )}
+                    </nav>
                 </div>
 
                 {/* Right: Actions */}
                 <div className="flex items-center gap-2 md:gap-3">
                     {userType !== 'admin' ? (
                         <>
-                            <div className="hidden sm:flex items-center gap-1.5 px-2 py-1 rounded-full bg-white/5 border border-white/5">
+                            <div className="hidden sm:flex items-center gap-1.5 px-2 py-1 rounded-full bg-muted/50 border border-border">
                                 <ThemeToggle />
-                                <div className="w-[1px] h-4 bg-white/10 mx-1" />
+                                <div className="w-[1px] h-4 bg-border mx-1" />
                                 <NotificationsPopover />
                                 <DealRoomsPopover />
                                 <MessagesPopover />
                             </div>
 
                             {/* Mobile notifications only */}
-                            <div className="sm:hidden flex items-center gap-1">
+                            <div className="sm:hidden flex items-center gap-0.5 -mr-1">
+                                <ThemeToggle />
                                 <NotificationsPopover />
                                 <DealRoomsPopover />
                                 <MessagesPopover />
                             </div>
                         </>
                     ) : (
-                        <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-white/5 border border-white/5">
+                        <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-muted/50 border border-border">
                             <ThemeToggle />
-                            <div className="w-[1px] h-4 bg-white/10 mx-1" />
+                            <div className="w-[1px] h-4 bg-border mx-1 shrink-0" />
                             <NotificationsPopover />
                         </div>
                     )}
 
-                    {/* User Dropdown */}
+                    {/* User Dropdown - Hidden on mobile since we have it in the sheet */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button
                                 variant="ghost"
-                                className="flex items-center gap-2.5 h-11 px-2.5 hover:bg-white/10 rounded-lg transition-all duration-200 group border border-transparent hover:border-white/10"
+                                className="hidden sm:flex items-center gap-2.5 h-11 px-2.5 hover:bg-accent rounded-lg transition-all duration-200 group border border-transparent hover:border-border"
                             >
                                 <div className={cn(
                                     "h-9 w-9 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-lg shrink-0 transition-transform duration-200 group-hover:scale-105",
@@ -188,7 +408,7 @@ export default function AppHeader() {
                                     {userType?.charAt(0).toUpperCase() || 'U'}
                                 </div>
                                 <div className="hidden md:flex flex-col items-start leading-none gap-1.5">
-                                    <span className="text-sm font-bold capitalize tracking-tight text-foreground group-hover:text-white transition-colors">
+                                    <span className="text-sm font-bold capitalize tracking-tight text-foreground group-hover:text-primary transition-colors">
                                         {userType}
                                     </span>
                                     <span className="text-[11px] text-muted-foreground/70 font-medium">Cuenta Activa</span>
@@ -198,59 +418,59 @@ export default function AppHeader() {
                                 </svg>
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-64 bg-[#1E293B] border-white/10 shadow-2xl mt-2 p-3">
+                        <DropdownMenuContent align="end" className="w-64 bg-card border-border shadow-2xl mt-2 p-3">
                             <div className="px-3 py-2.5 mb-2">
                                 <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Mi Cuenta</p>
                             </div>
-                            
-                            <DropdownMenuItem asChild className="focus:bg-white/10 hover:bg-white/10 cursor-pointer rounded-lg px-3 py-3 mb-1 transition-all">
+
+                            <DropdownMenuItem asChild className="focus:bg-accent hover:bg-accent cursor-pointer rounded-lg px-3 py-3 mb-1 transition-all">
                                 <Link to={
-                                    userType === 'provider' ? '/provider/profile?tab=profile' : 
-                                    userType === 'client' ? '/client/profile?tab=profile' : 
-                                    '/admin/profile'
+                                    userType === 'provider' ? '/provider/profile?tab=profile' :
+                                        userType === 'client' ? '/client/profile?tab=profile' :
+                                            '/admin/profile'
                                 } className="flex items-center gap-3">
                                     <div className={cn(
                                         "h-9 w-9 rounded-lg flex items-center justify-center",
-                                        userType === 'provider' && "bg-emerald-500/20 text-emerald-400",
-                                        userType === 'client' && "bg-blue-500/20 text-blue-400",
-                                        userType === 'admin' && "bg-amber-500/20 text-amber-400"
+                                        userType === 'provider' && "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400",
+                                        userType === 'client' && "bg-blue-500/20 text-blue-600 dark:text-blue-400",
+                                        userType === 'admin' && "bg-amber-500/20 text-amber-600 dark:text-amber-400"
                                     )}>
                                         <User className="h-4 w-4" />
                                     </div>
-                                    <span className="font-semibold text-white">Mi Perfil</span>
+                                    <span className="font-semibold text-foreground">Mi Perfil</span>
                                 </Link>
                             </DropdownMenuItem>
 
                             {/* Referidos - available for provider and client */}
                             {(userType === 'provider' || userType === 'client') && (
                                 <>
-                                    <DropdownMenuSeparator className="bg-white/10 my-2" />
-                                    
-                                    <DropdownMenuItem asChild className="focus:bg-white/10 hover:bg-white/10 cursor-pointer rounded-lg px-3 py-3 mb-1 transition-all">
+                                    <DropdownMenuSeparator className="bg-border my-2" />
+
+                                    <DropdownMenuItem asChild className="focus:bg-accent hover:bg-accent cursor-pointer rounded-lg px-3 py-3 mb-1 transition-all">
                                         <Link to={userType === 'provider' ? '/provider/referrals' : '/client/referrals'} className="flex items-center gap-3">
-                                            <div className="h-9 w-9 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                                            <div className="h-9 w-9 rounded-lg bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                                                 <Users className="h-4 w-4" />
                                             </div>
-                                            <span className="font-semibold text-white">Referidos</span>
+                                            <span className="font-semibold text-foreground">Referidos</span>
                                         </Link>
                                     </DropdownMenuItem>
 
                                     {/* Pagos - available for provider and client */}
-                                    <DropdownMenuItem asChild className="focus:bg-white/10 hover:bg-white/10 cursor-pointer rounded-lg px-3 py-3 mb-1 transition-all">
+                                    <DropdownMenuItem asChild className="focus:bg-accent hover:bg-accent cursor-pointer rounded-lg px-3 py-3 mb-1 transition-all">
                                         <Link to={userType === 'provider' ? '/provider/payments' : '/client/payments'} className="flex items-center gap-3">
-                                            <div className="h-9 w-9 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
+                                            <div className="h-9 w-9 rounded-lg bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
                                                 <CreditCard className="h-4 w-4" />
                                             </div>
-                                            <span className="font-semibold text-white">Pagos</span>
+                                            <span className="font-semibold text-foreground">Pagos</span>
                                         </Link>
                                     </DropdownMenuItem>
                                 </>
                             )}
 
-                            <DropdownMenuSeparator className="bg-white/10 my-2" />
-                            
-                            <DropdownMenuItem 
-                                onClick={logout} 
+                            <DropdownMenuSeparator className="bg-border my-2" />
+
+                            <DropdownMenuItem
+                                onClick={logout}
                                 className="hover:bg-red-500/10 focus:bg-red-500/10 cursor-pointer rounded-lg px-3 py-3 transition-all group"
                             >
                                 <div className="flex items-center gap-3 w-full">

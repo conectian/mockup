@@ -74,7 +74,7 @@ export default function CompanyDetailPage() {
                                 <ArrowLeft className="h-4 w-4" /> <span className="md:inline">Volver</span>
                             </Button>
                         </Link>
-                        <Button onClick={() => setIsProposalModalOpen(true)} className="flex-[2] md:flex-none gap-2 font-bold premium-gradient w-full md:w-auto text-white shadow-xl shadow-primary/20 hover:scale-105 transition-transform h-11 md:h-10">
+                        <Button onClick={() => setIsProposalModalOpen(true)} className="flex-[2] md:flex-none gap-2 font-bold bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto shadow-xl shadow-primary/20 hover:scale-105 transition-transform h-11 md:h-10">
                             Propuesta <ArrowRight className="h-4 w-4" />
                         </Button>
                     </div>

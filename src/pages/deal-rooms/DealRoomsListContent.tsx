@@ -131,7 +131,7 @@ export default function DealRoomsListContent() {
                     <h2 className="text-xl font-display font-bold">Negociaciones Activas</h2>
                     <p className="text-sm text-muted-foreground">Gestiona tus Deal Rooms y alianzas estratégicas</p>
                 </div>
-                <Button className="gap-2 h-11 px-5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 font-bold rounded-md shadow-lg shadow-violet-500/20">
+                <Button className="gap-2 h-11 px-5 bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-md shadow-lg shadow-primary/20">
                     <Plus className="h-4 w-4" />
                     Nueva Deal Room
                 </Button>
@@ -250,9 +250,9 @@ export default function DealRoomsListContent() {
                                 {/* Image Cover */}
                                 <div className="relative h-48 w-full overflow-hidden">
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
-                                    <img 
-                                        src={room.image} 
-                                        alt={room.title} 
+                                    <img
+                                        src={room.image}
+                                        alt={room.title}
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
                                     <div className="absolute top-4 right-4 z-20">
@@ -347,8 +347,8 @@ export default function DealRoomsListContent() {
                                                 {room.title.charAt(0)}
                                             </AvatarFallback>
                                         </Avatar>
-                                        <div>
-                                            <h3 className="font-bold text-sm leading-tight">{room.title}</h3>
+                                        <div className="min-w-0 flex-1">
+                                            <h3 className="font-bold text-sm leading-tight line-clamp-2">{room.title}</h3>
                                             <div className="flex items-center gap-2 mt-1">
                                                 <div className="h-5 w-5 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
                                                     {room.counterparty.charAt(0)}

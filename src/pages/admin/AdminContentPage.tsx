@@ -47,55 +47,55 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 
 const mockContent = [
-    { 
-        id: 1, 
-        title: 'Cómo implementar IA en procesos de RRHH', 
+    {
+        id: 1,
+        title: 'Cómo implementar IA en procesos de RRHH',
         slug: '/blog/ia-rrhh-implementation',
-        type: 'Artículo', 
-        author: 'Ana García', 
-        date: '12 Ene 2026', 
-        status: 'Publicado', 
-        views: 1250 
+        type: 'Artículo',
+        author: 'Ana García',
+        date: '12 Ene 2026',
+        status: 'Publicado',
+        views: 1250
     },
-    { 
-        id: 2, 
-        title: 'Guía completa de Machine Learning para CEOs', 
+    {
+        id: 2,
+        title: 'Guía completa de Machine Learning para CEOs',
         slug: '/guides/ml-for-ceos',
-        type: 'Guía', 
-        author: 'Carlos Ruiz', 
-        date: '10 Ene 2026', 
-        status: 'Publicado', 
-        views: 3400 
+        type: 'Guía',
+        author: 'Carlos Ruiz',
+        date: '10 Ene 2026',
+        status: 'Publicado',
+        views: 3400
     },
-    { 
-        id: 3, 
-        title: 'Entrevista con CTO de TechGlobal', 
+    {
+        id: 3,
+        title: 'Entrevista con CTO de TechGlobal',
         slug: '/videos/interview-techglobal',
-        type: 'Video', 
-        author: 'Laura M.', 
-        date: '08 Ene 2026', 
-        status: 'En Revisión', 
-        views: 0 
+        type: 'Video',
+        author: 'Laura M.',
+        date: '08 Ene 2026',
+        status: 'En Revisión',
+        views: 0
     },
-    { 
-        id: 4, 
-        title: 'Tendencias de IA para 2026', 
+    {
+        id: 4,
+        title: 'Tendencias de IA para 2026',
         slug: '/blog/ai-trends-2026',
-        type: 'Artículo', 
-        author: 'Ana García', 
-        date: '05 Ene 2026', 
-        status: 'Borrador', 
-        views: 0 
+        type: 'Artículo',
+        author: 'Ana García',
+        date: '05 Ene 2026',
+        status: 'Borrador',
+        views: 0
     },
-    { 
-        id: 5, 
-        title: 'Automatización de Facturación con IA', 
+    {
+        id: 5,
+        title: 'Automatización de Facturación con IA',
         slug: '/guides/invoice-automation',
-        type: 'Guía', 
-        author: 'Pedro S.', 
-        date: '03 Ene 2026', 
-        status: 'Publicado', 
-        views: 890 
+        type: 'Guía',
+        author: 'Pedro S.',
+        date: '03 Ene 2026',
+        status: 'Publicado',
+        views: 890
     },
 ];
 
@@ -163,7 +163,7 @@ export default function AdminContentPage() {
                     <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Gestión de Contenido</h1>
                     <p className="text-muted-foreground text-lg">Administra los recursos, artículos y guías de la plataforma</p>
                 </div>
-                <Button className="gap-2 h-12 px-6 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 font-bold rounded-md shadow-lg shadow-blue-500/20" onClick={handleCreate}>
+                <Button className="gap-2 h-12 px-6 bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-md shadow-lg shadow-primary/20" onClick={handleCreate}>
                     <Plus className="h-5 w-5" />
                     Nuevo Contenido
                 </Button>
@@ -211,8 +211,8 @@ export default function AdminContentPage() {
                 <div className="p-4 border-b border-white/5 flex flex-col md:flex-row gap-4 justify-between bg-muted/20">
                     <div className="relative w-full md:w-80">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input 
-                            placeholder="Buscar contenido..." 
+                        <Input
+                            placeholder="Buscar contenido..."
                             className="pl-10 bg-background border-white/10"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -259,8 +259,8 @@ export default function AdminContentPage() {
                         {mockContent.map((item) => {
                             const Icon = getTypeIcon(item.type);
                             return (
-                                <TableRow 
-                                    key={item.id} 
+                                <TableRow
+                                    key={item.id}
                                     className="border-white/5 hover:bg-muted/30 cursor-pointer group transition-colors"
                                     onClick={() => handleView(item)}
                                 >
@@ -304,19 +304,19 @@ export default function AdminContentPage() {
                                         <div className="flex items-center justify-end gap-1">
                                             {item.status === 'En Revisión' ? (
                                                 <>
-                                                    <Button 
-                                                        variant="ghost" 
-                                                        size="sm" 
-                                                        className="h-8 px-3 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-500/10 gap-1.5 font-semibold" 
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        className="h-8 px-3 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-500/10 gap-1.5 font-semibold"
                                                         onClick={() => handleApprove(item)}
                                                     >
                                                         <CheckCircle className="h-4 w-4" />
                                                         Aprobar
                                                     </Button>
-                                                    <Button 
-                                                        variant="ghost" 
-                                                        size="sm" 
-                                                        className="h-8 px-3 text-red-500 hover:text-red-600 hover:bg-red-500/10 gap-1.5 font-semibold" 
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        className="h-8 px-3 text-red-500 hover:text-red-600 hover:bg-red-500/10 gap-1.5 font-semibold"
                                                         onClick={() => handleReject(item)}
                                                     >
                                                         <X className="h-4 w-4" />
@@ -356,37 +356,37 @@ export default function AdminContentPage() {
                             {editMode ? 'Complete la información para publicar.' : 'Vista previa y metadatos del contenido.'}
                         </SheetDescription>
                     </SheetHeader>
-                    
+
                     <div className="space-y-6 mt-6">
                         <div className="grid grid-cols-3 gap-6">
                             <div className="col-span-2 space-y-4">
                                 <div className="space-y-2">
                                     <Label>Título Principal</Label>
-                                    <Input 
-                                        defaultValue={selectedContent?.title || ''} 
+                                    <Input
+                                        defaultValue={selectedContent?.title || ''}
                                         readOnly={!editMode}
                                         className={cn(!editMode && "bg-muted border-transparent")}
                                     />
                                 </div>
                                 <div className="space-y-2">
                                     <Label>Slug (URL)</Label>
-                                    <Input 
-                                        defaultValue={selectedContent?.slug || ''} 
+                                    <Input
+                                        defaultValue={selectedContent?.slug || ''}
                                         readOnly={!editMode}
                                         className={cn("font-mono text-sm", !editMode && "bg-muted border-transparent")}
                                     />
                                 </div>
                                 <div className="space-y-2">
                                     <Label>Contenido / Resumen</Label>
-                                    <Textarea 
-                                        className={cn("min-h-[200px]", !editMode && "bg-muted border-transparent")} 
+                                    <Textarea
+                                        className={cn("min-h-[200px]", !editMode && "bg-muted border-transparent")}
                                         placeholder="Escribe el contenido aquí..."
                                         readOnly={!editMode}
                                         defaultValue={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...`}
                                     />
                                 </div>
                             </div>
-                            
+
                             <div className="space-y-6">
                                 <div className="space-y-2">
                                     <Label>Estado</Label>
@@ -449,23 +449,23 @@ export default function AdminContentPage() {
                         {editMode ? (
                             <div className="flex gap-2 w-full justify-end">
                                 <Button variant="outline" onClick={() => setSheetOpen(false)}>Cancelar</Button>
-                                <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => {toast.success('Contenido guardado'); setSheetOpen(false);}}>Guardar Cambios</Button>
+                                <Button className="bg-primary text-primary-foreground hover:bg-primary/90" onClick={() => { toast.success('Contenido guardado'); setSheetOpen(false); }}>Guardar Cambios</Button>
                             </div>
                         ) : selectedContent?.status === 'En Revisión' ? (
                             <div className="flex gap-2 w-full justify-between">
                                 <Button variant="outline" onClick={() => setSheetOpen(false)}>Cerrar</Button>
                                 <div className="flex gap-2">
-                                    <Button 
-                                        variant="outline" 
-                                        className="text-red-500 border-red-500/50 hover:bg-red-500/10 hover:text-red-600 gap-2" 
-                                        onClick={() => {handleReject(selectedContent); setSheetOpen(false);}}
+                                    <Button
+                                        variant="outline"
+                                        className="text-red-500 border-red-500/50 hover:bg-red-500/10 hover:text-red-600 gap-2"
+                                        onClick={() => { handleReject(selectedContent); setSheetOpen(false); }}
                                     >
                                         <X className="h-4 w-4" />
                                         Rechazar
                                     </Button>
-                                    <Button 
-                                        className="bg-emerald-600 hover:bg-emerald-700 gap-2" 
-                                        onClick={() => {handleApprove(selectedContent); setSheetOpen(false);}}
+                                    <Button
+                                        className="bg-emerald-600 hover:bg-emerald-700 gap-2"
+                                        onClick={() => { handleApprove(selectedContent); setSheetOpen(false); }}
                                     >
                                         <CheckCircle className="h-4 w-4" />
                                         Aprobar y Publicar
@@ -475,7 +475,7 @@ export default function AdminContentPage() {
                         ) : (
                             <div className="flex gap-2 w-full justify-end">
                                 <Button variant="outline" onClick={() => setSheetOpen(false)}>Cerrar</Button>
-                                <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => setEditMode(true)}>Editar Contenido</Button>
+                                <Button className="bg-primary text-primary-foreground hover:bg-primary/90" onClick={() => setEditMode(true)}>Editar Contenido</Button>
                             </div>
                         )}
                     </SheetFooter>

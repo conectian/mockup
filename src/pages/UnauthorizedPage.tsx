@@ -14,7 +14,7 @@ export default function UnauthorizedPage() {
                 No tienes los permisos necesarios para ver esta página. Si crees que esto es un error, contacta con el administrador.
             </p>
             <Link to="/">
-                <Button size="lg" className="gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700">
+                <Button size="lg" className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 font-bold">
                     <ArrowLeft className="h-4 w-4" />
                     Volver al Inicio
                 </Button>

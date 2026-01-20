@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { type RFP } from '@/data/rfp-data';
 import { useCreditsStore } from '@/store/useCreditsStore';
 import UnlockLeadModal from './UnlockLeadModal';
+import SendProposalModal from '@/components/marketplace/SendProposalModal';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -14,7 +15,7 @@ import {
     Mail
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
+
 
 interface RFPActionCardProps {
     rfp: RFP;
@@ -22,6 +23,7 @@ interface RFPActionCardProps {
 
 export default function RFPActionCard({ rfp }: RFPActionCardProps) {
     const [showUnlockModal, setShowUnlockModal] = useState(false);
+    const [showProposalModal, setShowProposalModal] = useState(false);
     const isUnlocked = useCreditsStore((state) => state.isRFPUnlocked(rfp.id));
 
     return (
@@ -116,19 +118,20 @@ export default function RFPActionCard({ rfp }: RFPActionCardProps) {
 
                     {/* Action Button */}
                     {isUnlocked ? (
-                        <Link to={`/deal-room/new-${rfp.id}`}>
-                            <Button className="w-full h-10 gap-2 premium-gradient text-sm font-medium rounded-lg">
-                                <Send className="h-4 w-4" />
-                                Enviar Propuesta
-                            </Button>
-                        </Link>
+                        <Button
+                            className="w-full h-auto py-2.5 gap-2 bg-primary text-primary-foreground hover:bg-primary/90 text-sm font-medium rounded-lg whitespace-normal leading-tight"
+                            onClick={() => setShowProposalModal(true)}
+                        >
+                            <Send className="h-4 w-4 shrink-0" />
+                            <span>Enviar Propuesta</span>
+                        </Button>
                     ) : (
                         <Button
-                            className="w-full h-10 gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-sm font-medium rounded-lg"
+                            className="w-full h-auto py-2.5 gap-2 bg-amber-600 text-white hover:bg-amber-700 text-sm font-medium rounded-lg whitespace-normal leading-tight"
                             onClick={() => setShowUnlockModal(true)}
                         >
-                            <Lock className="h-4 w-4" />
-                            Desbloquear Oportunidad ({rfp.cost} Créditos)
+                            <Lock className="h-4 w-4 shrink-0" />
+                            <span>Desbloquear Oportunidad ({rfp.cost} Créditos)</span>
                         </Button>
                     )}
                 </CardContent>
@@ -141,6 +144,12 @@ export default function RFPActionCard({ rfp }: RFPActionCardProps) {
                 rfpTitle={rfp.title}
                 cost={rfp.cost}
                 onUnlocked={() => { }}
+            />
+
+            <SendProposalModal
+                isOpen={showProposalModal}
+                onClose={() => setShowProposalModal(false)}
+                companyName={rfp.clientName}
             />
         </>
     );

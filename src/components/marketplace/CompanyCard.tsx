@@ -38,7 +38,7 @@ export default function CompanyCard({ company }: CompanyCardProps) {
     return (
         <Card className="py-0 overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full rounded-xl bg-card/40 backdrop-blur-sm border border-white/10 hover:border-primary/30">
             {/* Image Header */}
-            <div className="aspect-[16/9] relative overflow-hidden">
+            <div className="aspect-[16/7] sm:aspect-[16/9] relative overflow-hidden">
                 <img
                     src={company.image}
                     alt={company.name}
@@ -75,7 +75,7 @@ export default function CompanyCard({ company }: CompanyCardProps) {
                         <Zap className="h-3 w-3 mr-1" />
                         Innovación {company.innovation}
                     </Badge>
-                    {company.tierBadge && (
+                    {company.tierBadge && company.tierBadge !== company.tier && (
                         <Badge variant="outline" className="text-[10px] px-2 py-0.5 bg-violet-500/10 text-violet-400 border-violet-500/30 font-medium">
                             {company.tierBadge}
                         </Badge>
@@ -112,20 +112,19 @@ export default function CompanyCard({ company }: CompanyCardProps) {
                 </div>
 
                 {/* Actions */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-auto pt-3 border-t border-white/5">
-                    <Button asChild variant="outline" size="sm" className="flex-1 w-full sm:w-auto h-10 text-xs font-bold border-primary/30 text-primary hover:bg-primary/5 rounded-lg">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 mt-auto pt-4 border-t border-white/5">
+                    <Button asChild variant="outline" className="flex-1 w-full sm:w-auto h-11 sm:h-10 text-sm sm:text-xs font-bold border-primary/30 text-primary hover:bg-primary/5 rounded-xl sm:rounded-lg">
                         <Link to={`/provider/marketplace/company/${company.id}`} className="flex items-center justify-center">
-                            <Building2 className="h-3.5 w-3.5 mr-1.5" />
+                            <Building2 className="h-4 w-4 sm:h-3.5 sm:w-3.5 mr-2 sm:mr-1.5" />
                             Ver Necesidades
                         </Link>
                     </Button>
                     <Button
-                        size="sm"
-                        className="flex-1 sm:flex-1 h-10 text-xs font-bold premium-gradient rounded-lg gap-1.5"
+                        className="flex-1 sm:flex-1 h-11 sm:h-10 text-sm sm:text-xs font-bold bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl sm:rounded-lg gap-2 sm:gap-1.5"
                         onClick={() => setIsProposalModalOpen(true)}
                     >
                         Propuesta
-                        <ArrowRight className="h-3.5 w-3.5" />
+                        <ArrowRight className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
                     </Button>
                 </div>
             </CardContent>

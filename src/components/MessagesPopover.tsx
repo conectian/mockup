@@ -39,7 +39,7 @@ const mockMessages = [
         read: true,
         avatar: 'SC',
         color: 'bg-indigo-500',
-        dealRoomId: 'dr-003' // Assuming support is also tracked in a room or just for demo
+        dealRoomId: 'dr-003'
     },
 ];
 
@@ -64,7 +64,7 @@ export default function MessagesPopover() {
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative rounded-full text-white/70 hover:text-white hover:bg-white/10">
+                <Button variant="ghost" size="icon" className="relative rounded-full text-muted-foreground hover:text-foreground hover:bg-accent">
                     <MessageSquare className="h-5 w-5" />
                     {unreadCount > 0 && (
                         <span className="absolute top-0 right-0 h-4 w-4 text-[10px] font-bold flex items-center justify-center rounded-full bg-red-600 text-white border-2 border-background">
@@ -74,7 +74,7 @@ export default function MessagesPopover() {
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-80 p-0" align="end">
-                <div className="flex items-center justify-between p-4 border-b">
+                <div className="flex items-center justify-between p-4 border-b border-border">
                     <h4 className="font-semibold">Mensajes</h4>
                     {unreadCount > 0 && (
                         <Button
@@ -89,7 +89,7 @@ export default function MessagesPopover() {
                 </div>
                 <ScrollArea className="h-[300px]">
                     {messages.length > 0 ? (
-                        <div className="divide-y">
+                        <div className="divide-y divide-border">
                             {messages.map((msg) => (
                                 <Link
                                     to={getLink(msg)}
@@ -125,7 +125,7 @@ export default function MessagesPopover() {
                         </div>
                     )}
                 </ScrollArea>
-                <div className="p-2 border-t text-center">
+                <div className="p-2 border-t border-border text-center">
                     <Link to={viewAllLink} className="text-xs text-primary hover:underline">
                         Ver todos los mensajes
                     </Link>

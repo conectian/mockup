@@ -96,7 +96,7 @@ export default function RegisterPage() {
                     />
                     <Button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700"
+                        className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
                         disabled={isLoading}
                     >
                         {isLoading ? (

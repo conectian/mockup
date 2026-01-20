@@ -33,9 +33,9 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
     const isActive = (href: string) => location.pathname === href;
 
     const sidebarContent = (
-        <div className="flex flex-col h-full bg-card/40 backdrop-blur-xl">
+        <div className="flex flex-col h-full bg-card/60 backdrop-blur-xl">
             {/* Logo */}
-            <div className="h-16 flex items-center justify-between px-6 border-b border-white/5">
+            <div className="h-16 flex items-center justify-between px-6 border-b border-border">
                 {!isCollapsed && (
                     <Link to="/" className="flex items-center gap-2 group">
                         <div className="h-9 w-9 flex items-center justify-center shrink-0 transition-all duration-300">
@@ -60,7 +60,7 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
 
             {/* User Badge & Toggle */}
             <div className={cn(
-                "px-6 py-4 border-b border-white/5 bg-white/5 flex items-center",
+                "px-6 py-4 border-b border-border bg-muted/30 flex items-center",
                 isCollapsed ? "justify-center" : "justify-between"
             )}>
                 {!isCollapsed && (
@@ -81,7 +81,7 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
                     variant="ghost"
                     size="icon"
                     onClick={onToggleCollapse}
-                    className="hidden lg:flex h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-white/5 rounded-md shrink-0"
+                    className="hidden lg:flex h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-accent rounded-md shrink-0"
                 >
                     {isCollapsed ? <ChevronRight className="h-4 w-4 cursor-pointer" /> : <ChevronLeft className="h-4 w-4 cursor-pointer" />}
                 </Button>
@@ -99,8 +99,8 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
                             className={cn(
                                 "group relative flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-300",
                                 active
-                                    ? "bg-primary/10 text-primary shadow-[inset_0_0_0_1px_rgba(var(--primary),0.1)]"
-                                    : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
+                                    ? "bg-primary/10 text-primary"
+                                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
                             )}
                         >
                             {active && (
@@ -125,7 +125,7 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
 
 
             {/* Bottom Actions - Spacing fix and visual refinement */}
-            <div className="px-3 py-4 border-t border-white/5 space-y-1.5 bg-white/5">
+            <div className="px-3 py-4 border-t border-border space-y-1.5 bg-muted/30">
                 <button
                     onClick={logout}
                     className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-destructive/80 hover:bg-destructive/10 hover:text-destructive transition-all duration-200"
@@ -161,7 +161,7 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
             {/* Desktop Sidebar */}
             <aside
                 className={cn(
-                    "hidden lg:flex flex-col border-r border-white/5 transition-all duration-300 ease-in-out shadow-sm",
+                    "hidden lg:flex flex-col border-r border-border transition-all duration-300 ease-in-out shadow-sm",
                     isCollapsed ? "w-20" : "w-72"
                 )}
             >

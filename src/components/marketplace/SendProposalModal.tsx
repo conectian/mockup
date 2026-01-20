@@ -13,6 +13,7 @@ import { toast } from 'sonner';
 import { mockUseCases } from '@/data/marketplace-data';
 import { Send, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Textarea } from '@/components/ui/textarea';
 
 interface SendProposalModalProps {
     companyName: string;
@@ -25,27 +26,29 @@ export default function SendProposalModal({
     isOpen,
     onClose,
 }: SendProposalModalProps) {
-    const [selectedUseCases, setSelectedUseCases] = useState<string[]>([]);
+    const [selectedUseCase, setSelectedUseCase] = useState<string | null>(null);
+    const [message, setMessage] = useState('');
 
     // Simulate "my" use cases provided by this vendor
     const myUseCases = mockUseCases.slice(0, 5);
 
     const toggleUseCase = (id: string) => {
-        if (selectedUseCases.includes(id)) {
-            setSelectedUseCases(selectedUseCases.filter(uid => uid !== id));
+        if (selectedUseCase === id) {
+            setSelectedUseCase(null);
         } else {
-            setSelectedUseCases([...selectedUseCases, id]);
+            setSelectedUseCase(id);
         }
     };
 
     const handleSend = () => {
-        if (selectedUseCases.length === 0) return;
+        if (!selectedUseCase) return;
 
         toast.success('Propuesta enviada con éxito', {
-            description: `Hemos enviado ${selectedUseCases.length} casos de uso a ${companyName}. Te notificaremos cuando los revisen.`
+            description: `Hemos enviado tu caso de uso a ${companyName}. Te notificaremos cuando lo revisen.`
         });
         onClose();
-        setSelectedUseCases([]);
+        setSelectedUseCase(null);
+        setMessage('');
     };
 
     return (
@@ -68,9 +71,9 @@ export default function SendProposalModal({
                 <div className="py-4 space-y-4">
                     <div className="space-y-4">
                         <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Mis Casos de Uso Disponibles</Label>
-                        <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 -mr-2 custom-scrollbar">
+                        <div className="space-y-3 max-h-[280px] overflow-y-auto pr-2 -mr-2 custom-scrollbar">
                             {myUseCases.map((uc) => {
-                                const isSelected = selectedUseCases.includes(uc.id);
+                                const isSelected = selectedUseCase === uc.id;
                                 return (
                                     <div
                                         key={uc.id}
@@ -108,6 +111,17 @@ export default function SendProposalModal({
                             })}
                         </div>
                     </div>
+
+                    <div className="space-y-3">
+                        <Label htmlFor="proposal-message" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Mensaje de acompañamiento</Label>
+                        <Textarea
+                            id="proposal-message"
+                            placeholder="Explica brevemente por qué tu solución es la mejor para esta necesidad..."
+                            className="min-h-[120px] bg-muted/30 border-white/10 resize-none"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                        />
+                    </div>
                 </div>
 
                 <DialogFooter>
@@ -116,8 +130,8 @@ export default function SendProposalModal({
                     </Button>
                     <Button
                         onClick={handleSend}
-                        className="premium-gradient gap-2 disabled:opacity-50"
-                        disabled={selectedUseCases.length === 0}
+                        className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 disabled:opacity-50"
+                        disabled={!selectedUseCase}
                     >
                         <Send className="h-4 w-4" /> Enviar Propuesta
                     </Button>

@@ -20,7 +20,7 @@ export default function PublicLayout() {
                             <Button variant="ghost">Empezar</Button>
                         </Link>
                         <Link to="/auth/login">
-                            <Button className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white shadow-lg shadow-violet-500/25">
+                            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 font-bold">
                                 Iniciar Sesión
                             </Button>
                         </Link>

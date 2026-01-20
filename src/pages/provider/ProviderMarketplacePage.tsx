@@ -14,6 +14,13 @@ import {
     Filter,
     X
 } from 'lucide-react';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { MultiSelect } from '@/components/ui/multi-select';
 import CompanyCard from '@/components/marketplace/CompanyCard';
 import ProviderCatalogPage from './ProviderCatalogPage';
@@ -45,17 +52,28 @@ const initialFilters: FilterState = {
 export default function ProviderMarketplacePage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const tabFromUrl = searchParams.get('tab');
-    const [activeTab, setActiveTab] = useState(tabFromUrl || 'empresas');
-    
+    const getNormalizedTab = (tab: string | null) => {
+        if (!tab) return 'empresas';
+        if (tab === 'rfip') return 'rfp';
+        return tab;
+    };
+
+    const [activeTab, setActiveTab] = useState(getNormalizedTab(tabFromUrl));
+
     const [filters, setFilters] = useState<FilterState>(initialFilters);
+    const [sortBy, setSortBy] = useState<string>('name-asc');
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
     // Sync activeTab with URL search params
     useEffect(() => {
-        if (tabFromUrl && ['empresas', 'casos-de-uso', 'rfip'].includes(tabFromUrl)) {
-            setActiveTab(tabFromUrl);
+        const normalized = getNormalizedTab(tabFromUrl);
+        if (tabFromUrl && ['empresas', 'casos-de-uso', 'rfp', 'rfip'].includes(tabFromUrl)) {
+            setActiveTab(normalized);
+            if (tabFromUrl === 'rfip') {
+                setSearchParams({ tab: 'rfp' });
+            }
         }
-    }, [tabFromUrl]);
+    }, [tabFromUrl, setSearchParams]);
 
     const handleTabChange = (value: string) => {
         setActiveTab(value);
@@ -72,7 +90,7 @@ export default function ProviderMarketplacePage() {
         (filters.revenueMax ? 1 : 0);
 
     const filteredCompanies = useMemo(() => {
-        return TARGET_COMPANIES.filter((company) => {
+        const filtered = TARGET_COMPANIES.filter((company) => {
             const matchesSearch = company.name.toLowerCase().includes(filters.search.toLowerCase()) ||
                 company.industry.toLowerCase().includes(filters.search.toLowerCase());
             const matchesSector = filters.sectors.length === 0 || filters.sectors.some(s => company.sector.toLowerCase().includes(s.toLowerCase()));
@@ -80,7 +98,24 @@ export default function ProviderMarketplacePage() {
             const matchesTech = filters.technologies.length === 0 || filters.technologies.some(t => company.tech.includes(t));
             return matchesSearch && matchesSector && matchesSize && matchesTech;
         });
-    }, [filters]);
+
+        return [...filtered].sort((a, b) => {
+            switch (sortBy) {
+                case 'name-asc':
+                    return a.name.localeCompare(b.name);
+                case 'name-desc':
+                    return b.name.localeCompare(a.name);
+                case 'innovation-high': {
+                    const rank: Record<string, number> = { 'ALTO': 3, 'MEDIO': 2, 'BAJO': 1 };
+                    return (rank[b.innovation] || 0) - (rank[a.innovation] || 0);
+                }
+                case 'rfps-high':
+                    return (b.rfps || 0) - (a.rfps || 0);
+                default:
+                    return 0;
+            }
+        });
+    }, [filters, sortBy]);
 
     const SidebarContent = () => (
         <div className="space-y-8 pb-20">
@@ -169,8 +204,8 @@ export default function ProviderMarketplacePage() {
                     <TabsTrigger value="casos-de-uso" className="gap-2 px-4 md:px-6 h-10 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md font-medium">
                         <Store className="h-4 w-4" /> <span className="hidden sm:inline">Casos de Uso</span>
                     </TabsTrigger>
-                    <TabsTrigger value="rfip" className="gap-2 px-4 md:px-6 h-10 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md font-medium">
-                        <FileText className="h-4 w-4" /> <span className="hidden sm:inline">RFIP</span>
+                    <TabsTrigger value="rfp" className="gap-2 px-4 md:px-6 h-10 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md font-medium">
+                        <FileText className="h-4 w-4" /> <span className="hidden sm:inline">RFP</span>
                     </TabsTrigger>
                 </TabsList>
 
@@ -216,6 +251,19 @@ export default function ProviderMarketplacePage() {
                                         </SheetContent>
                                     </Sheet>
 
+                                    {/* Sort Dropdown */}
+                                    <Select value={sortBy} onValueChange={setSortBy}>
+                                        <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
+                                            <SelectValue placeholder="Ordenar por" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="name-asc">Nombre (A-Z)</SelectItem>
+                                            <SelectItem value="name-desc">Nombre (Z-A)</SelectItem>
+                                            <SelectItem value="innovation-high">Más Innovadoras</SelectItem>
+                                            <SelectItem value="rfps-high">Más RFPs Activas</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+
                                     {/* Search */}
                                     <div className="relative w-full md:w-[280px]">
                                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -223,7 +271,7 @@ export default function ProviderMarketplacePage() {
                                             placeholder="Buscar empresas..."
                                             value={filters.search}
                                             onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                                            className="pl-10 bg-background/50 border-white/10"
+                                            className="pl-10 bg-background/50 border-white/10 h-10"
                                         />
                                     </div>
                                 </div>
@@ -257,8 +305,8 @@ export default function ProviderMarketplacePage() {
                     <ProviderCatalogPage />
                 </TabsContent>
 
-                {/* Tab Content: RFIP */}
-                <TabsContent value="rfip" className="mt-0">
+                {/* Tab Content: RFP */}
+                <TabsContent value="rfp" className="mt-0">
                     <RFPMarketPage />
                 </TabsContent>
             </Tabs>

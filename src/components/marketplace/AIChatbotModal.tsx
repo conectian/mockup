@@ -286,7 +286,7 @@ export default function AIChatbotModal({ open, onOpenChange, onSearchSuggestion 
                                                     {message.recommendedCases.map((useCase) => (
                                                         <Card key={useCase.id} className="p-4 border-border hover:border-primary/40 transition-colors cursor-pointer group">
                                                             <div className="flex items-start gap-3">
-                                                                <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-primary to-indigo-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
+                                                                <div className="h-12 w-12 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg shrink-0">
                                                                     {useCase.title.charAt(0)}
                                                                 </div>
                                                                 <div className="flex-1 min-w-0">

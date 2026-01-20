@@ -81,6 +81,7 @@ const initialFilters: FilterState = {
 
 export default function RFPMarketPage() {
     const [filters, setFilters] = useState<FilterState>(initialFilters);
+    const [sortBy, setSortBy] = useState<string>('newest');
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
     const toggleArrayItem = <T extends string>(array: T[], item: T): T[] => {
@@ -102,7 +103,7 @@ export default function RFPMarketPage() {
         const searchLower = filters.search.toLowerCase();
         const stackSearch = filters.techStack.toLowerCase();
 
-        return mockRFPs.filter((rfp) => {
+        const filtered = mockRFPs.filter((rfp) => {
             if (filters.search) {
                 const matches =
                     rfp.title.toLowerCase().includes(searchLower) ||
@@ -123,7 +124,22 @@ export default function RFPMarketPage() {
             }
             return true;
         });
-    }, [filters]);
+
+        return [...filtered].sort((a, b) => {
+            switch (sortBy) {
+                case 'newest':
+                    return b.postedAt.localeCompare(a.postedAt); // Simplified for mock
+                case 'budget-high': {
+                    const getBudget = (s: string) => parseInt(s.replace(/[^0-9]/g, '')) || 0;
+                    return getBudget(b.budget) - getBudget(a.budget);
+                }
+                case 'deadline-soon':
+                    return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
+                default:
+                    return 0;
+            }
+        });
+    }, [filters, sortBy]);
 
     const SidebarContent = () => (
         <div className="space-y-8 pb-20">
@@ -284,7 +300,7 @@ export default function RFPMarketPage() {
                 {/* Search & Filters Header */}
                 <div className="flex flex-col gap-4">
                     <div className="min-w-0">
-                        <h1 className="text-2xl md:text-3xl font-display font-bold tracking-tight truncate">RFIP - Oportunidades</h1>
+                        <h1 className="text-2xl md:text-3xl font-display font-bold tracking-tight truncate">RFP - Oportunidades</h1>
                         <p className="text-muted-foreground text-sm md:text-base">Encuentra nuevas demandas de innovación</p>
                     </div>
 
@@ -300,6 +316,19 @@ export default function RFPMarketPage() {
                                 <div className="py-6 px-6"><SidebarContent /></div>
                             </SheetContent>
                         </Sheet>
+
+                        {/* Sort Dropdown */}
+                        <Select value={sortBy} onValueChange={setSortBy}>
+                            <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
+                                <SelectValue placeholder="Ordenar por" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="newest">Más Recientes</SelectItem>
+                                <SelectItem value="budget-high">Presupuesto (Mayor)</SelectItem>
+                                <SelectItem value="deadline-soon">Fecha Límite (Próxima)</SelectItem>
+                            </SelectContent>
+                        </Select>
+
                         <div className="relative flex-1">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                             <Input

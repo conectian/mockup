@@ -36,11 +36,11 @@ export function ExpandingNav({ items }: ExpandingNavProps) {
             .sort((a, b) => b.basePath.length - a.basePath.length)
             .find(item => {
                 // Check if any sub-item href matches
-                const hasMatchingSubItem = item.subItems.some(sub => 
+                const hasMatchingSubItem = item.subItems.some(sub =>
                     sub.href && currentPath.startsWith(sub.href)
                 );
                 if (hasMatchingSubItem) return true;
-                
+
                 return currentPath.startsWith(item.basePath);
             });
 
@@ -60,15 +60,15 @@ export function ExpandingNav({ items }: ExpandingNavProps) {
             {items.map((item) => {
                 const isActive = activeSection === item.name;
                 const currentTab = searchParams.get('tab');
-                
+
                 return (
-                    <div 
+                    <div
                         key={item.name}
                         className={cn(
                             "group flex items-center transition-all duration-300 ease-in-out border rounded-full overflow-hidden",
-                            isActive 
-                                ? "bg-white/10 border-white/10 pr-1" 
-                                : "bg-transparent border-transparent hover:bg-white/5"
+                            isActive
+                                ? "bg-muted border-border pr-1 shadow-sm"
+                                : "bg-transparent border-transparent hover:bg-accent hover:border-border/50"
                         )}
                     >
                         {/* Main Section Button */}
@@ -76,7 +76,7 @@ export function ExpandingNav({ items }: ExpandingNavProps) {
                             onClick={() => handleSectionClick(item.name)}
                             className={cn(
                                 "flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap",
-                                isActive ? "text-white" : "text-white/70 group-hover:text-white"
+                                isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
                             )}
                         >
                             <item.icon className="h-4 w-4" />
@@ -87,16 +87,16 @@ export function ExpandingNav({ items }: ExpandingNavProps) {
                         </button>
 
                         {/* Expanded Sub-items */}
-                        <div 
+                        <div
                             className={cn(
                                 "flex items-center gap-1 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
                                 isActive ? "max-w-[500px] opacity-100" : "max-w-0 opacity-0"
                             )}
                         >
-                            <div className="w-px h-4 bg-white/10 mx-1 shrink-0" />
-                            
+                            <div className="w-[1px] h-4 bg-border mx-1 shrink-0" />
+
                             {item.subItems.map((subItem) => {
-                                const isSubActive = subItem.href 
+                                const isSubActive = subItem.href
                                     ? location.pathname.startsWith(subItem.href)
                                     : currentTab === subItem.value;
 
@@ -106,12 +106,12 @@ export function ExpandingNav({ items }: ExpandingNavProps) {
                                         to={subItem.href || `${item.basePath}?tab=${subItem.value}`}
                                         className={cn(
                                             "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap",
-                                            isSubActive 
-                                                ? "bg-white/20 text-white shadow-sm hover:bg-white/25" 
-                                                : "text-white/60 hover:text-white hover:bg-white/10"
+                                            isSubActive
+                                                ? "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90"
+                                                : "text-muted-foreground hover:text-foreground hover:bg-accent"
                                         )}
                                     >
-                                        <subItem.icon className={cn("h-3.5 w-3.5", isSubActive ? "text-white" : "opacity-70")} />
+                                        <subItem.icon className={cn("h-3.5 w-3.5", isSubActive ? "text-primary-foreground" : "opacity-70")} />
                                         {subItem.name}
                                     </Link>
                                 );

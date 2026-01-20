@@ -29,7 +29,7 @@ export default function ClientFavoritesPage() {
                     <Card key={i} className="hover:shadow-lg transition-all">
                         <CardContent className="p-6">
                             <div className="flex items-start justify-between mb-4">
-                                <div className="h-14 w-14 rounded-md bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold">
+                                <div className="h-14 w-14 rounded-md bg-primary flex items-center justify-center text-white text-xl font-bold">
                                     {provider.name.charAt(0)}
                                 </div>
                                 <Button variant="ghost" size="icon" className="text-yellow-400 hover:text-yellow-500">

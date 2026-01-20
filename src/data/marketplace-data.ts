@@ -146,6 +146,8 @@ export const mockUseCases: UseCase[] = [
 export interface InnovationRequest {
   id: string;
   title: string;
+  description: string;
+  sector: string;
   createdAt: string;
   status: "Active" | "Closed" | "Draft";
   budgetRange: string;
@@ -156,6 +158,9 @@ export const MOCK_REQUESTS: InnovationRequest[] = [
   {
     id: "1",
     title: "Sistema de Detección de Anomalías en Producción",
+    description:
+      "Buscamos una solución de visión artificial para detectar defectos en línea de montaje.",
+    sector: "Manufactura",
     createdAt: "2025-10-15",
     status: "Active",
     budgetRange: "50k - 100k",
@@ -164,6 +169,9 @@ export const MOCK_REQUESTS: InnovationRequest[] = [
   {
     id: "2",
     title: "Motor de Recomendación para E-commerce",
+    description:
+      "Necesitamos mejorar el cross-selling en nuestra tienda online usando ML.",
+    sector: "Retail",
     createdAt: "2025-09-20",
     status: "Closed",
     budgetRange: "20k - 50k",
@@ -172,6 +180,9 @@ export const MOCK_REQUESTS: InnovationRequest[] = [
   {
     id: "3",
     title: "Automatización de Reportes Financieros",
+    description:
+      "Unificación de datos de múltiples ERPs para reportes automáticos en tiempo real.",
+    sector: "Finanzas",
     createdAt: "2025-11-01",
     status: "Active",
     budgetRange: "30k - 60k",
@@ -180,6 +191,9 @@ export const MOCK_REQUESTS: InnovationRequest[] = [
   {
     id: "4",
     title: "Sistema de Visión por Computador para Control de Calidad",
+    description:
+      "Implementación de IA en cámaras de seguridad para control de EPIs.",
+    sector: "Seguridad",
     createdAt: "2025-10-28",
     status: "Active",
     budgetRange: "80k - 150k",
@@ -188,6 +202,8 @@ export const MOCK_REQUESTS: InnovationRequest[] = [
   {
     id: "5",
     title: "Chatbot Multiidioma para Atención al Cliente",
+    description: "Soporte 24/7 en 6 idiomas para nuestro mercado europeo.",
+    sector: "Retail",
     createdAt: "2025-09-05",
     status: "Closed",
     budgetRange: "40k - 80k",
@@ -196,6 +212,9 @@ export const MOCK_REQUESTS: InnovationRequest[] = [
   {
     id: "6",
     title: "Optimización de Rutas Logísticas con IA",
+    description:
+      "Algoritmo para reducir la huella de carbono y tiempos de entrega de última milla.",
+    sector: "Logística",
     createdAt: "2025-11-10",
     status: "Active",
     budgetRange: "60k - 120k",

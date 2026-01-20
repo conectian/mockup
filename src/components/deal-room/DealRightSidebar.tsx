@@ -50,7 +50,7 @@ export default function DealRightSidebar() {
             case 'propuesta':
                 return (
                     <Button
-                        className={cn(baseClass, "bg-emerald-600 hover:bg-emerald-700 text-white")}
+                        className={cn(baseClass, "bg-primary text-primary-foreground hover:bg-primary/90")}
                         onClick={approveProposal}
                         disabled={proposalApproved}
                     >
@@ -67,7 +67,7 @@ export default function DealRightSidebar() {
             case 'firma':
                 return (
                     <Button
-                        className={cn(baseClass, "bg-indigo-600 hover:bg-indigo-700 text-white")}
+                        className={cn(baseClass, "bg-primary text-primary-foreground hover:bg-primary/90")}
                         onClick={() => setPhase('kickoff')}
                     >
                         <FileSignature className="mr-2 h-4 w-4" />
@@ -76,7 +76,7 @@ export default function DealRightSidebar() {
                 );
             case 'kickoff':
                 return (
-                    <Button className={cn(baseClass, "bg-violet-600 hover:bg-violet-700 text-white")}>
+                    <Button className={cn(baseClass, "bg-primary text-primary-foreground hover:bg-primary/90")}>
                         <Rocket className="mr-2 h-4 w-4" />
                         Iniciar Proyecto
                     </Button>
@@ -91,7 +91,7 @@ export default function DealRightSidebar() {
                 <div className="flex items-center justify-between">
                     {/* Client */}
                     <div className="flex flex-col items-center gap-1.5">
-                        <div className="h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
+                        <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg shadow-md">
                             {clientName.charAt(0)}
                         </div>
                         <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">Cliente</span>
@@ -104,7 +104,7 @@ export default function DealRightSidebar() {
 
                     {/* Provider */}
                     <div className="flex flex-col items-center gap-1.5">
-                        <div className="h-12 w-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
+                        <div className="h-12 w-12 rounded-full bg-[#243A57] flex items-center justify-center text-white font-bold text-lg shadow-md">
                             {providerName.charAt(0)}
                         </div>
                         <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">Partner</span>
@@ -173,7 +173,7 @@ export default function DealRightSidebar() {
                     </div>
 
                     {/* Escrow */}
-                    <div className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 p-4 rounded-xl border border-indigo-200 dark:border-indigo-800">
+                    <div className="bg-primary/5 p-4 rounded-xl border border-primary/20">
                         <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wide mb-1">Fondos en Escrow</p>
                         <div className="text-3xl font-bold text-foreground">
                             <span className="text-lg text-indigo-500 mr-0.5">$</span>

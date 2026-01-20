@@ -42,8 +42,8 @@ export default function ROICalculator({
     useEffect(() => {
         const cost = parseFloat(currentAnnualCost) || 0;
         const savings = (cost * savingsPercentage) / 100;
-        const calculatedROI = implementationCost > 0 
-            ? ((savings - implementationCost) / implementationCost) * 100 
+        const calculatedROI = implementationCost > 0
+            ? ((savings - implementationCost) / implementationCost) * 100
             : 0;
         const payback = savings > 0 ? implementationCost / savings : 0;
         const threeYear = (savings * 3) - implementationCost;
@@ -255,7 +255,7 @@ export default function ROICalculator({
                 </div>
 
                 {/* CTA */}
-                <Button className="w-full h-11 premium-gradient text-white font-semibold">
+                <Button className="w-full h-11 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-lg shadow-primary/20">
                     Solicitar Análisis Personalizado
                 </Button>
             </CardContent>

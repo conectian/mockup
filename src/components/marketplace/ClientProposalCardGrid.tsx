@@ -2,37 +2,32 @@ import { type Proposal } from './ClientProposalCard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, FileText, Lock, TrendingUp, Zap } from 'lucide-react';
+import { ArrowRight, Lock, TrendingUp, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
 
 interface ClientProposalCardGridProps {
     proposal: Proposal;
 }
 
 export default function ClientProposalCardGrid({ proposal }: ClientProposalCardGridProps) {
-    // Determine gradient based on whether it's private
-    const cardGradient = proposal.isPrivate 
-        ? 'from-indigo-500/20 via-purple-500/10' 
-        : 'from-blue-500/20 via-cyan-500/10';
+    // Generate a consistent image based on proposal ID
+    const imageId = parseInt(proposal.id) || 1;
+    const mockImage = `https://picsum.photos/seed/${imageId + 100}/800/600`;
 
     return (
         <Card className="py-0 overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full border border-white/5 rounded-xl bg-card/40 backdrop-blur-sm hover:border-primary/30">
-            {/* Header with gradient */}
-            <div className={cn("aspect-[16/10] relative overflow-hidden bg-gradient-to-br", cardGradient, "to-transparent")}>
-                {/* Pattern overlay */}
-                <div className="absolute inset-0 opacity-10">
-                    <div className="absolute inset-0" style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                    }} />
-                </div>
-
-                {/* Icon centered */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-2xl shadow-indigo-500/30 group-hover:scale-110 transition-transform duration-500">
-                        <FileText className="h-10 w-10" />
-                    </div>
-                </div>
+            {/* Header with image */}
+            <div className="aspect-[16/10] relative overflow-hidden">
+                <img
+                    src={mockImage}
+                    alt={proposal.title}
+                    className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
+                    onError={(e) => {
+                        // Fallback to gradient if image fails
+                        e.currentTarget.style.display = 'none';
+                    }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-70 group-hover:opacity-50 transition-opacity duration-500" />
 
                 {/* Private Badge */}
                 {proposal.isPrivate && (
@@ -91,7 +86,7 @@ export default function ClientProposalCardGrid({ proposal }: ClientProposalCardG
                 </div>
 
                 {/* Footer Action */}
-                <div className="border-t border-white/5 mt-auto pt-4">
+                <div className="border-t border-white/5 mt-auto">
                     <Button asChild className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-all rounded-md font-bold h-11 bg-white/5 text-foreground border border-white/10 hover:border-primary/50">
                         <Link to={`/client/proposals/${proposal.id}`}>
                             Ver Propuesta

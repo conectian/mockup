@@ -38,18 +38,11 @@ export default function UseCaseCard({ useCase, matchScore, hasFilters = false }:
     return (
         <Card className={cn(
             "py-0 overflow-hidden group hover:shadow-2xl transition-all duration-500 flex flex-col h-full rounded-xl bg-card/40 backdrop-blur-sm relative",
-            isGoldPartner 
-                ? "border-2 border-amber-400/60 hover:border-amber-400 hover:shadow-amber-400/20" 
+            isGoldPartner
+                ? "border-2 border-amber-400/60 hover:border-amber-400 hover:shadow-amber-400/20"
                 : "border-2 border-white/10 hover:border-primary/30 hover:shadow-primary/5"
         )}>
-            {/* Gold Partner Corner Ribbon */}
-            {isGoldPartner && (
-                <div className="absolute top-0 left-0 z-10">
-                    <div className="bg-gradient-to-br from-amber-400 to-amber-500 text-white text-[9px] font-bold px-3 py-1 uppercase tracking-wider shadow-lg">
-                        🏆 Gold Partner
-                    </div>
-                </div>
-            )}
+            {/* Gold Partner Corner Ribbon removed */}
 
             {/* Match Score Badge (when filters applied) */}
             {hasFilters && matchScore && (
@@ -115,7 +108,7 @@ export default function UseCaseCard({ useCase, matchScore, hasFilters = false }:
                 </div>
 
                 {/* Footer Action */}
-                <div className="border-t border-white/5 mt-auto pt-4">
+                <div className="border-t border-white/5 mt-auto">
                     <Button asChild className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-all rounded-md font-bold h-11 bg-white/5 text-foreground border border-white/10 hover:border-primary/50">
                         <Link to={`/client/marketplace/${useCase.id}`}>
                             Ver Detalles

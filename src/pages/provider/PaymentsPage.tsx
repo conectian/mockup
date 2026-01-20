@@ -170,8 +170,8 @@ export default function PaymentsPage() {
                             <div key={tx.id} className="p-4 hover:bg-muted/20 transition-colors">
                                 <div className="flex items-center gap-4">
                                     <div className={`h-10 w-10 rounded-full flex items-center justify-center ${tx.type === 'income'
-                                            ? 'bg-emerald-500/20'
-                                            : 'bg-red-500/20'
+                                        ? 'bg-emerald-500/20'
+                                        : 'bg-red-500/20'
                                         }`}>
                                         {tx.type === 'income' ? (
                                             <ArrowDownLeft className="h-5 w-5 text-emerald-400" />
@@ -247,7 +247,7 @@ export default function PaymentsPage() {
                     </div>
 
                     {/* Next Payout */}
-                    <Card className="p-5 border-border bg-gradient-to-br from-primary/5 to-transparent">
+                    <Card className="p-5 border-border bg-primary/5">
                         <h3 className="font-semibold mb-3">Próximo Pago Programado</h3>
                         <div className="space-y-3">
                             <div className="flex items-center justify-between">

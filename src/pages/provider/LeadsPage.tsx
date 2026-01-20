@@ -128,7 +128,7 @@ export default function LeadsPage() {
                     <Button variant="outline" size="sm" className="gap-2">
                         <Download className="h-4 w-4" /> Exportar
                     </Button>
-                    <Button size="sm" className="premium-gradient gap-2">
+                    <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2">
                         <Plus className="h-4 w-4" /> Nuevo Lead
                     </Button>
                 </div>

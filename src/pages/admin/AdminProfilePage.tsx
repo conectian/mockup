@@ -372,7 +372,7 @@ export default function AdminProfilePage() {
                                         </div>
                                         <Button
                                             onClick={handleSave}
-                                            className="h-11 px-8 premium-gradient hover:opacity-90 font-bold rounded-md shadow-lg shadow-indigo-500/20 text-white"
+                                            className="h-11 px-8 bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-md shadow-lg shadow-primary/20"
                                         >
                                             Guardar Cambios
                                         </Button>
@@ -594,7 +594,7 @@ export default function AdminProfilePage() {
                                 <div className="divide-y divide-white/5">
                                     {notifications.length > 0 ? (
                                         notifications.map((notification) => (
-                                            <div 
+                                            <div
                                                 key={notification.id}
                                                 onClick={() => handleNotificationClick(notification.id)}
                                                 className={cn(
@@ -605,7 +605,7 @@ export default function AdminProfilePage() {
                                                 <div className={cn("h-10 w-10 rounded-full flex items-center justify-center shrink-0", notification.bg, notification.color)}>
                                                     <notification.icon className="h-5 w-5" />
                                                 </div>
-                                                
+
                                                 <div className="flex-1 min-w-0">
                                                     <div className="flex items-start justify-between gap-2">
                                                         <div>

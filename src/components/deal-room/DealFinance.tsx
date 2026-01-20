@@ -137,7 +137,7 @@ export default function DealFinance() {
             </Card>
 
             {/* ROI Calculator */}
-            <Card className="border-2 border-emerald-200 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30">
+            <Card className="border-2 border-primary/20 bg-primary/5">
                 <CardHeader className="pb-2 md:pb-6">
                     <CardTitle className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 text-base md:text-lg">
                         <TrendingUp className="h-4 w-4 md:h-5 md:w-5" />
