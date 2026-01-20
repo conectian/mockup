@@ -27,7 +27,7 @@ export default function RFPActionCard({ rfp }: RFPActionCardProps) {
     return (
         <>
             <Card className={cn(
-                'glass-card border-white/10 transition-all hover:shadow-lg hover:border-primary/30',
+                'py-0 overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-xl bg-card/40 backdrop-blur-sm border border-white/10 hover:border-primary/30',
                 isUnlocked && 'ring-2 ring-emerald-500/30 border-emerald-500/30'
             )}>
                 <CardContent className="p-5 space-y-4">

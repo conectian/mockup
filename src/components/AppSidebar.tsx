@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore, type UserType } from '../store/useAuthStore';
 import { MENU_PROVIDER, MENU_CLIENT, MENU_ADMIN, type MenuItem } from '../config/navigation';
 import { Button } from '@/components/ui/button';
-import { Settings, LogOut, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { LogOut, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface AppSidebarProps {
@@ -126,13 +126,6 @@ export default function AppSidebar({ isOpen, onClose, isCollapsed, onToggleColla
 
             {/* Bottom Actions - Spacing fix and visual refinement */}
             <div className="px-3 py-4 border-t border-white/5 space-y-1.5 bg-white/5">
-                <Link
-                    to="/settings"
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-foreground transition-all duration-200"
-                >
-                    <Settings className="h-5 w-5 shrink-0" />
-                    {!isCollapsed && <span>Configuración</span>}
-                </Link>
                 <button
                     onClick={logout}
                     className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-destructive/80 hover:bg-destructive/10 hover:text-destructive transition-all duration-200"

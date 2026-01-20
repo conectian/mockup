@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { FileText, FolderKanban, Search, ArrowRight, Sparkles } from 'lucide-react';
+import { FileText, FolderKanban, Search, ArrowRight, Sparkles, TrendingUp, Euro, Clock, Zap, Users, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 // Mock recommended use cases
 const mockRecommendations = [
@@ -57,52 +58,96 @@ export default function ClientHome() {
                 </CardContent>
             </Card>
 
-            {/* Status Cards */}
-            <div className="grid grid-cols-2 gap-4 md:gap-6">
-                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-white/5 relative overflow-hidden rounded-md">
+            {/* ROI & Value Metrics */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                {/* Ahorros Estimados */}
+                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-emerald-500/20 bg-emerald-500/5 relative overflow-hidden rounded-md">
                     <div className="absolute top-0 right-0 p-3 md:p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <FileText className="h-12 w-12 md:h-24 md:w-24 -mr-4 md:-mr-8 -mt-4 md:-mt-8" />
+                        <Euro className="h-12 w-12 md:h-24 md:w-24 -mr-4 md:-mr-8 -mt-4 md:-mt-8" />
                     </div>
                     <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
-                        <CardTitle className="text-[10px] md:text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Mis RFPs Activos</CardTitle>
-                        <div className="p-1.5 md:p-2 rounded-md bg-blue-500/10 text-blue-500">
-                            <FileText className="h-4 w-4 md:h-5 md:w-5" />
+                        <CardTitle className="text-[10px] md:text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Ahorros Estimados</CardTitle>
+                        <div className="p-1.5 md:p-2 rounded-md bg-emerald-500/20 text-emerald-500">
+                            <Euro className="h-4 w-4 md:h-5 md:w-5" />
                         </div>
                     </CardHeader>
                     <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
-                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-2">
-                            <div>
-                                <div className="text-2xl md:text-5xl font-display font-bold text-foreground">2</div>
-                                <p className="text-[10px] md:text-sm font-medium text-muted-foreground mt-0.5 md:mt-1 text-balance">Solicitudes publicadas</p>
+                        <div>
+                            <div className="text-2xl md:text-5xl font-display font-bold text-emerald-500">€245K</div>
+                            <p className="text-[10px] md:text-sm font-medium text-muted-foreground mt-0.5 md:mt-1 text-balance">Ahorro anual proyectado</p>
+                            <div className="flex items-center gap-1 mt-2">
+                                <TrendingUp className="h-3 w-3 text-emerald-500" />
+                                <span className="text-xs font-bold text-emerald-500">+32% vs año anterior</span>
                             </div>
-                            <Link to="/client/rfps">
-                                <Button variant="ghost" size="sm" className="h-8 rounded-md gap-1.5 md:gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all text-[10px] md:text-sm">
-                                    Ver todas
-                                    <ArrowRight className="h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
-                                </Button>
-                            </Link>
                         </div>
                     </CardContent>
                 </Card>
 
-                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-white/5 relative overflow-hidden rounded-md">
+                {/* ROI Promedio */}
+                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-blue-500/20 bg-blue-500/5 relative overflow-hidden rounded-md">
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <TrendingUp className="h-12 w-12 md:h-24 md:w-24 -mr-4 md:-mr-8 -mt-4 md:-mt-8" />
+                    </div>
+                    <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
+                        <CardTitle className="text-[10px] md:text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">ROI Promedio</CardTitle>
+                        <div className="p-1.5 md:p-2 rounded-md bg-blue-500/20 text-blue-500">
+                            <Target className="h-4 w-4 md:h-5 md:w-5" />
+                        </div>
+                    </CardHeader>
+                    <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
+                        <div>
+                            <div className="text-2xl md:text-5xl font-display font-bold text-blue-500">285%</div>
+                            <p className="text-[10px] md:text-sm font-medium text-muted-foreground mt-0.5 md:mt-1 text-balance">En proyectos activos</p>
+                            <div className="flex items-center gap-1 mt-2">
+                                <Clock className="h-3 w-3 text-blue-500" />
+                                <span className="text-xs font-bold text-blue-500">Payback: 4.2 meses</span>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Tiempo Ahorrado */}
+                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-amber-500/20 bg-amber-500/5 relative overflow-hidden rounded-md">
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <Zap className="h-12 w-12 md:h-24 md:w-24 -mr-4 md:-mr-8 -mt-4 md:-mt-8" />
+                    </div>
+                    <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
+                        <CardTitle className="text-[10px] md:text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Eficiencia Ganada</CardTitle>
+                        <div className="p-1.5 md:p-2 rounded-md bg-amber-500/20 text-amber-500">
+                            <Zap className="h-4 w-4 md:h-5 md:w-5" />
+                        </div>
+                    </CardHeader>
+                    <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
+                        <div>
+                            <div className="text-2xl md:text-5xl font-display font-bold text-amber-500">1,840h</div>
+                            <p className="text-[10px] md:text-sm font-medium text-muted-foreground mt-0.5 md:mt-1 text-balance">Horas ahorradas/año</p>
+                            <div className="flex items-center gap-1 mt-2">
+                                <Users className="h-3 w-3 text-amber-500" />
+                                <span className="text-xs font-bold text-amber-500">≈ 1.1 FTE liberados</span>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Deal Rooms */}
+                <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer group border-indigo-500/20 bg-indigo-500/5 relative overflow-hidden rounded-md">
                     <div className="absolute top-0 right-0 p-3 md:p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                         <FolderKanban className="h-12 w-12 md:h-24 md:w-24 -mr-4 md:-mr-8 -mt-4 md:-mt-8" />
                     </div>
                     <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
                         <CardTitle className="text-[10px] md:text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground/70">Deal Rooms</CardTitle>
-                        <div className="p-1.5 md:p-2 rounded-md bg-indigo-500/10 text-indigo-500">
+                        <div className="p-1.5 md:p-2 rounded-md bg-indigo-500/20 text-indigo-500">
                             <FolderKanban className="h-4 w-4 md:h-5 md:w-5" />
                         </div>
                     </CardHeader>
                     <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-2">
                             <div>
-                                <div className="text-2xl md:text-5xl font-display font-bold text-foreground">1</div>
-                                <p className="text-[10px] md:text-sm font-medium text-muted-foreground mt-0.5 md:mt-1 text-balance">Negociación técnica</p>
+                                <div className="text-2xl md:text-5xl font-display font-bold text-indigo-500">3</div>
+                                <p className="text-[10px] md:text-sm font-medium text-muted-foreground mt-0.5 md:mt-1 text-balance">Proyectos activos</p>
                             </div>
                             <Link to="/client/deal-rooms">
-                                <Button variant="ghost" size="sm" className="h-8 rounded-md gap-1.5 md:gap-2 font-bold group-hover:bg-primary group-hover:text-primary-foreground transition-all text-[10px] md:text-sm">
+                                <Button variant="ghost" size="sm" className="h-8 rounded-md gap-1.5 md:gap-2 font-bold group-hover:bg-indigo-500 group-hover:text-white transition-all text-[10px] md:text-sm">
                                     Ir a salas
                                     <ArrowRight className="h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
                                 </Button>

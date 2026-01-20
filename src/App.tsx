@@ -9,25 +9,32 @@ import RegisterPage from './pages/auth/RegisterPage';
 import OnboardingWizard from './pages/onboarding/OnboardingWizard';
 import MarketplacePage from './pages/marketplace/MarketplacePage';
 import UseCaseDetailPage from './pages/marketplace/UseCaseDetailPage';
-import DealRoomsList from './pages/deal-rooms/DealRoomsList';
+import DealRoomsHub from './pages/deal-rooms/DealRoomsHub';
 import DealRoomPage from './pages/deal-rooms/DealRoomPage';
 import ProviderHome from './pages/dashboard/ProviderHome';
 import ClientHome from './pages/dashboard/ClientHome';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 import AdminUsersPage from './pages/admin/AdminUsersPage';
-import AdminMessagesPage from './pages/admin/AdminMessagesPage';
-import SettingsPage from './pages/settings/SettingsPage';
+import AdminContentPage from './pages/admin/AdminContentPage';
+import AdminFinancesPage from './pages/admin/AdminFinancesPage';
+import AdminSettingsPage from './pages/admin/AdminSettingsPage';
+import AdminMonitoringPage from './pages/admin/AdminMonitoringPage';
+import AdminProfilePage from './pages/admin/AdminProfilePage';
+
 import ClientRFPManager from './pages/client/ClientRFPManager';
-import ProviderAnalyticsPage from './pages/provider/ProviderAnalyticsPage';
 import ProviderMarketplacePage from './pages/provider/ProviderMarketplacePage';
+import CreateUseCasePage from './pages/provider/CreateUseCasePage';
 import CompanyDetailPage from './pages/provider/CompanyDetailPage';
 import LeadsPage from './pages/provider/LeadsPage';
+import ReferralsPage from './pages/provider/ReferralsPage';
+import PaymentsPage from './pages/provider/PaymentsPage';
 import ClientFavoritesPage from './pages/client/ClientFavoritesPage';
 import ClientProposalDetail from './pages/client/ClientProposalDetail';
 import ClientRequestDetail from './pages/client/ClientRequestDetail';
 import UnauthorizedPage from './pages/UnauthorizedPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ProfilePage from './pages/ProfilePage';
+import NotificationsPage from './pages/shared/NotificationsPage';
 import DevToolbar from './components/DevToolbar';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -62,25 +69,37 @@ function App() {
           <Route path="/client/requests/:id" element={<ClientRequestDetail />} />
           <Route path="/client/rfps" element={<ClientRFPManager />} />
           <Route path="/client/favorites" element={<ClientFavoritesPage />} />
-          <Route path="/client/deal-rooms" element={<DealRoomsList />} />
-          <Route path="/client/settings" element={<SettingsPage />} />
+          <Route path="/client/deal-rooms" element={<DealRoomsHub />} />
+
           <Route path="/client/profile" element={<ProfilePage />} />
+          <Route path="/client/referrals" element={<ReferralsPage />} />
+          <Route path="/client/payments" element={<PaymentsPage />} />
+          <Route path="/client/notifications" element={<NotificationsPage />} />
 
           {/* Provider Routes - All prefixed with /provider */}
           <Route path="/provider/dashboard" element={<ProviderHome />} />
           <Route path="/provider/marketplace" element={<ProviderMarketplacePage />} />
+          <Route path="/provider/marketplace/create" element={<CreateUseCasePage />} />
           <Route path="/provider/marketplace/company/:id" element={<CompanyDetailPage />} />
-          <Route path="/provider/analytics" element={<ProviderAnalyticsPage />} />
+
           <Route path="/provider/leads" element={<LeadsPage />} />
-          <Route path="/provider/deal-rooms" element={<DealRoomsList />} />
-          <Route path="/provider/settings" element={<SettingsPage />} />
+          <Route path="/provider/deal-rooms" element={<DealRoomsHub />} />
+
           <Route path="/provider/profile" element={<ProfilePage />} />
+          <Route path="/provider/referrals" element={<ReferralsPage />} />
+          <Route path="/provider/payments" element={<PaymentsPage />} />
+          <Route path="/provider/notifications" element={<NotificationsPage />} />
 
           {/* Admin Routes - All prefixed with /admin */}
           <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
           <Route path="/admin/users" element={<AdminUsersPage />} />
-          <Route path="/admin/messages" element={<AdminMessagesPage />} />
-          <Route path="/admin/settings" element={<SettingsPage />} />
+          <Route path="/admin/content" element={<AdminContentPage />} />
+          <Route path="/admin/finances" element={<AdminFinancesPage />} />
+          <Route path="/admin/settings" element={<AdminSettingsPage />} />
+          <Route path="/admin/monitoring" element={<AdminMonitoringPage />} />
+          <Route path="/admin/profile" element={<AdminProfilePage />} />
+          <Route path="/admin/notifications" element={<NotificationsPage />} />
+
         </Route>
 
         {/* Deal Room - Full Screen Layout (outside DashboardLayout) */}

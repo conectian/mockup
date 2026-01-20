@@ -2,12 +2,14 @@ import { type UseCase } from '@/data/marketplace-data';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Rocket, Award, ShieldCheck, Medal } from 'lucide-react';
+import { ArrowRight, Rocket, Award, ShieldCheck, Medal, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 interface UseCaseCardProps {
     useCase: UseCase;
+    matchScore?: number;
+    hasFilters?: boolean;
 }
 
 const tierConfig = {
@@ -28,12 +30,37 @@ const tierConfig = {
     },
 };
 
-export default function UseCaseCard({ useCase }: UseCaseCardProps) {
+export default function UseCaseCard({ useCase, matchScore, hasFilters = false }: UseCaseCardProps) {
     const tier = tierConfig[useCase.providerTier];
     const TierIcon = tier.icon;
+    const isGoldPartner = useCase.providerTier === 'Gold';
 
     return (
-        <Card className="py-0 overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full border-white/5 rounded-md bg-card/40 backdrop-blur-sm">
+        <Card className={cn(
+            "py-0 overflow-hidden group hover:shadow-2xl transition-all duration-500 flex flex-col h-full rounded-xl bg-card/40 backdrop-blur-sm relative",
+            isGoldPartner 
+                ? "border-2 border-amber-400/60 hover:border-amber-400 hover:shadow-amber-400/20" 
+                : "border-2 border-white/10 hover:border-primary/30 hover:shadow-primary/5"
+        )}>
+            {/* Gold Partner Corner Ribbon */}
+            {isGoldPartner && (
+                <div className="absolute top-0 left-0 z-10">
+                    <div className="bg-gradient-to-br from-amber-400 to-amber-500 text-white text-[9px] font-bold px-3 py-1 uppercase tracking-wider shadow-lg">
+                        🏆 Gold Partner
+                    </div>
+                </div>
+            )}
+
+            {/* Match Score Badge (when filters applied) */}
+            {hasFilters && matchScore && (
+                <div className="absolute top-4 left-4 z-10 glass-card px-3 py-1.5 rounded-lg border-emerald-500/30 bg-emerald-500/10 backdrop-blur-md">
+                    <div className="flex items-center gap-1.5">
+                        <Target className="h-3.5 w-3.5 text-emerald-400" />
+                        <span className="text-xs font-bold text-emerald-400">{matchScore}% Match</span>
+                    </div>
+                </div>
+            )}
+
             {/* Image Header */}
             <div className="aspect-[16/10] relative overflow-hidden">
                 <img
@@ -88,13 +115,13 @@ export default function UseCaseCard({ useCase }: UseCaseCardProps) {
                 </div>
 
                 {/* Footer Action */}
-                <div className="border-t border-white/5 mt-auto">
-                    <Link to={`/client/marketplace/${useCase.id}`} className="block">
-                        <Button className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-all rounded-md font-bold h-11 bg-white/5 text-foreground border border-white/10 hover:border-primary/50">
+                <div className="border-t border-white/5 mt-auto pt-4">
+                    <Button asChild className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-all rounded-md font-bold h-11 bg-white/5 text-foreground border border-white/10 hover:border-primary/50">
+                        <Link to={`/client/marketplace/${useCase.id}`}>
                             Ver Detalles
                             <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                    </Link>
+                        </Link>
+                    </Button>
                 </div>
             </CardContent>
         </Card>

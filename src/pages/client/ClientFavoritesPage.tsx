@@ -24,7 +24,7 @@ export default function ClientFavoritesPage() {
                 <p className="text-muted-foreground">Tus partners tecnológicos de confianza</p>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="zoom-adaptive-grid">
                 {favoriteProviders.map((provider, i) => (
                     <Card key={i} className="hover:shadow-lg transition-all">
                         <CardContent className="p-6">

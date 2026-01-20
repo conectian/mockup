@@ -312,30 +312,34 @@
   /* Cards grid that adapts to zoom level */
   /* This grid responds to browser zoom, showing more/fewer cards as the user zooms */
   /* Cards will always fill the horizontal space available */
-  /* Cards grid that adapts to zoom level - WIDER CARDS for 2 per row typically */
-  /* This grid responds to browser zoom, showing more/fewer cards as the user zooms */
-  /* Cards will always fill the horizontal space available */
   .zoom-adaptive-grid {
     display: grid;
     gap: 1.5rem;
-    grid-template-columns: 1fr; /* 1 card on mobile */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
   }
 
   @media (min-width: 640px) {
     .zoom-adaptive-grid {
-      grid-template-columns: repeat(2, 1fr); /* 2 cards on tablet */
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     }
   }
 
   @media (min-width: 1024px) {
     .zoom-adaptive-grid {
-      grid-template-columns: repeat(3, 1fr); /* 3 cards on desktop */
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
   }
 
-  @media (min-width: 1536px) {
+  @media (min-width: 1280px) {
     .zoom-adaptive-grid {
-      grid-template-columns: repeat(4, 1fr); /* 4 cards on large screens */
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+  }
+
+  /* For very large screens and zoomed out views */
+  @media (min-width: 1920px) {
+    .zoom-adaptive-grid {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     }
   }
 }

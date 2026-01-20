@@ -2,9 +2,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Coins, Eye, FolderKanban, Plus, Search, TrendingUp, Building2, Clock, ArrowRight, Sparkles } from 'lucide-react';
+import { Coins, Eye, Plus, Search, TrendingUp, Building2, Clock, ArrowRight, Sparkles, MousePointerClick, DollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+    AreaChart,
+    Area
+} from 'recharts';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 // Mock data for leads
 const mockLeads = [
@@ -13,6 +25,23 @@ const mockLeads = [
     { id: 3, company: 'Repsol', sector: 'Energía', date: 'Ayer', status: 'Vio tu caso', statusColor: 'bg-blue-500' },
     { id: 4, company: 'El Corte Inglés', sector: 'Retail', date: 'Ayer', status: 'Solicitó demo', statusColor: 'bg-violet-500' },
     { id: 5, company: 'Mapfre', sector: 'Seguros', date: 'Hace 2 días', status: 'Vio tu caso', statusColor: 'bg-blue-500' },
+];
+
+const viewsData = [
+    { name: 'Lun', views: 120, clicks: 45 },
+    { name: 'Mar', views: 145, clicks: 52 },
+    { name: 'Mie', views: 180, clicks: 68 },
+    { name: 'Jue', views: 210, clicks: 80 },
+    { name: 'Vie', views: 195, clicks: 75 },
+    { name: 'Sab', views: 110, clicks: 35 },
+    { name: 'Dom', views: 95, clicks: 28 },
+];
+
+const engagementData = [
+    { name: 'Sem 1', deals: 2 },
+    { name: 'Sem 2', deals: 4 },
+    { name: 'Sem 3', deals: 3 },
+    { name: 'Sem 4', deals: 6 },
 ];
 
 export default function ProviderHome() {
@@ -31,21 +60,21 @@ export default function ProviderHome() {
             </div>
 
             {/* KPI Row */}
-            <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
                 {/* Credits */}
                 <Card className="border-0 bg-gradient-to-br from-amber-400/20 via-orange-500/10 to-transparent relative overflow-hidden rounded-md shadow-xl shadow-amber-500/5 group col-span-2 lg:col-span-1">
                     <div className="absolute top-0 right-0 p-3 md:p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
                         <Coins className="h-12 w-12 md:h-20 md:w-20 text-amber-500" />
                     </div>
                     <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
-                        <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70">Créditos Disponibles</CardTitle>
+                        <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70">Créditos</CardTitle>
                         <Coins className="h-4 w-4 md:h-5 md:w-5 text-amber-500" />
                     </CardHeader>
                     <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
                         <div className="text-3xl md:text-5xl font-display font-bold text-amber-700 dark:text-amber-400 mb-2 md:mb-4">150</div>
                         <div className="flex items-center justify-between">
-                            <span className="text-[10px] md:text-xs font-medium text-amber-600/70">Usa créditos para ver leads</span>
-                            <Link to="/settings?tab=billing">
+                            <span className="text-[10px] md:text-xs font-medium text-amber-600/70">Disponibles</span>
+                            <Link to="/provider/payments">
                                 <Button size="sm" variant="outline" className="h-7 md:h-8 px-2 md:px-3 text-[10px] md:text-xs border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 rounded-md font-bold">
                                     Recargar
                                 </Button>
@@ -57,7 +86,7 @@ export default function ProviderHome() {
                 {/* Profile Views */}
                 <Card className="border-white/5 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden">
                     <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
-                        <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Visitas al Perfil</CardTitle>
+                        <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Visitas</CardTitle>
                         <div className="p-1.5 md:p-2 rounded-md bg-primary/10 text-primary">
                             <Eye className="h-4 w-4 md:h-5 md:w-5" />
                         </div>
@@ -71,17 +100,34 @@ export default function ProviderHome() {
                     </CardContent>
                 </Card>
 
-                {/* Active Deals */}
+                {/* Interactions (New) */}
                 <Card className="border-white/5 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden">
                     <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
-                        <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Deals Activos</CardTitle>
-                        <div className="p-1.5 md:p-2 rounded-md bg-indigo-500/10 text-indigo-500">
-                            <FolderKanban className="h-4 w-4 md:h-5 md:w-5" />
+                        <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Interacciones</CardTitle>
+                        <div className="p-1.5 md:p-2 rounded-md bg-blue-500/10 text-blue-500">
+                            <MousePointerClick className="h-4 w-4 md:h-5 md:w-5" />
                         </div>
                     </CardHeader>
                     <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
-                        <div className="text-3xl md:text-5xl font-display font-bold mb-1 md:mb-2">3</div>
-                        <p className="text-[10px] md:text-sm font-medium text-muted-foreground">Oportunidades abiertas</p>
+                        <div className="text-3xl md:text-5xl font-display font-bold mb-1 md:mb-2">345</div>
+                        <div className="flex items-center gap-1.5 text-emerald-500 bg-emerald-500/10 w-fit px-2 py-0.5 rounded-full font-bold text-[10px] md:text-xs">
+                            <TrendingUp className="h-3 w-3" />
+                            <span>+5%</span>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Active Deals / ROI */}
+                <Card className="border-white/5 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden">
+                    <CardHeader className="flex flex-row items-center justify-between pb-1 md:pb-2 p-4 md:p-6">
+                        <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/70">Pipeline</CardTitle>
+                        <div className="p-1.5 md:p-2 rounded-md bg-indigo-500/10 text-indigo-500">
+                            <DollarSign className="h-4 w-4 md:h-5 md:w-5" />
+                        </div>
+                    </CardHeader>
+                    <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
+                        <div className="text-2xl md:text-3xl font-display font-bold mb-1 md:mb-2">45.2k €</div>
+                        <p className="text-[10px] md:text-xs font-medium text-muted-foreground">3 Deals activos</p>
                     </CardContent>
                 </Card>
             </div>
@@ -150,7 +196,7 @@ export default function ProviderHome() {
                             <CardTitle className="text-lg font-display font-bold">Impulsa tu catálogo</CardTitle>
                         </CardHeader>
                         <CardContent className="relative z-10 px-8 pb-8 space-y-4">
-                            <Link to="/provider/catalog" className="block">
+                            <Link to="/provider/marketplace/create" className="block">
                                 <Button className="w-full gap-3 h-14 bg-white text-indigo-600 hover:bg-white/95 scale-100 hover:scale-[1.02] active:scale-[0.98] transition-all font-bold text-base rounded-md shadow-xl shadow-black/10">
                                     <Plus className="h-6 w-6" />
                                     Nuevo Caso de Uso
@@ -203,6 +249,82 @@ export default function ProviderHome() {
                         </CardContent>
                     </Card>
                 </div>
+            </div>
+
+            {/* Analytics Charts Section */}
+            <div className="space-y-4">
+                <h2 className="text-xl font-display font-bold">Rendimiento y Analytics</h2>
+                <Tabs defaultValue="traffic" className="space-y-4">
+                    <TabsList className="bg-muted/50">
+                        <TabsTrigger value="traffic">Tráfico y Vistas</TabsTrigger>
+                        <TabsTrigger value="engagement">Conversión</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="traffic" className="space-y-4">
+                        <Card className="border-white/5">
+                            <CardHeader>
+                                <CardTitle>Vistas vs Clics (Últimos 7 días)</CardTitle>
+                            </CardHeader>
+                            <CardContent className="pl-2">
+                                <div className="h-[350px]">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <AreaChart data={viewsData}>
+                                            <defs>
+                                                <linearGradient id="colorViews" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                                                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                                                </linearGradient>
+                                                <linearGradient id="colorClicks" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                                                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                                                </linearGradient>
+                                            </defs>
+                                            <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                                            <XAxis dataKey="name" />
+                                            <YAxis />
+                                            <Tooltip
+                                                contentStyle={{
+                                                    backgroundColor: 'hsl(var(--popover))',
+                                                    borderRadius: '8px',
+                                                    border: '1px solid hsl(var(--border))',
+                                                    color: 'hsl(var(--popover-foreground))'
+                                                }}
+                                            />
+                                            <Area type="monotone" dataKey="views" stroke="#8884d8" fillOpacity={1} fill="url(#colorViews)" name="Vistas" />
+                                            <Area type="monotone" dataKey="clicks" stroke="#82ca9d" fillOpacity={1} fill="url(#colorClicks)" name="Clics" />
+                                        </AreaChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                    <TabsContent value="engagement">
+                        <Card className="border-white/5">
+                            <CardHeader>
+                                <CardTitle>Deals Generados (Últimas 4 semanas)</CardTitle>
+                            </CardHeader>
+                            <CardContent className="pl-2">
+                                <div className="h-[350px]">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <BarChart data={engagementData}>
+                                            <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                                            <XAxis dataKey="name" />
+                                            <YAxis />
+                                            <Tooltip
+                                                contentStyle={{
+                                                    backgroundColor: 'hsl(var(--popover))',
+                                                    borderRadius: '8px',
+                                                    border: '1px solid hsl(var(--border))',
+                                                    color: 'hsl(var(--popover-foreground))'
+                                                }}
+                                            />
+                                            <Bar dataKey="deals" fill="#f59e0b" radius={[4, 4, 0, 0]} name="Nuevos Deals" />
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                </Tabs>
             </div>
         </div>
     );

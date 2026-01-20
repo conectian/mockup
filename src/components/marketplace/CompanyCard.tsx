@@ -33,8 +33,10 @@ export default function CompanyCard({ company }: CompanyCardProps) {
     const tierStyle = tierConfig[company.tier] || tierConfig['Enterprise'];
     const [isProposalModalOpen, setIsProposalModalOpen] = useState(false);
 
+
+
     return (
-        <Card className="py-0 overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full border-white/5 rounded-xl bg-card/40 backdrop-blur-sm">
+        <Card className="py-0 overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full rounded-xl bg-card/40 backdrop-blur-sm border border-white/10 hover:border-primary/30">
             {/* Image Header */}
             <div className="aspect-[16/9] relative overflow-hidden">
                 <img
@@ -110,16 +112,16 @@ export default function CompanyCard({ company }: CompanyCardProps) {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-2 mt-auto pt-3 border-t border-white/5">
-                    <Link to={`/provider/marketplace/company/${company.id}`} className="flex-1">
-                        <Button variant="outline" size="sm" className="w-full h-9 text-xs font-bold border-primary/30 text-primary hover:bg-primary/5 rounded-lg">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-auto pt-3 border-t border-white/5">
+                    <Button asChild variant="outline" size="sm" className="flex-1 w-full sm:w-auto h-10 text-xs font-bold border-primary/30 text-primary hover:bg-primary/5 rounded-lg">
+                        <Link to={`/provider/marketplace/company/${company.id}`} className="flex items-center justify-center">
                             <Building2 className="h-3.5 w-3.5 mr-1.5" />
                             Ver Necesidades
-                        </Button>
-                    </Link>
+                        </Link>
+                    </Button>
                     <Button
                         size="sm"
-                        className="flex-1 h-9 text-xs font-bold premium-gradient rounded-lg gap-1.5"
+                        className="flex-1 sm:flex-1 h-10 text-xs font-bold premium-gradient rounded-lg gap-1.5"
                         onClick={() => setIsProposalModalOpen(true)}
                     >
                         Propuesta

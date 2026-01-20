@@ -138,256 +138,267 @@ export default function DealRoomsList() {
                 </Button>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-4">
-                <Card className="border-0 bg-gradient-to-br from-slate-400/20 via-slate-500/10 to-transparent rounded-md shadow-xl shadow-slate-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <Users className="h-10 w-10 md:h-16 md:w-16 text-slate-500" />
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                {/* Left Sidebar - Filters */}
+                <div className="space-y-6 lg:sticky lg:top-24 h-fit">
+                    <div className="space-y-4">
+                        <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Búsqueda</h3>
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                placeholder="Buscar..."
+                                className="pl-10 bg-muted/30 border-white/10"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
                     </div>
-                    <CardContent className="p-4 md:pt-6">
-                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-1 md:mb-2">Total</div>
-                        <div className="text-2xl md:text-4xl font-display font-bold">{stats.total}</div>
-                    </CardContent>
-                </Card>
-                <Card className="border-0 bg-gradient-to-br from-emerald-400/20 via-emerald-500/10 to-transparent rounded-md shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <CheckCircle className="h-10 w-10 md:h-16 md:w-16 text-emerald-500" />
-                    </div>
-                    <CardContent className="p-4 md:pt-6">
-                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/70 mb-1 md:mb-2">Activas</div>
-                        <div className="text-2xl md:text-4xl font-display font-bold text-emerald-700 dark:text-emerald-400">{stats.active}</div>
-                    </CardContent>
-                </Card>
-                <Card className="border-0 bg-gradient-to-br from-amber-400/20 via-amber-500/10 to-transparent rounded-md shadow-xl shadow-amber-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <AlertCircle className="h-10 w-10 md:h-16 md:w-16 text-amber-500" />
-                    </div>
-                    <CardContent className="p-4 md:pt-6">
-                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400/70 mb-1 md:mb-2">Pendientes</div>
-                        <div className="text-2xl md:text-4xl font-display font-bold text-amber-700 dark:text-amber-400">{stats.pending}</div>
-                    </CardContent>
-                </Card>
-                <Card className="border-0 bg-gradient-to-br from-slate-400/20 via-slate-500/10 to-transparent rounded-md shadow-xl shadow-slate-500/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-2 md:p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <XCircle className="h-10 w-10 md:h-16 md:w-16 text-slate-500" />
-                    </div>
-                    <CardContent className="p-4 md:pt-6">
-                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-1 md:mb-2">Cerradas</div>
-                        <div className="text-2xl md:text-4xl font-display font-bold">{stats.closed}</div>
-                    </CardContent>
-                </Card>
-            </div>
 
-            {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4">
-                <div className="relative flex-1 max-w-md">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                        placeholder="Buscar por título o contraparte..."
-                        className="pl-10 h-11 bg-muted/30 border-white/10 rounded-md"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-                <div className="flex flex-wrap gap-2">
-                    <Button
-                        variant={filterStatus === 'all' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setFilterStatus('all')}
-                        className={cn(
-                            "h-11 px-4 rounded-md font-bold",
-                            filterStatus === 'all' && "bg-primary shadow-lg shadow-primary/20"
-                        )}
-                    >
-                        Todas
-                    </Button>
-                    <Button
-                        variant={filterStatus === 'active' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setFilterStatus('active')}
-                        className={cn(
-                            "h-11 px-4 rounded-md font-bold",
-                            filterStatus === 'active' && "bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-500/20"
-                        )}
-                    >
-                        Activas
-                    </Button>
-                    <Button
-                        variant={filterStatus === 'pending' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setFilterStatus('pending')}
-                        className={cn(
-                            "h-11 px-4 rounded-md font-bold",
-                            filterStatus === 'pending' && "bg-amber-600 hover:bg-amber-700 shadow-lg shadow-amber-500/20"
-                        )}
-                    >
-                        Pendientes
-                    </Button>
-                    <Button
-                        variant={filterStatus === 'closed' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setFilterStatus('closed')}
-                        className={cn(
-                            "h-11 px-4 rounded-md font-bold",
-                            filterStatus === 'closed' && "bg-slate-600 hover:bg-slate-700 shadow-lg shadow-slate-500/20"
-                        )}
-                    >
-                        Cerradas
-                    </Button>
-                </div>
-            </div>
+                    <div className="space-y-4">
+                        <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Estado</h3>
+                        <div className="flex flex-col gap-3">
+                            <button
+                                onClick={() => setFilterStatus('all')}
+                                className={cn(
+                                    "flex items-center justify-between p-3 rounded-lg border transition-all text-left",
+                                    filterStatus === 'all'
+                                        ? "bg-primary/10 border-primary/50 text-foreground shadow-sm"
+                                        : "bg-white/5 border-transparent text-muted-foreground hover:bg-white/10 hover:text-foreground"
+                                )}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <div className={cn("p-2 rounded-md transition-colors", filterStatus === 'all' ? "bg-primary text-primary-foreground" : "bg-white/5")}>
+                                        <Users className="h-4 w-4" />
+                                    </div>
+                                    <div>
+                                        <div className="text-xs font-medium opacity-70">Total</div>
+                                        <div className="font-bold text-sm">Todas</div>
+                                    </div>
+                                </div>
+                                <div className="text-xl font-display font-bold">{stats.total}</div>
+                            </button>
 
-            {/* Deal Rooms Table */}
-            <Card className="border-white/5 rounded-md shadow-sm overflow-hidden">
-                <CardHeader className="px-8 pt-8 pb-0">
-                    <CardTitle className="text-xl font-display font-bold">Negociaciones</CardTitle>
-                </CardHeader>
-                <CardContent className="p-0 mt-6">
-                    {/* Desktop Table */}
-                    <div className="hidden md:block">
-                        <Table>
-                            <TableHeader>
-                                <TableRow className="border-white/5">
-                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pl-8">Deal Room</TableHead>
-                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Contraparte</TableHead>
-                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Estado</TableHead>
-                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Mensajes</TableHead>
-                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Última Actividad</TableHead>
-                                    <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Creado</TableHead>
-                                    <TableHead className="text-right text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pr-8">Acciones</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
+                            <button
+                                onClick={() => setFilterStatus('active')}
+                                className={cn(
+                                    "flex items-center justify-between p-3 rounded-lg border transition-all text-left",
+                                    filterStatus === 'active'
+                                        ? "bg-emerald-500/10 border-emerald-500/50 text-foreground shadow-sm"
+                                        : "bg-white/5 border-transparent text-muted-foreground hover:bg-white/10 hover:text-foreground"
+                                )}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <div className={cn("p-2 rounded-md transition-colors", filterStatus === 'active' ? "bg-emerald-500 text-white" : "bg-white/5")}>
+                                        <CheckCircle className="h-4 w-4" />
+                                    </div>
+                                    <div>
+                                        <div className="text-xs font-medium opacity-70 text-emerald-500">Activas</div>
+                                        <div className="font-bold text-sm">En curso</div>
+                                    </div>
+                                </div>
+                                <div className={cn("text-xl font-display font-bold", filterStatus === 'active' ? "text-emerald-500" : "")}>{stats.active}</div>
+                            </button>
+
+                            <button
+                                onClick={() => setFilterStatus('pending')}
+                                className={cn(
+                                    "flex items-center justify-between p-3 rounded-lg border transition-all text-left",
+                                    filterStatus === 'pending'
+                                        ? "bg-amber-500/10 border-amber-500/50 text-foreground shadow-sm"
+                                        : "bg-white/5 border-transparent text-muted-foreground hover:bg-white/10 hover:text-foreground"
+                                )}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <div className={cn("p-2 rounded-md transition-colors", filterStatus === 'pending' ? "bg-amber-500 text-white" : "bg-white/5")}>
+                                        <AlertCircle className="h-4 w-4" />
+                                    </div>
+                                    <div>
+                                        <div className="text-xs font-medium opacity-70 text-amber-500">Pendientes</div>
+                                        <div className="font-bold text-sm">Acción req.</div>
+                                    </div>
+                                </div>
+                                <div className={cn("text-xl font-display font-bold", filterStatus === 'pending' ? "text-amber-500" : "")}>{stats.pending}</div>
+                            </button>
+
+                            <button
+                                onClick={() => setFilterStatus('closed')}
+                                className={cn(
+                                    "flex items-center justify-between p-3 rounded-lg border transition-all text-left",
+                                    filterStatus === 'closed'
+                                        ? "bg-slate-500/10 border-slate-500/50 text-foreground shadow-sm"
+                                        : "bg-white/5 border-transparent text-muted-foreground hover:bg-white/10 hover:text-foreground"
+                                )}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <div className={cn("p-2 rounded-md transition-colors", filterStatus === 'closed' ? "bg-slate-500 text-white" : "bg-white/5")}>
+                                        <XCircle className="h-4 w-4" />
+                                    </div>
+                                    <div>
+                                        <div className="text-xs font-medium opacity-70 text-slate-500">Cerradas</div>
+                                        <div className="font-bold text-sm">Histórico</div>
+                                    </div>
+                                </div>
+                                <div className={cn("text-xl font-display font-bold", filterStatus === 'closed' ? "text-slate-500" : "")}>{stats.closed}</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Main Content - Table */}
+                <div className="lg:col-span-3">
+                    <Card className="border-white/5 rounded-md shadow-sm overflow-hidden min-h-[500px]">
+                        <CardHeader className="px-8 pt-8 pb-0">
+                            <CardTitle className="text-xl font-display font-bold">Negociaciones</CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-0 mt-6">
+                            {/* Desktop Table */}
+                            <div className="hidden md:block">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow className="border-white/5">
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pl-8">Deal Room</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Contraparte</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Estado</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Mensajes</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Última Actividad</TableHead>
+                                            <TableHead className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Creado</TableHead>
+                                            <TableHead className="text-right text-xs font-bold uppercase tracking-wider text-muted-foreground/60 pr-8">Acciones</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {filteredRooms.map((room) => (
+                                            <TableRow key={room.id} className="border-white/5 hover:bg-muted/30 transition-colors">
+                                                <TableCell className="pl-8">
+                                                    <Link to={`/deal-room/${room.id}`} className="flex items-center gap-3 group">
+                                                        <Avatar className="h-10 w-10 rounded-md shadow-sm">
+                                                            <AvatarFallback className="bg-gradient-to-br from-violet-400 to-indigo-500 text-white font-bold rounded-md">
+                                                                {room.title.charAt(0)}
+                                                            </AvatarFallback>
+                                                        </Avatar>
+                                                        <span className="font-bold group-hover:text-primary transition-colors">{room.title}</span>
+                                                    </Link>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="h-6 w-6 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
+                                                            {room.counterparty.charAt(0)}
+                                                        </div>
+                                                        <span className="text-muted-foreground">{room.counterparty}</span>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell>{getStatusBadge(room.status)}</TableCell>
+                                                <TableCell>
+                                                    <div className="flex items-center gap-2 text-sm">
+                                                        <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                                                        <span className="font-medium">{room.messages}</span>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                                        <Clock className="h-4 w-4" />
+                                                        <span>{room.lastActivity}</span>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="text-muted-foreground text-sm">{room.createdAt}</TableCell>
+                                                <TableCell className="text-right pr-8">
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger asChild>
+                                                            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
+                                                                <span className="sr-only">Open menu</span>
+                                                                <MoreHorizontal className="h-4 w-4" />
+                                                            </Button>
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent align="end" className="glass-card">
+                                                            <DropdownMenuLabel className="font-display">Acciones</DropdownMenuLabel>
+                                                            <DropdownMenuItem asChild className="cursor-pointer">
+                                                                <Link to={`/deal-room/${room.id}`}>
+                                                                    <Eye className="mr-2 h-4 w-4" /> Entrar a la sala
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem onClick={() => handleAction('Archivado', room.title)} className="cursor-pointer">
+                                                                <Archive className="mr-2 h-4 w-4" /> Archivar
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuSeparator className="bg-white/5" />
+                                                            <DropdownMenuItem className="text-red-500 cursor-pointer" onClick={() => handleAction('Eliminado', room.title)}>
+                                                                <Trash2 className="mr-2 h-4 w-4" /> Eliminar
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </div>
+
+                            {/* Mobile List View */}
+                            <div className="md:hidden space-y-4 p-4">
                                 {filteredRooms.map((room) => (
-                                    <TableRow key={room.id} className="border-white/5 hover:bg-muted/30 transition-colors">
-                                        <TableCell className="pl-8">
-                                            <Link to={`/deal-room/${room.id}`} className="flex items-center gap-3 group">
+                                    <div key={room.id} className="bg-white/5 rounded-lg border border-white/5 p-4 space-y-4">
+                                        <div className="flex items-start justify-between">
+                                            <Link to={`/deal-room/${room.id}`} className="flex items-center gap-3">
                                                 <Avatar className="h-10 w-10 rounded-md shadow-sm">
                                                     <AvatarFallback className="bg-gradient-to-br from-violet-400 to-indigo-500 text-white font-bold rounded-md">
                                                         {room.title.charAt(0)}
                                                     </AvatarFallback>
                                                 </Avatar>
-                                                <span className="font-bold group-hover:text-primary transition-colors">{room.title}</span>
-                                            </Link>
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="flex items-center gap-2">
-                                                <div className="h-6 w-6 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
-                                                    {room.counterparty.charAt(0)}
+                                                <div>
+                                                    <h3 className="font-bold text-sm leading-tight">{room.title}</h3>
+                                                    <div className="flex items-center gap-2 mt-1">
+                                                        <div className="h-5 w-5 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
+                                                            {room.counterparty.charAt(0)}
+                                                        </div>
+                                                        <span className="text-xs text-muted-foreground">{room.counterparty}</span>
+                                                    </div>
                                                 </div>
-                                                <span className="text-muted-foreground">{room.counterparty}</span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>{getStatusBadge(room.status)}</TableCell>
-                                        <TableCell>
-                                            <div className="flex items-center gap-2 text-sm">
-                                                <MessageSquare className="h-4 w-4 text-muted-foreground" />
-                                                <span className="font-medium">{room.messages}</span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                                <Clock className="h-4 w-4" />
-                                                <span>{room.lastActivity}</span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="text-muted-foreground text-sm">{room.createdAt}</TableCell>
-                                        <TableCell className="text-right pr-8">
+                                            </Link>
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
-                                                    <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
-                                                        <span className="sr-only">Open menu</span>
+                                                    <Button variant="ghost" className="h-8 w-8 p-0 -mr-2 text-muted-foreground">
                                                         <MoreHorizontal className="h-4 w-4" />
                                                     </Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end" className="glass-card">
-                                                    <DropdownMenuLabel className="font-display">Acciones</DropdownMenuLabel>
-                                                    <DropdownMenuItem asChild className="cursor-pointer">
-                                                        <Link to={`/deal-room/${room.id}`}>
-                                                            <Eye className="mr-2 h-4 w-4" /> Entrar a la sala
-                                                        </Link>
+                                                    <DropdownMenuItem asChild>
+                                                        <Link to={`/deal-room/${room.id}`}>Entrar a la sala</Link>
                                                     </DropdownMenuItem>
-                                                    <DropdownMenuItem onClick={() => handleAction('Archivado', room.title)} className="cursor-pointer">
-                                                        <Archive className="mr-2 h-4 w-4" /> Archivar
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuSeparator className="bg-white/5" />
-                                                    <DropdownMenuItem className="text-red-500 cursor-pointer" onClick={() => handleAction('Eliminado', room.title)}>
-                                                        <Trash2 className="mr-2 h-4 w-4" /> Eliminar
-                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem onSelect={() => handleAction('Archivado', room.title)}>Archivar</DropdownMenuItem>
+                                                    <DropdownMenuItem className="text-red-500" onSelect={() => handleAction('Eliminado', room.title)}>Eliminar</DropdownMenuItem>
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </div>
+                                        </div>
 
-                    {/* Mobile List View */}
-                    <div className="md:hidden space-y-4 p-4">
-                        {filteredRooms.map((room) => (
-                            <div key={room.id} className="bg-white/5 rounded-lg border border-white/5 p-4 space-y-4">
-                                <div className="flex items-start justify-between">
-                                    <Link to={`/deal-room/${room.id}`} className="flex items-center gap-3">
-                                        <Avatar className="h-10 w-10 rounded-md shadow-sm">
-                                            <AvatarFallback className="bg-gradient-to-br from-violet-400 to-indigo-500 text-white font-bold rounded-md">
-                                                {room.title.charAt(0)}
-                                            </AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <h3 className="font-bold text-sm leading-tight">{room.title}</h3>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <div className="h-5 w-5 rounded-md bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20">
-                                                    {room.counterparty.charAt(0)}
+                                        <div className="flex items-center justify-between border-t border-white/5 pt-3">
+                                            {getStatusBadge(room.status)}
+                                            <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                                <div className="flex items-center gap-1.5">
+                                                    <MessageSquare className="h-3.5 w-3.5" />
+                                                    <span>{room.messages}</span>
                                                 </div>
-                                                <span className="text-xs text-muted-foreground">{room.counterparty}</span>
+                                                <div className="flex items-center gap-1.5">
+                                                    <Clock className="h-3.5 w-3.5" />
+                                                    <span>{room.lastActivity}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </Link>
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" className="h-8 w-8 p-0 -mr-2 text-muted-foreground">
-                                                <MoreHorizontal className="h-4 w-4" />
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end" className="glass-card">
-                                            <DropdownMenuItem asChild>
-                                                <Link to={`/deal-room/${room.id}`}>Entrar a la sala</Link>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem onSelect={() => handleAction('Archivado', room.title)}>Archivar</DropdownMenuItem>
-                                            <DropdownMenuItem className="text-red-500" onSelect={() => handleAction('Eliminado', room.title)}>Eliminar</DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </div>
-
-                                <div className="flex items-center justify-between border-t border-white/5 pt-3">
-                                    {getStatusBadge(room.status)}
-                                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                                        <div className="flex items-center gap-1.5">
-                                            <MessageSquare className="h-3.5 w-3.5" />
-                                            <span>{room.messages}</span>
-                                        </div>
-                                        <div className="flex items-center gap-1.5">
-                                            <Clock className="h-3.5 w-3.5" />
-                                            <span>{room.lastActivity}</span>
-                                        </div>
                                     </div>
-                                </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
 
-                    {filteredRooms.length === 0 && (
-                        <div className="text-center py-16">
-                            <FolderOpen className="h-16 w-16 mx-auto text-muted-foreground/30 mb-4" />
-                            <h3 className="text-lg font-display font-bold mb-2">No se encontraron Deal Rooms</h3>
-                            <p className="text-muted-foreground">
-                                Prueba ajustando los filtros de búsqueda
-                            </p>
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
+                            {filteredRooms.length === 0 && (
+                                <div className="text-center py-16">
+                                    <FolderOpen className="h-16 w-16 mx-auto text-muted-foreground/30 mb-4" />
+                                    <h3 className="text-lg font-display font-bold mb-2">No se encontraron Deal Rooms</h3>
+                                    <p className="text-muted-foreground">
+                                        Prueba ajustando los filtros de búsqueda
+                                    </p>
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
         </div>
     );
 }
+

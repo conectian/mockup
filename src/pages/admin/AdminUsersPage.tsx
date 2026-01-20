@@ -21,6 +21,20 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetFooter,
+} from '@/components/ui/sheet';
+import {
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
+} from '@/components/ui/tabs';
+import {
     Users,
     MoreHorizontal,
     Search,
@@ -44,9 +58,24 @@ const allUsers = [
     { id: 8, company: 'InnovateTech', email: 'team@innovatetech.dev', type: 'Provider', status: 'Pendiente', tier: 'Bronze', verified: false, joinedAt: '26 Dic 2025' },
 ];
 
+// Mock activity log for detailed view
+const mockActivity = [
+    { id: 1, action: 'Inicio de sesión', date: 'Hace 2 horas', ip: '192.168.1.1' },
+    { id: 2, action: 'Actualización de perfil', date: 'Hace 1 día', ip: '192.168.1.1' },
+    { id: 3, action: 'Nuevo caso de uso publicado', date: 'Hace 3 días', ip: '192.168.1.1' },
+    { id: 4, action: 'Cambio de contraseña', date: 'Hace 1 semana', ip: '192.168.1.1' },
+];
+
 export default function AdminUsersPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState<'all' | 'Client' | 'Provider'>('all');
+    const [selectedUser, setSelectedUser] = useState<typeof allUsers[0] | null>(null);
+    const [sheetOpen, setSheetOpen] = useState(false);
+
+    const handleRowClick = (user: typeof allUsers[0]) => {
+        setSelectedUser(user);
+        setSheetOpen(true);
+    };
 
     const handleAction = (action: string, user: string) => {
         toast.success(`${action} ejecutado para ${user}`);
@@ -190,10 +219,14 @@ export default function AdminUsersPage() {
                             </TableHeader>
                             <TableBody>
                                 {filteredUsers.map((user) => (
-                                    <TableRow key={user.id} className="border-white/5 hover:bg-muted/30 transition-colors">
+                                    <TableRow 
+                                        key={user.id} 
+                                        className="border-white/5 hover:bg-muted/30 transition-colors cursor-pointer group"
+                                        onClick={() => handleRowClick(user)}
+                                    >
                                         <TableCell className="pl-8">
                                             <div className="flex items-center gap-3">
-                                                <Avatar className="h-10 w-10 rounded-md shadow-sm">
+                                                <Avatar className="h-10 w-10 rounded-md shadow-sm group-hover:shadow-md transition-shadow">
                                                     <AvatarFallback className={cn(
                                                         "text-sm font-bold rounded-md",
                                                         user.type === 'Provider' ? "bg-gradient-to-br from-emerald-400 to-teal-500 text-white" : "bg-gradient-to-br from-blue-400 to-indigo-500 text-white"
@@ -201,7 +234,7 @@ export default function AdminUsersPage() {
                                                         {user.company.charAt(0)}
                                                     </AvatarFallback>
                                                 </Avatar>
-                                                <span className="font-bold">{user.company}</span>
+                                                <span className="font-bold group-hover:text-primary transition-colors">{user.company}</span>
                                             </div>
                                         </TableCell>
                                         <TableCell className="text-muted-foreground">{user.email}</TableCell>
@@ -240,7 +273,7 @@ export default function AdminUsersPage() {
                                             )}
                                         </TableCell>
                                         <TableCell className="text-muted-foreground text-sm">{user.joinedAt}</TableCell>
-                                        <TableCell className="text-right pr-8">
+                                        <TableCell className="text-right pr-8" onClick={(e) => e.stopPropagation()}>
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
                                                     <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/5">
@@ -250,7 +283,7 @@ export default function AdminUsersPage() {
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end" className="glass-card">
                                                     <DropdownMenuLabel className="font-display">Acciones</DropdownMenuLabel>
-                                                    <DropdownMenuItem onClick={() => handleAction('Ver perfil', user.company)} className="cursor-pointer">
+                                                    <DropdownMenuItem onClick={() => handleRowClick(user)} className="cursor-pointer">
                                                         Ver Perfil Completo
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem onClick={() => handleAction('Email enviado', user.company)} className="cursor-pointer">
@@ -354,6 +387,127 @@ export default function AdminUsersPage() {
                     )}
                 </CardContent>
             </Card>
+            {/* User Details Sheet */}
+            <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+                <SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto">
+                    {selectedUser && (
+                        <div className="space-y-6">
+                            <SheetHeader className="pb-4 border-b border-border">
+                                <div className="flex items-center gap-4">
+                                    <Avatar className="h-16 w-16 rounded-xl shadow-lg">
+                                        <AvatarFallback className={cn(
+                                            "text-2xl font-bold rounded-xl",
+                                            selectedUser.type === 'Provider' ? "bg-gradient-to-br from-emerald-400 to-teal-500 text-white" : "bg-gradient-to-br from-blue-400 to-indigo-500 text-white"
+                                        )}>
+                                            {selectedUser.company.charAt(0)}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <div className="space-y-1">
+                                        <SheetTitle className="text-xl font-display font-bold">{selectedUser.company}</SheetTitle>
+                                        <SheetDescription>{selectedUser.email}</SheetDescription>
+                                        <div className="flex gap-2 pt-1">
+                                            <Badge variant="outline" className="text-xs">{selectedUser.type}</Badge>
+                                            <Badge variant={selectedUser.status === 'Activo' ? 'default' : 'secondary'} className="text-xs">{selectedUser.status}</Badge>
+                                        </div>
+                                    </div>
+                                </div>
+                            </SheetHeader>
+
+                            <Tabs defaultValue="overview" className="w-full">
+                                <TabsList className="w-full grid grid-cols-3 mb-4">
+                                    <TabsTrigger value="overview">General</TabsTrigger>
+                                    <TabsTrigger value="activity">Actividad</TabsTrigger>
+                                    <TabsTrigger value="billing">Facturación</TabsTrigger>
+                                </TabsList>
+                                
+                                <TabsContent value="overview" className="space-y-4">
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <Card className="p-4 bg-muted/30 border-0">
+                                            <h4 className="text-xs font-bold text-muted-foreground uppercase mb-1">Registro</h4>
+                                            <p className="font-semibold">{selectedUser.joinedAt}</p>
+                                        </Card>
+                                        <Card className="p-4 bg-muted/30 border-0">
+                                            <h4 className="text-xs font-bold text-muted-foreground uppercase mb-1">Nivel</h4>
+                                            <p className="font-semibold">{selectedUser.tier}</p>
+                                        </Card>
+                                        <Card className="p-4 bg-muted/30 border-0">
+                                            <h4 className="text-xs font-bold text-muted-foreground uppercase mb-1">Verificación</h4>
+                                            <p className={cn("font-semibold flex items-center gap-2", selectedUser.verified ? "text-emerald-500" : "text-muted-foreground")}>
+                                                {selectedUser.verified ? <CheckCircle className="h-4 w-4" /> : "No verificado"}
+                                                {selectedUser.verified ? "Verificado" : ""}
+                                            </p>
+                                        </Card>
+                                        <Card className="p-4 bg-muted/30 border-0">
+                                            <h4 className="text-xs font-bold text-muted-foreground uppercase mb-1">ID Usuario</h4>
+                                            <p className="font-mono text-sm">USR-{selectedUser.id.toString().padStart(4, '0')}</p>
+                                        </Card>
+                                    </div>
+                                    
+                                    <div className="pt-4 border-t border-border">
+                                        <h4 className="font-semibold mb-3">Información de Contacto</h4>
+                                        <div className="space-y-3 text-sm">
+                                            <div className="flex justify-between">
+                                                <span className="text-muted-foreground">Teléfono:</span>
+                                                <span>+34 600 000 000</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-muted-foreground">Ubicación:</span>
+                                                <span>Madrid, España</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-muted-foreground">Sitio Web:</span>
+                                                <a href="#" className="text-primary hover:underline">www.{selectedUser.company.toLowerCase().replace(/\s/g, '')}.com</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="pt-4 border-t border-border flex gap-3">
+                                        <Button className="flex-1" onClick={() => handleAction('Email enviado', selectedUser.company)}>
+                                            <Mail className="h-4 w-4 mr-2" /> Contactar
+                                        </Button>
+                                        <Button variant="outline" className="flex-1 text-red-500 hover:text-red-600 hover:bg-red-500/10" onClick={() => handleAction('Suspendido', selectedUser.company)}>
+                                            <Ban className="h-4 w-4 mr-2" /> Bloquear
+                                        </Button>
+                                    </div>
+                                </TabsContent>
+
+                                <TabsContent value="activity" className="space-y-4">
+                                    <div className="space-y-4">
+                                        {mockActivity.map((log) => (
+                                            <div key={log.id} className="flex gap-4 p-3 rounded-lg hover:bg-muted/30 transition-colors border border-transparent hover:border-border">
+                                                <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                                                    <Clock className="h-4 w-4 text-primary" />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <p className="font-medium text-sm">{log.action}</p>
+                                                    <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
+                                                        <span>{log.date}</span>
+                                                        <span>•</span>
+                                                        <span className="font-mono">{log.ip}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </TabsContent>
+
+                                <TabsContent value="billing" className="space-y-4">
+                                    <Card className="bg-gradient-to-br from-primary/10 to-transparent border-0 p-6 text-center">
+                                        <p className="text-sm text-muted-foreground mb-1">Créditos Disponibles</p>
+                                        <p className="text-4xl font-bold font-display text-primary">2,500</p>
+                                        <Button variant="outline" size="sm" className="mt-4">
+                                            Ajustar Saldo
+                                        </Button>
+                                    </Card>
+                                    <div className="text-center p-8 text-muted-foreground">
+                                        <p>No hay facturas recientes</p>
+                                    </div>
+                                </TabsContent>
+                            </Tabs>
+                        </div>
+                    )}
+                </SheetContent>
+            </Sheet>
         </div>
     );
 }
