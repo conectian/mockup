@@ -190,21 +190,22 @@ export default function ProviderHome() {
 
                 {/* Quick Actions */}
                 <div className="space-y-6">
-                    <Card className="border-0 bg-[#243A57] rounded-md shadow-2xl shadow-primary/20 text-white overflow-hidden relative">
-                        <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
+                    <Card className="border border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 rounded-md shadow-lg overflow-hidden relative group">
+                        <div className="absolute inset-0 bg-white/40 dark:bg-black/20 backdrop-blur-[2px]" />
                         <CardHeader className="relative z-10 px-8 pt-8">
-                            <CardTitle className="text-lg font-display font-bold">Impulsa tu catálogo</CardTitle>
+                            <CardTitle className="text-xl font-display font-bold text-foreground">Impulsa tu catálogo</CardTitle>
+                            <p className="text-sm text-muted-foreground mt-1">Sube soluciones o explora oportunidades</p>
                         </CardHeader>
                         <CardContent className="relative z-10 px-8 pb-8 space-y-4">
                             <Link to="/provider/marketplace/create" className="block">
-                                <Button className="w-full gap-3 h-14 bg-primary text-white hover:bg-primary/90 scale-100 hover:scale-[1.02] active:scale-[0.98] transition-all font-bold text-base rounded-md shadow-xl shadow-primary/20">
+                                <Button className="w-full gap-3 h-14 bg-primary text-primary-foreground hover:bg-primary/90 scale-100 hover:scale-[1.02] active:scale-[0.98] transition-all font-bold text-base rounded-md shadow-xl shadow-primary/20">
                                     <Plus className="h-6 w-6" />
                                     Nuevo Caso de Uso
                                 </Button>
                             </Link>
                             <Link to="/provider/marketplace" className="block">
-                                <Button className="w-full gap-2 h-14 bg-white/10 hover:bg-white/20 border-white/20 text-white hover:border-white/30 backdrop-blur-md font-bold rounded-md transition-all">
-                                    <Search className="h-5 w-5" />
+                                <Button variant="outline" className="w-full gap-2 h-14 bg-background/50 hover:bg-background border-border hover:border-primary/50 text-foreground font-bold rounded-md transition-all">
+                                    <Search className="h-5 w-5 text-primary" />
                                     Explorar RFPs
                                 </Button>
                             </Link>

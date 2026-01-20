@@ -34,22 +34,22 @@ export default function ClientHome() {
 
     return (
         <div className="space-y-10">
-            {/* Hero Banner */}
-            <Card className="border-0 bg-[#243A57] text-white overflow-hidden relative rounded-md shadow-2xl shadow-indigo-500/20">
-                <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]" />
-                <CardContent className="py-12 px-8 md:px-12 relative z-10">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+            {/* Hero Banner - Compact & Light */}
+            <Card className="border border-primary/10 bg-gradient-to-r from-white via-slate-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative rounded-md shadow-lg shadow-primary/5">
+                <div className="absolute inset-0 bg-primary/5 backdrop-blur-[1px]" />
+                <CardContent className="py-8 px-8 md:px-10 relative z-10">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                         <div className="max-w-xl">
-                            <h1 className="text-3xl md:text-5xl font-display font-bold mb-4 tracking-tight leading-tight">
+                            <h1 className="text-2xl md:text-3xl font-display font-bold mb-1 tracking-tight text-foreground">
                                 Hola, {companyName} <span className="inline-block animate-bounce-slow">👋</span>
                             </h1>
-                            <p className="text-white/80 text-lg md:text-xl font-medium max-w-md leading-relaxed">
+                            <p className="text-muted-foreground text-base md:text-lg font-medium">
                                 ¿Qué desafío de innovación resolvemos hoy para tu empresa?
                             </p>
                         </div>
                         <Link to="/client/marketplace" className="shrink-0">
-                            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 gap-3 shadow-xl shadow-primary/20 px-8 py-7 text-lg font-bold rounded-md transition-all hover:scale-105 active:scale-95 border border-white/10">
-                                <Search className="h-6 w-6" />
+                            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 shadow-lg shadow-primary/20 px-6 h-12 text-base font-bold rounded-md transition-all hover:scale-105 active:scale-95">
+                                <Search className="h-5 w-5" />
                                 Explorar Soluciones
                             </Button>
                         </Link>

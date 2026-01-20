@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import UseCaseCreateSidebar from '@/components/marketplace/UseCaseCreateSidebar';
+
 import {
     Plus,
     Search,
@@ -155,12 +155,28 @@ export default function ProviderCatalogPage() {
         return matchesSearch && matchesIndustry && matchesStatus;
     });
 
-    const SidebarContent = () => (
-        <div className="space-y-8">
-            <h3 className="text-lg font-display font-bold flex items-center gap-2">
-                <Filter className="h-4 w-4" /> Filtros
-            </h3>
 
+    // Sidebar content component for filters
+    const SidebarContent = () => (
+        <div className="space-y-8 md:p-4 p-2">
+            <div className="flex items-center justify-between">
+                <h3 className="text-lg font-display font-bold flex items-center gap-2">
+                    <Filter className="h-4 w-4" /> Filtros
+                </h3>
+            </div>
+
+            {/* INDUSTRIA */}
+            <div className="space-y-3">
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Industria</Label>
+                <MultiSelect
+                    options={['Retail', 'Fintech', 'Healthcare', 'Logistics', 'Insurance']}
+                    selected={filters.industries}
+                    onChange={(val) => setFilters({ ...filters, industries: val })}
+                    placeholder="Seleccionar industrias..."
+                />
+            </div>
+
+            {/* ESTADO */}
             <div className="space-y-3">
                 <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Estado</Label>
                 <div className="space-y-2">
@@ -168,185 +184,140 @@ export default function ProviderCatalogPage() {
                         <div key={status} className="flex items-center space-x-2">
                             <input
                                 type="checkbox"
-                                id={`uc_${status}`}
+                                id={`sidebar_${status}`}
                                 className="rounded border-white/10 bg-white/5 text-primary focus:ring-primary"
                                 checked={filters.status.includes(status)}
                                 onChange={() => toggleStatus(status)}
                             />
-                            <Label htmlFor={`uc_${status}`} className="text-sm font-normal cursor-pointer">{status}</Label>
+                            <Label htmlFor={`sidebar_${status}`} className="text-sm font-normal cursor-pointer select-none">
+                                {status}
+                            </Label>
                         </div>
                     ))}
                 </div>
-            </div>
-
-            <div className="space-y-3">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Industria</Label>
-                <MultiSelect
-                    options={['Retail', 'Fintech', 'Healthcare', 'Logistics', 'Insurance']}
-                    selected={filters.industries}
-                    onChange={(val) => setFilters({ ...filters, industries: val })}
-                    placeholder="Seleccionar..."
-                />
             </div>
         </div>
     );
 
     return (
-        <div className="flex gap-8">
-            {/* Sidebar */}
-            <div className="hidden lg:block zoom-fixed-sidebar">
-                <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-                    <UseCaseCreateSidebar mode="usecase" onSuccess={() => {
-                        toast.success("Caso de uso creado", { description: "El caso de uso se ha añadido a tu catálogo." });
-                        // Refresh the list or navigate
-                    }} />
-                </div>
+        <div className="flex gap-6 h-full overflow-hidden">
+            {/* Desktop Sidebar - Fixed */}
+            <div className="hidden lg:flex lg:flex-col w-[320px] shrink-0 p-4 border-r border-white/10 h-full shadow-sm overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                <SidebarContent />
             </div>
 
-            <div className="space-y-6 flex-1 min-w-0">
-                {/* Header / Actions bar */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h2 className="text-2xl font-bold tracking-tight">Mi Catálogo</h2>
-                        <p className="text-muted-foreground">Gestiona los casos de uso visibles para clientes</p>
-                    </div>
-
-                    <div className="flex gap-2 w-full md:w-auto">
-                        <div className="relative flex-1 max-w-sm">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input
-                                placeholder="Buscar en mi catálogo..."
-                                className="pl-10 bg-white/50 dark:bg-white/5 border-white/10"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
+            <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden">
+                {/* Header / Actions bar - Fixed */}
+                <div className="shrink-0 p-4 md:p-6 pb-4">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 className="text-2xl font-bold tracking-tight">Mi Catálogo</h2>
+                            <p className="text-muted-foreground">Gestiona los casos de uso visibles para clientes</p>
                         </div>
-                        <Button
-                            className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 px-6 h-10"
-                            onClick={() => navigate('/provider/marketplace/create')}
-                        >
-                            <Plus className="h-4 w-4" />
-                            <span className="hidden sm:inline">Nuevo Caso</span>
-                        </Button>
-                    </div>
-                </div>
 
-                {/* Top Filters Bar */}
-                <div className="flex flex-wrap items-center gap-4 py-4 border-y border-white/5 bg-white/5 rounded-lg px-4 backdrop-blur-sm">
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                        <Filter className="h-4 w-4" />
-                        <span className="text-sm font-medium">Filtros:</span>
-                    </div>
-
-                    <div className="w-[200px]">
-                        <MultiSelect
-                            options={['Retail', 'Fintech', 'Healthcare', 'Logistics', 'Insurance']}
-                            selected={filters.industries}
-                            onChange={(val) => setFilters({ ...filters, industries: val })}
-                            placeholder="Industria..."
-                        />
-                    </div>
-
-                    <div className="h-6 w-px bg-white/10 mx-2 hidden sm:block" />
-
-                    <div className="flex flex-wrap items-center gap-4">
-                        {['Publicado', 'Borrador', 'Archivado'].map(status => (
-                            <div key={`top-${status}`} className="flex items-center space-x-2">
-                                <input
-                                    type="checkbox"
-                                    id={`uc_top_${status}`}
-                                    className="rounded border-white/10 bg-white/5 text-primary focus:ring-primary"
-                                    checked={filters.status.includes(status)}
-                                    onChange={() => toggleStatus(status)}
+                        <div className="flex gap-2 w-full md:w-auto">
+                            <div className="relative flex-1 max-w-sm">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    placeholder="Buscar en mi catálogo..."
+                                    className="pl-10 bg-white/50 dark:bg-white/5 border-white/10"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
                                 />
-                                <Label htmlFor={`uc_top_${status}`} className="text-sm font-normal cursor-pointer select-none">
-                                    {status}
-                                </Label>
                             </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Grid display */}
-                <div className="zoom-adaptive-grid">
-                    {filteredUseCases.map((useCase) => (
-                        <Card key={useCase.id} className="glass-card group hover:border-primary/30 transition-all overflow-hidden border-white/10 flex flex-col h-full bg-white/5 backdrop-blur-sm">
-                            <div className="aspect-[16/9] overflow-hidden relative">
-                                <img
-                                    src={useCase.image}
-                                    alt={useCase.title}
-                                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                />
-                                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button variant="secondary" size="icon" className="h-8 w-8 bg-black/40 hover:bg-black/60 backdrop-blur-md border-white/10 text-white">
-                                                <MoreHorizontal className="h-4 w-4" />
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end" className="glass-card">
-                                            <DropdownMenuItem onClick={() => openEdit(useCase)}>
-                                                <Edit className="mr-2 h-4 w-4" /> Editar
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={() => toast.info('Vista previa del caso')}>
-                                                <Eye className="mr-2 h-4 w-4" /> Ver en Marketplace
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem
-                                                className="text-red-500"
-                                                onClick={() => handleDelete(useCase.id)}
-                                            >
-                                                <Trash2 className="mr-2 h-4 w-4" /> Eliminar
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </div>
-                                <div className="absolute bottom-2 left-2">
-                                    <Badge className="bg-emerald-500/90 text-white border-0 backdrop-blur-sm">
-                                        Publicado
-                                    </Badge>
-                                </div>
-                            </div>
-                            <CardContent className="p-5 flex flex-col flex-1 space-y-4">
-                                <div>
-                                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 mb-1 flex items-center gap-1.5">
-                                        <Building2 className="h-3 w-3" /> {useCase.industry}
-                                    </div>
-                                    <h3 className="font-bold text-lg text-foreground leading-tight mb-2">
-                                        {useCase.title}
-                                    </h3>
-                                    <p className="text-sm text-muted-foreground line-clamp-2">
-                                        {useCase.description}
-                                    </p>
-                                </div>
-
-                                <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <div>
-                                            <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-bold block">KPI Principal</span>
-                                            <span className="text-sm font-bold text-primary">
-                                                {useCase.roi}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <Button variant="ghost" size="sm" className="h-9 text-xs gap-1.5 hover:bg-primary/10 text-primary font-semibold">
-                                        Ver detalles
-                                    </Button>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    ))}
-
-                    {filteredUseCases.length === 0 && (
-                        <div className="col-span-full text-center py-20 bg-white/5 rounded-2xl border border-dashed border-white/10">
-                            <FileText className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
-                            <h3 className="text-xl font-bold text-[#243A57] dark:text-white mb-2">No se encontraron casos</h3>
-                            <p className="text-muted-foreground mb-6">Prueba a buscar con otros términos o añade uno nuevo.</p>
-                            <Button onClick={() => navigate('/provider/marketplace/create')} className="bg-primary text-primary-foreground hover:bg-primary/90">
-                                <Plus className="mr-2 h-4 w-4" />
-                                Añadir mi primer caso
+                            <Button
+                                className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 px-6 h-10"
+                                onClick={() => navigate('/provider/marketplace/create')}
+                            >
+                                <Plus className="h-4 w-4" />
+                                <span className="hidden sm:inline">Nuevo Caso</span>
                             </Button>
                         </div>
-                    )}
+                    </div>
+                </div>
+
+                {/* Grid display - Scrollable area */}
+                <div className="flex-1 overflow-y-auto px-4 md:px-6 pb-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                    <div className="zoom-adaptive-grid">
+                        {filteredUseCases.map((useCase) => (
+                            <Card key={useCase.id} className="glass-card group hover:border-primary/30 transition-all overflow-hidden border-white/10 flex flex-col h-full bg-white/5 backdrop-blur-sm">
+                                <div className="aspect-[16/9] overflow-hidden relative">
+                                    <img
+                                        src={useCase.image}
+                                        alt={useCase.title}
+                                        className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger asChild>
+                                                <Button variant="secondary" size="icon" className="h-8 w-8 bg-black/40 hover:bg-black/60 backdrop-blur-md border-white/10 text-white">
+                                                    <MoreHorizontal className="h-4 w-4" />
+                                                </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent align="end" className="glass-card">
+                                                <DropdownMenuItem onClick={() => openEdit(useCase)}>
+                                                    <Edit className="mr-2 h-4 w-4" /> Editar
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem onClick={() => toast.info('Vista previa del caso')}>
+                                                    <Eye className="mr-2 h-4 w-4" /> Ver en Marketplace
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem
+                                                    className="text-red-500"
+                                                    onClick={() => handleDelete(useCase.id)}
+                                                >
+                                                    <Trash2 className="mr-2 h-4 w-4" /> Eliminar
+                                                </DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                    </div>
+                                    <div className="absolute bottom-2 left-2">
+                                        <Badge className="bg-emerald-500/90 text-white border-0 backdrop-blur-sm">
+                                            Publicado
+                                        </Badge>
+                                    </div>
+                                </div>
+                                <CardContent className="p-5 flex flex-col flex-1 space-y-4">
+                                    <div>
+                                        <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 mb-1 flex items-center gap-1.5">
+                                            <Building2 className="h-3 w-3" /> {useCase.industry}
+                                        </div>
+                                        <h3 className="font-bold text-lg text-foreground leading-tight mb-2">
+                                            {useCase.title}
+                                        </h3>
+                                        <p className="text-sm text-muted-foreground line-clamp-2">
+                                            {useCase.description}
+                                        </p>
+                                    </div>
+
+                                    <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <div>
+                                                <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-bold block">KPI Principal</span>
+                                                <span className="text-sm font-bold text-primary">
+                                                    {useCase.roi}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <Button variant="ghost" size="sm" className="h-9 text-xs gap-1.5 hover:bg-primary/10 text-primary font-semibold">
+                                            Ver detalles
+                                        </Button>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        ))}
+
+                        {filteredUseCases.length === 0 && (
+                            <div className="col-span-full text-center py-20 bg-white/5 rounded-2xl border border-dashed border-white/10">
+                                <FileText className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
+                                <h3 className="text-xl font-bold text-[#243A57] dark:text-white mb-2">No se encontraron casos</h3>
+                                <p className="text-muted-foreground mb-6">Prueba a buscar con otros términos o añade uno nuevo.</p>
+                                <Button onClick={() => navigate('/provider/marketplace/create')} className="bg-primary text-primary-foreground hover:bg-primary/90">
+                                    <Plus className="mr-2 h-4 w-4" />
+                                    Añadir mi primer caso
+                                </Button>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Create/Edit Dialogs */}

@@ -1,23 +1,18 @@
-import { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { mockUseCases, MOCK_REQUESTS } from '@/data/marketplace-data';
-import UseCaseCard from '@/components/marketplace/UseCaseCard';
 import { type Proposal } from '@/components/marketplace/ClientProposalCard';
 import ClientProposalCardGrid from '@/components/marketplace/ClientProposalCardGrid';
 import ClientRequestCardGrid from '@/components/marketplace/ClientRequestCardGrid';
 import MarketplaceChatbot from '@/components/marketplace/MarketplaceChatbot';
-import UseCaseCreateSidebar from '@/components/marketplace/UseCaseCreateSidebar';
+import UseCaseCard from '@/components/marketplace/UseCaseCard';
+import { MOCK_REQUESTS, mockUseCases } from '@/data/marketplace-data';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
+
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Switch } from '@/components/ui/switch';
-import {
-    Sheet,
-    SheetContent,
-    SheetTrigger
-} from '@/components/ui/sheet';
+import { Label } from '@/components/ui/label';
+import { MultiSelect } from '@/components/ui/multi-select';
 import {
     Select,
     SelectContent,
@@ -25,10 +20,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Search, X, SlidersHorizontal, Filter, Globe, Inbox, Lightbulb, Bot, Sparkles } from 'lucide-react';
+import {
+    Sheet,
+    SheetContent,
+    SheetTrigger
+} from '@/components/ui/sheet';
+import { Switch } from '@/components/ui/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from '@/lib/utils';
-import { Label } from '@/components/ui/label';
-import { MultiSelect } from '@/components/ui/multi-select';
+import { Filter, Globe, Inbox, Lightbulb, Plus, Search, SlidersHorizontal, Sparkles, X } from 'lucide-react';
 
 const SECTORS = [
     'Fintech & Banca',
@@ -151,6 +151,7 @@ const initialFilters: FilterState = {
 };
 
 export default function MarketplacePage() {
+    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const tabFromUrl = searchParams.get('tab');
     const [activeTab, setActiveTab] = useState(tabFromUrl || 'mercado');
@@ -165,8 +166,11 @@ export default function MarketplacePage() {
     useEffect(() => {
         if (tabFromUrl && ['mercado', 'propuestas', 'innovacion'].includes(tabFromUrl)) {
             setActiveTab(tabFromUrl);
+        } else if (!tabFromUrl || !['mercado', 'propuestas', 'innovacion'].includes(tabFromUrl)) {
+            setSearchParams({ tab: 'mercado' });
+            setActiveTab('mercado');
         }
-    }, [tabFromUrl]);
+    }, [tabFromUrl, setSearchParams]);
 
     const handleTabChange = (value: string) => {
         setActiveTab(value);
@@ -290,9 +294,12 @@ export default function MarketplacePage() {
     }, [filters, sortBy]);
 
     const SidebarContent = () => (
-        <div className="space-y-6 pb-20">
+        <div className={cn(
+            "flex flex-col h-full py-4",
+            filterMode === 'chatbot' ? "" : "overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
+        )}>
             {/* Mode Toggle */}
-            <div className="flex items-center gap-2 p-1 bg-muted/30 rounded-lg border border-white/10">
+            <div className="flex items-center gap-2 p-1 bg-muted/30 rounded-lg border border-white/10 shrink-0 mb-4">
                 <button
                     onClick={() => setFilterMode('filters')}
                     className={cn(
@@ -320,10 +327,12 @@ export default function MarketplacePage() {
             </div>
 
             {filterMode === 'chatbot' ? (
-                <MarketplaceChatbot onApplyFilters={handleChatbotFilters} />
+                <div className="flex-1 min-h-0 flex flex-col">
+                    <MarketplaceChatbot onApplyFilters={handleChatbotFilters} />
+                </div>
             ) : (
-                <div className="space-y-8">
-                    <div className="flex items-center justify-between">
+                <div className="space-y-8 px-4">
+                    <div className="flex flex-col gap-2">
                         <h3 className="text-lg font-display font-bold flex items-center gap-2">
                             <Filter className="h-4 w-4" /> Filtros Avanzados
                         </h3>
@@ -332,10 +341,10 @@ export default function MarketplacePage() {
                                 variant="ghost"
                                 size="sm"
                                 onClick={resetFilters}
-                                className="h-8 text-xs text-muted-foreground hover:text-destructive px-2"
+                                className="h-8 w-fit text-xs text-muted-foreground hover:text-destructive px-0 justify-start"
                             >
                                 <X className="h-3 w-3 mr-1" />
-                                Limpiar ({activeFilterCount})
+                                Limpiar filtros ({activeFilterCount})
                             </Button>
                         )}
                     </div>
@@ -473,234 +482,314 @@ export default function MarketplacePage() {
     );
 
     return (
-        <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
-            <TabsList className="hidden p-1 h-auto bg-white/5 border border-white/10 rounded-lg justify-start gap-1 w-fit">
-                <TabsTrigger value="mercado" className="gap-2 px-4 md:px-6 h-10 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md font-medium">
-                    <Globe className="h-4 w-4" /> <span className="hidden sm:inline">Mercado Global</span>
-                </TabsTrigger>
-                <TabsTrigger value="propuestas" className="gap-2 px-4 md:px-6 h-10 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md font-medium">
-                    <Inbox className="h-4 w-4" />
-                    <span className="hidden sm:inline">Propuestas Recibidas</span>
-                </TabsTrigger>
-                <TabsTrigger value="innovacion" className="gap-2 px-4 md:px-6 h-10 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md font-medium">
-                    <Lightbulb className="h-4 w-4" />
-                    <span className="hidden sm:inline">Mis Solicitudes (Innovación)</span>
-                </TabsTrigger>
-            </TabsList>
+        <div className="h-[calc(100vh-4rem)] overflow-hidden">
+            <Tabs value={activeTab} onValueChange={handleTabChange} className="h-full flex flex-col">
+                <TabsList className="hidden p-1 h-auto bg-white/5 border border-white/10 rounded-lg justify-start gap-1 w-fit">
+                    <TabsTrigger value="mercado" className="gap-2 px-4 md:px-6 h-10 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md font-medium">
+                        <Globe className="h-4 w-4" /> <span className="hidden sm:inline">Mercado Global</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="propuestas" className="gap-2 px-4 md:px-6 h-10 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md font-medium">
+                        <Inbox className="h-4 w-4" />
+                        <span className="hidden sm:inline">Propuestas Recibidas</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="innovacion" className="gap-2 px-4 md:px-6 h-10 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md font-medium">
+                        <Lightbulb className="h-4 w-4" />
+                        <span className="hidden sm:inline">Mis Solicitudes (Innovación)</span>
+                    </TabsTrigger>
+                </TabsList>
 
-            <TabsContent value="mercado" className="mt-0">
-                <div className="flex gap-8">
-                    <div className="hidden lg:block zoom-fixed-sidebar">
-                        <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                <TabsContent value="mercado" className="mt-0 flex-1 min-h-0">
+                    <div className="flex gap-6 h-full">
+                        {/* Sidebar - Fixed, no scroll */}
+                        <div className="hidden lg:flex lg:flex-col w-[320px] shrink-0 p-4 border-r border-white/10 h-full shadow-sm">
                             <SidebarContent />
                         </div>
-                    </div>
-                    <div className="space-y-6 min-w-0 flex-1">
-                        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                            <div>
-                                <h1 className="text-3xl font-display font-bold tracking-tight">Marketplace</h1>
-                                <p className="text-muted-foreground mt-1">{filteredUseCases.length} soluciones verificadas para tu empresa</p>
-                            </div>
-                            <div className="flex gap-2 w-full md:w-auto">
-                                <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
-                                    <SheetTrigger asChild>
-                                        <Button variant="outline" className="lg:hidden w-auto gap-2 px-3">
-                                            <SlidersHorizontal className="h-4 w-4" />
-                                            <span className="hidden sm:inline">Filtros</span>
-                                            {activeFilterCount > 0 && <Badge className="ml-1 h-5 w-5 p-0 flex items-center justify-center bg-primary text-xs">{activeFilterCount}</Badge>}
-                                        </Button>
-                                    </SheetTrigger>
-                                    <SheetContent side="left" className="w-[320px] sm:w-[400px] overflow-y-auto">
-                                        <div className="py-6 px-6"><SidebarContent /></div>
-                                    </SheetContent>
-                                </Sheet>
 
-                                {/* Sort Dropdown */}
-                                <Select value={sortBy} onValueChange={setSortBy}>
-                                    <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
-                                        <SelectValue placeholder="Ordenar por" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="match-high">Mejor Match</SelectItem>
-                                        <SelectItem value="name-asc">Nombre (A-Z)</SelectItem>
-                                        <SelectItem value="name-desc">Nombre (Z-A)</SelectItem>
-                                    </SelectContent>
-                                </Select>
+                        {/* Main Content - Scrollable */}
+                        <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden">
+                            {/* Header - Fixed */}
+                            <div className="shrink-0 p-4 md:p-6 pb-4">
+                                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                    <div>
+                                        <h1 className="text-3xl font-display font-bold tracking-tight">Marketplace</h1>
+                                        <p className="text-muted-foreground mt-1">{filteredUseCases.length} soluciones verificadas para tu empresa</p>
+                                    </div>
+                                    <div className="flex gap-2 w-full md:w-auto">
+                                        <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
+                                            <SheetTrigger asChild>
+                                                <Button variant="outline" className="lg:hidden w-auto gap-2 px-3">
+                                                    <SlidersHorizontal className="h-4 w-4" />
+                                                    <span className="hidden sm:inline">Filtros</span>
+                                                    {activeFilterCount > 0 && <Badge className="ml-1 h-5 w-5 p-0 flex items-center justify-center bg-primary text-xs">{activeFilterCount}</Badge>}
+                                                </Button>
+                                            </SheetTrigger>
+                                            <SheetContent side="left" className="w-[320px] sm:w-[400px] !p-0 !gap-0">
+                                                <div className="flex-1 flex flex-col h-full overflow-hidden">
+                                                    <SidebarContent />
+                                                </div>
+                                            </SheetContent>
+                                        </Sheet>
 
-                                <div className="relative flex-1 md:w-[300px]">
-                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                    <Input placeholder="Buscar solución, proveedor..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10 h-10" />
+                                        {/* Sort Dropdown */}
+                                        <Select value={sortBy} onValueChange={setSortBy}>
+                                            <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
+                                                <SelectValue placeholder="Ordenar por" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="match-high">Mejor Match</SelectItem>
+                                                <SelectItem value="name-asc">Nombre (A-Z)</SelectItem>
+                                                <SelectItem value="name-desc">Nombre (Z-A)</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+
+                                        <div className="relative flex-1 md:w-[300px]">
+                                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                            <Input placeholder="Buscar solución, proveedor..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10 h-10" />
+                                        </div>
+
+                                    </div>
                                 </div>
+                            </div>
 
+                            {/* Cards Grid - Scrollable area */}
+                            <div className="flex-1 overflow-y-auto px-4 md:px-6 pb-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                                {filteredUseCases.length > 0 ? (
+                                    <div className="zoom-adaptive-grid">
+                                        {filteredUseCases.map((useCase, index) => {
+                                            // Calculate match score based on filters (simulate matching algorithm)
+                                            let matchScore = 0;
+                                            if (activeFilterCount > 0) {
+                                                // Base score
+                                                matchScore = 75;
+                                                // Add points for sector match
+                                                if (filters.sector.length > 0 && filters.sector.some(s => useCase.industry.toLowerCase().includes(s.split(' ')[0].toLowerCase()))) {
+                                                    matchScore += 10;
+                                                }
+                                                // Add points for tech stack match
+                                                if (filters.techStack && useCase.techStack.some(t => t.toLowerCase().includes(filters.techStack.toLowerCase()))) {
+                                                    matchScore += 15;
+                                                }
+                                                // Vary slightly between cards
+                                                matchScore = Math.min(98, matchScore + (index % 3) * 2);
+                                            }
+
+                                            return (
+                                                <UseCaseCard
+                                                    key={useCase.id}
+                                                    useCase={useCase}
+                                                    matchScore={matchScore > 0 ? matchScore : undefined}
+                                                    hasFilters={activeFilterCount > 0}
+                                                />
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <div className="text-center py-20 bg-muted/30 rounded-lg border border-dashed border-white/10">
+                                        <Search className="h-16 w-16 mx-auto text-muted-foreground/30 mb-6" />
+                                        <h3 className="text-xl font-display font-bold mb-2">No se encontraron resultados</h3>
+                                        <p className="text-muted-foreground mb-6">Intenta ajustar los filtros o buscar con otros términos</p>
+                                        <Button variant="outline" onClick={resetFilters}>Limpiar filtros</Button>
+                                    </div>
+                                )}
                             </div>
                         </div>
-                        {filteredUseCases.length > 0 ? (
-                            <div className="zoom-adaptive-grid">
-                                {filteredUseCases.map((useCase, index) => {
-                                    // Calculate match score based on filters (simulate matching algorithm)
-                                    let matchScore = 0;
-                                    if (activeFilterCount > 0) {
-                                        // Base score
-                                        matchScore = 75;
-                                        // Add points for sector match
-                                        if (filters.sector.length > 0 && filters.sector.some(s => useCase.industry.toLowerCase().includes(s.split(' ')[0].toLowerCase()))) {
-                                            matchScore += 10;
-                                        }
-                                        // Add points for tech stack match
-                                        if (filters.techStack && useCase.techStack.some(t => t.toLowerCase().includes(filters.techStack.toLowerCase()))) {
-                                            matchScore += 15;
-                                        }
-                                        // Vary slightly between cards
-                                        matchScore = Math.min(98, matchScore + (index % 3) * 2);
-                                    }
+                    </div>
+                </TabsContent>
 
-                                    return (
-                                        <UseCaseCard
-                                            key={useCase.id}
-                                            useCase={useCase}
-                                            matchScore={matchScore > 0 ? matchScore : undefined}
-                                            hasFilters={activeFilterCount > 0}
+                <TabsContent value="propuestas" className="mt-0 flex-1 min-h-0">
+                    <div className="flex gap-6 h-full">
+                        {/* Sidebar - Fixed, no scroll */}
+                        <div className="hidden lg:flex lg:flex-col w-[320px] shrink-0 p-4 border-r border-white/10 h-full shadow-sm">
+                            <SidebarContent />
+                        </div>
+
+                        {/* Main Content - Scrollable */}
+                        <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden">
+                            {/* Header - Fixed */}
+                            <div className="shrink-0 p-4 md:p-6 pb-4">
+                                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                    <div>
+                                        <h1 className="text-3xl font-display font-bold tracking-tight">Marketplace Privado</h1>
+                                        <p className="text-muted-foreground mt-1">{filteredProposals.length} propuestas recibidas</p>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
+                                            <SheetTrigger asChild>
+                                                <Button variant="outline" className="lg:hidden flex-1 gap-2">
+                                                    <SlidersHorizontal className="h-4 w-4" /> Filtros
+                                                    {activeFilterCount > 0 && <Badge className="ml-1 h-5 w-5 p-0 flex items-center justify-center bg-primary text-xs">{activeFilterCount}</Badge>}
+                                                </Button>
+                                            </SheetTrigger>
+                                            <SheetContent side="left" className="w-[320px] sm:w-[400px] overflow-y-auto">
+                                                <div className="py-6 px-6"><SidebarContent /></div>
+                                            </SheetContent>
+                                        </Sheet>
+
+                                        {/* Sort Dropdown */}
+                                        <Select value={sortBy} onValueChange={setSortBy}>
+                                            <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
+                                                <SelectValue placeholder="Ordenar por" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="match-high">Mejor Match</SelectItem>
+                                                <SelectItem value="name-asc">Nombre (A-Z)</SelectItem>
+                                                <SelectItem value="name-desc">Nombre (Z-A)</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+
+                                        <div className="relative flex-1 md:w-[300px]">
+                                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                            <Input placeholder="Buscar propuesta..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10 h-10" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Cards Grid - Scrollable area */}
+                            <div className="flex-1 overflow-y-auto px-4 md:px-6 pb-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                                {filteredProposals.length > 0 ? (
+                                    <div className="zoom-adaptive-grid">
+                                        {filteredProposals.map((proposal) => (
+                                            <ClientProposalCardGrid key={proposal.id} proposal={proposal} />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="text-center py-20 bg-muted/30 rounded-lg border border-dashed border-white/10">
+                                        <Search className="h-16 w-16 mx-auto text-muted-foreground/30 mb-6" />
+                                        <h3 className="text-xl font-display font-bold mb-2">No se encontraron propuestas</h3>
+                                        <p className="text-muted-foreground mb-6">No tienes propuestas recibidas en este momento</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </TabsContent>
+
+
+
+                <TabsContent value="innovacion" className="mt-0 flex-1 min-h-0">
+                    <div className="flex gap-6 h-full">
+                        {/* Desktop Sidebar - Fixed, no scroll */}
+                        <div className="hidden lg:flex lg:flex-col w-[320px] shrink-0 p-4 border-r border-white/10 h-full shadow-sm overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                            <div className="space-y-8 md:p-4 p-2">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="text-lg font-display font-bold flex items-center gap-2">
+                                        <Filter className="h-4 w-4" /> Filtros
+                                    </h3>
+                                </div>
+
+                                {/* SECTOR */}
+                                <div className="space-y-3">
+                                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Sector</Label>
+                                    <MultiSelect
+                                        options={SECTORS}
+                                        selected={filters.sector}
+                                        onChange={(selected) => setFilters({ ...filters, sector: selected })}
+                                        placeholder="Seleccionar sectores..."
+                                    />
+                                </div>
+
+                                {/* ESTADO */}
+                                <div className="space-y-3">
+                                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Estado</Label>
+                                    <div className="space-y-2">
+                                        {['Activa', 'Pendiente', 'Cerrada'].map(status => (
+                                            <div key={status} className="flex items-center space-x-2">
+                                                <input
+                                                    type="checkbox"
+                                                    id={`innovacion_${status}`}
+                                                    className="rounded border-white/10 bg-white/5 text-primary focus:ring-primary"
+                                                />
+                                                <Label htmlFor={`innovacion_${status}`} className="text-sm font-normal cursor-pointer select-none">
+                                                    {status}
+                                                </Label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* PRESUPUESTO */}
+                                <div className="space-y-3">
+                                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Presupuesto</Label>
+                                    <div className="flex items-center gap-2">
+                                        <Input
+                                            type="text"
+                                            placeholder="Min"
+                                            className="bg-muted/30 border-white/10 h-9"
                                         />
-                                    );
-                                })}
-                            </div>
-                        ) : (
-                            <div className="text-center py-20 bg-muted/30 rounded-lg border border-dashed border-white/10">
-                                <Search className="h-16 w-16 mx-auto text-muted-foreground/30 mb-6" />
-                                <h3 className="text-xl font-display font-bold mb-2">No se encontraron resultados</h3>
-                                <p className="text-muted-foreground mb-6">Intenta ajustar los filtros o buscar con otros términos</p>
-                                <Button variant="outline" onClick={resetFilters}>Limpiar filtros</Button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </TabsContent>
-
-            <TabsContent value="propuestas" className="mt-0">
-                <div className="flex gap-8">
-                    <div className="hidden lg:block zoom-fixed-sidebar">
-                        <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-                            <SidebarContent />
-                        </div>
-                    </div>
-                    <div className="space-y-6 min-w-0 flex-1">
-                        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                            <div>
-                                <h1 className="text-3xl font-display font-bold tracking-tight">Marketplace Privado</h1>
-                                <p className="text-muted-foreground mt-1">{filteredProposals.length} propuestas recibidas</p>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
-                                    <SheetTrigger asChild>
-                                        <Button variant="outline" className="lg:hidden flex-1 gap-2">
-                                            <SlidersHorizontal className="h-4 w-4" /> Filtros
-                                            {activeFilterCount > 0 && <Badge className="ml-1 h-5 w-5 p-0 flex items-center justify-center bg-primary text-xs">{activeFilterCount}</Badge>}
-                                        </Button>
-                                    </SheetTrigger>
-                                    <SheetContent side="left" className="w-[320px] sm:w-[400px] overflow-y-auto">
-                                        <div className="py-6 px-6"><SidebarContent /></div>
-                                    </SheetContent>
-                                </Sheet>
-
-                                {/* Sort Dropdown */}
-                                <Select value={sortBy} onValueChange={setSortBy}>
-                                    <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
-                                        <SelectValue placeholder="Ordenar por" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="match-high">Mejor Match</SelectItem>
-                                        <SelectItem value="name-asc">Nombre (A-Z)</SelectItem>
-                                        <SelectItem value="name-desc">Nombre (Z-A)</SelectItem>
-                                    </SelectContent>
-                                </Select>
-
-                                <div className="relative flex-1 md:w-[300px]">
-                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                    <Input placeholder="Buscar propuesta..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10 h-10" />
+                                        <span className="text-muted-foreground">-</span>
+                                        <Input
+                                            type="text"
+                                            placeholder="Max"
+                                            className="bg-muted/30 border-white/10 h-9"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        {filteredProposals.length > 0 ? (
-                            <div className="zoom-adaptive-grid">
-                                {filteredProposals.map((proposal) => (
-                                    <ClientProposalCardGrid key={proposal.id} proposal={proposal} />
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="text-center py-20 bg-muted/30 rounded-lg border border-dashed border-white/10">
-                                <Search className="h-16 w-16 mx-auto text-muted-foreground/30 mb-6" />
-                                <h3 className="text-xl font-display font-bold mb-2">No se encontraron propuestas</h3>
-                                <p className="text-muted-foreground mb-6">No tienes propuestas recibidas en este momento</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </TabsContent >
 
-
-
-            <TabsContent value="innovacion" className="mt-0">
-                <div className="flex gap-8">
-                    <div className="hidden lg:block zoom-fixed-sidebar">
-                        <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-                            <UseCaseCreateSidebar mode="rfp" />
-                        </div>
-                    </div>
-                    <div className="space-y-6 min-w-0 flex-1">
-                        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                            <div>
-                                <h1 className="text-3xl font-display font-bold tracking-tight">RFP - Mis Solicitudes</h1>
-                                <p className="text-muted-foreground mt-1">{filteredRequests.length} solicitudes de innovación</p>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
-                                    <SheetTrigger asChild>
-                                        <Button variant="outline" className="lg:hidden flex-1 gap-2">
-                                            <Bot className="h-4 w-4" /> Crear RFP
+                        {/* Main Content - Scrollable */}
+                        <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden">
+                            {/* Header - Fixed */}
+                            <div className="shrink-0 p-4 md:p-6 pb-4">
+                                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                    <div>
+                                        <h1 className="text-3xl font-display font-bold tracking-tight">Mis Solicitudes</h1>
+                                        <p className="text-muted-foreground mt-1">{filteredRequests.length} solicitudes de innovación</p>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Button
+                                            className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
+                                            onClick={() => navigate('/client/marketplace/create')}
+                                        >
+                                            <Plus className="h-4 w-4" />
+                                            <span className="hidden sm:inline">Crear Solicitud</span>
+                                            <span className="sm:hidden">Crear</span>
                                         </Button>
-                                    </SheetTrigger>
-                                    <SheetContent side="left" className="w-[320px] sm:w-[400px] overflow-y-auto">
-                                        <div className="py-6 px-6"><UseCaseCreateSidebar mode="rfp" /></div>
-                                    </SheetContent>
-                                </Sheet>
 
-                                {/* Sort Dropdown */}
-                                <Select value={sortBy} onValueChange={setSortBy}>
-                                    <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
-                                        <SelectValue placeholder="Ordenar por" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="match-high">Mejor Match</SelectItem>
-                                        <SelectItem value="name-asc">Nombre (A-Z)</SelectItem>
-                                        <SelectItem value="name-desc">Nombre (Z-A)</SelectItem>
-                                    </SelectContent>
-                                </Select>
+                                        {/* Sort Dropdown */}
+                                        <Select value={sortBy} onValueChange={setSortBy}>
+                                            <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
+                                                <SelectValue placeholder="Ordenar por" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="match-high">Más Recientes</SelectItem>
+                                                <SelectItem value="name-asc">Nombre (A-Z)</SelectItem>
+                                                <SelectItem value="name-desc">Nombre (Z-A)</SelectItem>
+                                            </SelectContent>
+                                        </Select>
 
-                                <div className="relative flex-1 md:w-[300px]">
-                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                    <Input placeholder="Buscar solicitud..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10 h-10" />
+                                        <div className="relative flex-1 md:w-[300px]">
+                                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                            <Input placeholder="Buscar solicitud..." value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} className="pl-10 bg-background/50 border-white/10 h-10" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                            {/* Cards Grid - Scrollable area */}
+                            <div className="flex-1 overflow-y-auto px-4 md:px-6 pb-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                                {filteredRequests.length > 0 ? (
+                                    <div className="zoom-adaptive-grid">
+                                        {filteredRequests.map((request) => (
+                                            <ClientRequestCardGrid key={request.id} request={request} />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="text-center py-20 bg-muted/30 rounded-lg border border-dashed border-white/10">
+                                        <Search className="h-16 w-16 mx-auto text-muted-foreground/30 mb-6" />
+                                        <h3 className="text-xl font-display font-bold mb-2">No se encontraron solicitudes</h3>
+                                        <p className="text-muted-foreground mb-6">No tienes solicitudes activas en este momento</p>
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                        {filteredRequests.length > 0 ? (
-                            <div className="zoom-adaptive-grid">
-                                {filteredRequests.map((request) => (
-                                    <ClientRequestCardGrid key={request.id} request={request} />
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="text-center py-20 bg-muted/30 rounded-lg border border-dashed border-white/10">
-                                <Search className="h-16 w-16 mx-auto text-muted-foreground/30 mb-6" />
-                                <h3 className="text-xl font-display font-bold mb-2">No se encontraron solicitudes</h3>
-                                <p className="text-muted-foreground mb-6">No tienes solicitudes activas en este momento</p>
-                            </div>
-                        )}
                     </div>
-                </div>
-            </TabsContent>
+                </TabsContent>
 
 
 
-        </Tabs >
+            </Tabs>
+        </div>
     );
 }

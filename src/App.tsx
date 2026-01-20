@@ -25,7 +25,6 @@ import ClientRFPManager from './pages/client/ClientRFPManager';
 import ProviderMarketplacePage from './pages/provider/ProviderMarketplacePage';
 import CreateUseCasePage from './pages/provider/CreateUseCasePage';
 import CompanyDetailPage from './pages/provider/CompanyDetailPage';
-import LeadsPage from './pages/provider/LeadsPage';
 import ReferralsPage from './pages/provider/ReferralsPage';
 import PaymentsPage from './pages/provider/PaymentsPage';
 import ClientFavoritesPage from './pages/client/ClientFavoritesPage';
@@ -64,6 +63,7 @@ function App() {
           {/* Client Routes - All prefixed with /client */}
           <Route path="/client/dashboard" element={<ClientHome />} />
           <Route path="/client/marketplace" element={<MarketplacePage />} />
+          <Route path="/client/marketplace/create" element={<CreateUseCasePage />} />
           <Route path="/client/marketplace/:id" element={<UseCaseDetailPage />} />
           <Route path="/client/proposals/:id" element={<ClientProposalDetail />} />
           <Route path="/client/requests/:id" element={<ClientRequestDetail />} />
@@ -81,8 +81,6 @@ function App() {
           <Route path="/provider/marketplace" element={<ProviderMarketplacePage />} />
           <Route path="/provider/marketplace/create" element={<CreateUseCasePage />} />
           <Route path="/provider/marketplace/company/:id" element={<CompanyDetailPage />} />
-
-          <Route path="/provider/leads" element={<LeadsPage />} />
           <Route path="/provider/deal-rooms" element={<DealRoomsHub />} />
 
           <Route path="/provider/profile" element={<ProfilePage />} />

@@ -10,9 +10,35 @@ interface ClientProposalCardGridProps {
 }
 
 export default function ClientProposalCardGrid({ proposal }: ClientProposalCardGridProps) {
-    // Generate a consistent image based on proposal ID
-    const imageId = parseInt(proposal.id) || 1;
-    const mockImage = `https://picsum.photos/seed/${imageId + 100}/800/600`;
+    // Get professional image based on proposal content
+    const getProposalImage = (proposal: Proposal): string => {
+        const titleLower = proposal.title.toLowerCase();
+        const tagsLower = proposal.tags.join(' ').toLowerCase();
+        
+        // Map to relevant professional images based on use case
+        if (titleLower.includes('inventario') || titleLower.includes('inventory')) {
+            return 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop';
+        }
+        if (titleLower.includes('chatbot') || titleLower.includes('hr') || tagsLower.includes('nlp')) {
+            return 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&h=600&fit=crop';
+        }
+        if (titleLower.includes('predicción') || titleLower.includes('demanda') || titleLower.includes('forecasting')) {
+            return 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop';
+        }
+        if (titleLower.includes('factura') || titleLower.includes('invoice') || titleLower.includes('finance')) {
+            return 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop';
+        }
+        if (titleLower.includes('contrato') || titleLower.includes('contract') || titleLower.includes('legal')) {
+            return 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=600&fit=crop';
+        }
+        if (titleLower.includes('sentimiento') || titleLower.includes('redes') || titleLower.includes('social')) {
+            return 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=600&fit=crop';
+        }
+        // Default: business/technology image
+        return 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop';
+    };
+    
+    const mockImage = getProposalImage(proposal);
 
     return (
         <Card className="py-0 overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full border border-white/5 rounded-xl bg-card/40 backdrop-blur-sm hover:border-primary/30">

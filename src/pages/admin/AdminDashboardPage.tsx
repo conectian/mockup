@@ -26,8 +26,14 @@ const dashboardStats = [
 
 const revenueData = [
     { name: 'Sem 1', value: 10000 },
+    { name: '1.2', value: 10400 },
+    { name: '1.4', value: 10800 },
     { name: 'Sem 2', value: 11500 },
+    { name: '2.2', value: 11900 },
+    { name: '2.4', value: 12100 },
     { name: 'Sem 3', value: 12800 },
+    { name: '3.2', value: 13500 },
+    { name: '3.4', value: 13900 },
     { name: 'Sem 4', value: 14405 },
 ];
 
@@ -103,40 +109,52 @@ export default function AdminDashboardPage() {
                     <CardContent className="pl-0">
                         <div className="h-[350px] w-full">
                             <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={revenueData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                                <AreaChart data={revenueData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
                                     <defs>
                                         <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                                            <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                                            <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
+                                            <stop offset="95%" stopColor="#10b981" stopOpacity={0.05} />
                                         </linearGradient>
                                     </defs>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--muted-foreground)/0.1)" />
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" strokeOpacity={0.4} />
                                     <XAxis
                                         dataKey="name"
                                         axisLine={false}
                                         tickLine={false}
-                                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                                        tick={{ fill: 'var(--muted-foreground)', fontSize: 12 }}
                                         dy={10}
+                                        tickMargin={5}
+                                        interval="preserveStartEnd"
+                                        ticks={['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4']}
                                     />
                                     <YAxis
                                         axisLine={false}
                                         tickLine={false}
-                                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
-                                        tickFormatter={(value) => `€${value}`}
+                                        tick={{ fill: 'var(--muted-foreground)', fontSize: 12 }}
+                                        tickFormatter={(value) => `€${(value / 1000).toFixed(1)}k`}
                                         dx={-10}
                                     />
                                     <Tooltip
-                                        contentStyle={{ backgroundColor: 'hsl(var(--popover))', borderColor: 'hsl(var(--border))', borderRadius: '8px', color: 'hsl(var(--popover-foreground))' }}
-                                        itemStyle={{ color: 'hsl(var(--primary))' }}
-                                        cursor={{ stroke: 'hsl(var(--muted-foreground)/0.2)' }}
+                                        contentStyle={{
+                                            backgroundColor: 'hsl(var(--card))',
+                                            borderColor: 'hsl(var(--border))',
+                                            borderRadius: '8px',
+                                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                                            color: 'hsl(var(--foreground))'
+                                        }}
+                                        labelStyle={{ color: 'hsl(var(--muted-foreground))', marginBottom: '4px' }}
+                                        formatter={(value: number) => [`€${(value || 0).toLocaleString()}`, 'Ingresos']}
+                                        cursor={{ stroke: '#10b981', strokeWidth: 1, strokeDasharray: '4 4' }}
                                     />
                                     <Area
                                         type="monotone"
                                         dataKey="value"
-                                        stroke="hsl(var(--primary))"
-                                        strokeWidth={2}
+                                        stroke="#10b981"
+                                        strokeWidth={3}
                                         fillOpacity={1}
                                         fill="url(#colorRevenue)"
+                                        activeDot={{ r: 6, strokeWidth: 0, fill: '#10b981' }}
+                                        animationDuration={1500}
                                     />
                                 </AreaChart>
                             </ResponsiveContainer>

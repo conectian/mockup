@@ -142,8 +142,8 @@ export default function RFPMarketPage() {
     }, [filters, sortBy]);
 
     const SidebarContent = () => (
-        <div className="space-y-8 pb-20">
-            <div className="flex items-center justify-between">
+        <div className="space-y-8 md:p-4 p-2">
+            <div className="flex flex-col gap-2">
                 <h3 className="text-lg font-display font-bold flex items-center gap-2">
                     <Filter className="h-4 w-4" /> Filtros Avanzados
                 </h3>
@@ -152,10 +152,10 @@ export default function RFPMarketPage() {
                         variant="ghost"
                         size="sm"
                         onClick={resetFilters}
-                        className="h-8 text-xs text-muted-foreground hover:text-destructive px-2"
+                        className="h-8 w-fit text-xs text-muted-foreground hover:text-destructive px-0 justify-start"
                     >
                         <X className="h-3 w-3 mr-1" />
-                        Limpiar ({activeFilterCount})
+                        Limpiar filtros ({activeFilterCount})
                     </Button>
                 )}
             </div>
@@ -288,87 +288,90 @@ export default function RFPMarketPage() {
     );
 
     return (
-        <div className="flex gap-8">
-            {/* Desktop Sidebar */}
-            <div className="hidden lg:block zoom-fixed-sidebar">
-                <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-                    <SidebarContent />
-                </div>
+        <div className="flex gap-6 h-full overflow-hidden">
+            {/* Desktop Sidebar - Fixed */}
+            <div className="hidden lg:flex lg:flex-col w-[320px] shrink-0 p-4 border-r border-white/10 h-full shadow-sm overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                <SidebarContent />
             </div>
 
-            <div className="space-y-6 min-w-0 flex-1">
-                {/* Search & Filters Header */}
-                <div className="flex flex-col gap-4">
-                    <div className="min-w-0">
-                        <h1 className="text-2xl md:text-3xl font-display font-bold tracking-tight truncate">RFP - Oportunidades</h1>
-                        <p className="text-muted-foreground text-sm md:text-base">Encuentra nuevas demandas de innovación</p>
-                    </div>
+            <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden">
+                {/* Search & Filters Header - Fixed */}
+                <div className="shrink-0 p-4 md:p-6 pb-4">
+                    <div className="flex flex-col gap-4">
+                        <div className="min-w-0">
+                            <h1 className="text-2xl md:text-3xl font-display font-bold tracking-tight truncate">RFP - Oportunidades</h1>
+                            <p className="text-muted-foreground text-sm md:text-base">Encuentra nuevas demandas de innovación</p>
+                        </div>
 
-                    <div className="flex gap-2 w-full">
-                        <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
-                            <SheetTrigger asChild>
-                                <Button variant="outline" className="lg:hidden flex-1 gap-2">
-                                    <SlidersHorizontal className="h-4 w-4" /> Filtros
-                                    {activeFilterCount > 0 && <Badge className="ml-1 h-5 w-5 p-0 flex items-center justify-center bg-primary text-xs">{activeFilterCount}</Badge>}
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent side="left" className="w-[320px] sm:w-[400px] overflow-y-auto">
-                                <div className="py-6 px-6"><SidebarContent /></div>
-                            </SheetContent>
-                        </Sheet>
+                        <div className="flex gap-2 w-full">
+                            <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
+                                <SheetTrigger asChild>
+                                    <Button variant="outline" className="lg:hidden flex-1 gap-2">
+                                        <SlidersHorizontal className="h-4 w-4" /> Filtros
+                                        {activeFilterCount > 0 && <Badge className="ml-1 h-5 w-5 p-0 flex items-center justify-center bg-primary text-xs">{activeFilterCount}</Badge>}
+                                    </Button>
+                                </SheetTrigger>
+                                <SheetContent side="left" className="w-[320px] sm:w-[400px] overflow-y-auto">
+                                    <div className="py-6 px-6"><SidebarContent /></div>
+                                </SheetContent>
+                            </Sheet>
 
-                        {/* Sort Dropdown */}
-                        <Select value={sortBy} onValueChange={setSortBy}>
-                            <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
-                                <SelectValue placeholder="Ordenar por" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="newest">Más Recientes</SelectItem>
-                                <SelectItem value="budget-high">Presupuesto (Mayor)</SelectItem>
-                                <SelectItem value="deadline-soon">Fecha Límite (Próxima)</SelectItem>
-                            </SelectContent>
-                        </Select>
+                            {/* Sort Dropdown */}
+                            <Select value={sortBy} onValueChange={setSortBy}>
+                                <SelectTrigger className="w-[160px] bg-background/50 border-white/10 h-10">
+                                    <SelectValue placeholder="Ordenar por" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="newest">Más Recientes</SelectItem>
+                                    <SelectItem value="budget-high">Presupuesto (Mayor)</SelectItem>
+                                    <SelectItem value="deadline-soon">Fecha Límite (Próxima)</SelectItem>
+                                </SelectContent>
+                            </Select>
 
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input
-                                placeholder="Buscar por título, industria..."
-                                value={filters.search}
-                                onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                                className="pl-10 bg-background/50 border-white/10 h-10"
-                            />
+                            <div className="relative flex-1">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    placeholder="Buscar por título, industria..."
+                                    value={filters.search}
+                                    onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                                    className="pl-10 bg-background/50 border-white/10 h-10"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Results Info */}
-                <div className="flex items-center gap-2">
-                    <Badge className="bg-primary/10 text-primary border-0 text-sm px-3 h-6">
-                        {filteredRFPs.length} oportunidades
-                    </Badge>
-                    {filters.search && (
-                        <span className="text-sm text-muted-foreground truncate">
-                            para "{filters.search}"
-                        </span>
+                {/* Results area - Scrollable */}
+                <div className="flex-1 overflow-y-auto px-4 md:px-6 pb-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent space-y-6">
+                    {/* Results Info */}
+                    <div className="flex items-center gap-2">
+                        <Badge className="bg-primary/10 text-primary border-0 text-sm px-3 h-6">
+                            {filteredRFPs.length} oportunidades
+                        </Badge>
+                        {filters.search && (
+                            <span className="text-sm text-muted-foreground truncate">
+                                para "{filters.search}"
+                            </span>
+                        )}
+                    </div>
+
+                    {/* RFP Cards Grid */}
+                    <div className="zoom-adaptive-grid">
+                        {filteredRFPs.map((rfp) => (
+                            <RFPActionCard key={rfp.id} rfp={rfp} />
+                        ))}
+                    </div>
+
+                    {filteredRFPs.length === 0 && (
+                        <Card className="glass-card border-white/10">
+                            <CardContent className="py-12 text-center">
+                                <Search className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
+                                <h3 className="text-lg font-semibold mb-2 text-[#243A57] dark:text-white">No se encontraron oportunidades</h3>
+                                <p className="text-muted-foreground">Prueba ajustando los filtros de búsqueda</p>
+                            </CardContent>
+                        </Card>
                     )}
                 </div>
-
-                {/* RFP Cards Grid */}
-                <div className="zoom-adaptive-grid">
-                    {filteredRFPs.map((rfp) => (
-                        <RFPActionCard key={rfp.id} rfp={rfp} />
-                    ))}
-                </div>
-
-                {filteredRFPs.length === 0 && (
-                    <Card className="glass-card border-white/10">
-                        <CardContent className="py-12 text-center">
-                            <Search className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
-                            <h3 className="text-lg font-semibold mb-2 text-[#243A57] dark:text-white">No se encontraron oportunidades</h3>
-                            <p className="text-muted-foreground">Prueba ajustando los filtros de búsqueda</p>
-                        </CardContent>
-                    </Card>
-                )}
             </div>
         </div>
     );

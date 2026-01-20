@@ -12,9 +12,37 @@ interface ClientRequestCardGridProps {
 
 export default function ClientRequestCardGrid({ request }: ClientRequestCardGridProps) {
     const isActive = request.status === 'Active';
-    // Generate a consistent image based on request ID
-    const imageId = parseInt(request.id) || 1;
-    const mockImage = `https://picsum.photos/seed/${imageId + 200}/800/600`;
+    
+    // Get professional image based on request content
+    const getRequestImage = (request: InnovationRequest): string => {
+        const titleLower = request.title.toLowerCase();
+        const descriptionLower = request.description.toLowerCase();
+        const sectorLower = request.sector.toLowerCase();
+        
+        // Map to relevant professional images based on use case
+        if (titleLower.includes('anomalía') || titleLower.includes('detección') || titleLower.includes('defecto') || descriptionLower.includes('visión artificial')) {
+            return 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop';
+        }
+        if (titleLower.includes('recomendación') || titleLower.includes('e-commerce') || titleLower.includes('cross-selling')) {
+            return 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop';
+        }
+        if (titleLower.includes('reporte') || titleLower.includes('financiero') || titleLower.includes('erp')) {
+            return 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop';
+        }
+        if (titleLower.includes('visión') || titleLower.includes('computador') || titleLower.includes('control de calidad') || titleLower.includes('epi')) {
+            return 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop';
+        }
+        if (titleLower.includes('chatbot') || titleLower.includes('atención al cliente') || titleLower.includes('multiidioma')) {
+            return 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&h=600&fit=crop';
+        }
+        if (titleLower.includes('ruta') || titleLower.includes('logística') || titleLower.includes('carbono') || titleLower.includes('entrega')) {
+            return 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop';
+        }
+        // Default: innovation/technology image
+        return 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop';
+    };
+    
+    const mockImage = getRequestImage(request);
 
     return (
         <Card className="py-0 overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full border border-white/5 rounded-xl bg-card/40 backdrop-blur-sm hover:border-primary/30">

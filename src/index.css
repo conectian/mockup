@@ -302,7 +302,8 @@
     gap: 1.5rem;
     /* Adjusts the number of columns automatically based on available space */
     /* Each card will be at least 320px (or 100% on small screens) and at most 420px */
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 400px));
+    /* More flexible min-width and uses 1fr instead of fixed max-width to always fill space */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
     /* Centers the grid if there is leftover space on the sides */
     justify-content: start;
   }

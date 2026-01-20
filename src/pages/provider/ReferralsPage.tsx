@@ -1,59 +1,19 @@
 import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import {
     Users,
-    Handshake,
     Euro,
     Copy,
     Check,
-    ArrowRight,
     Linkedin,
     Twitter,
     MessageCircle,
     TrendingUp,
     Gift,
-    Star
+    Handshake
 } from 'lucide-react';
-
-const NETWORKING_OPPORTUNITIES = [
-    {
-        id: 1,
-        type: 'Colaboración',
-        company: 'Robotics Corp',
-        verified: true,
-        title: 'Proyecto de Visión Artificial',
-        description: 'Empresa de robótica busca partner especializado en Computer Vision para proyecto industrial.',
-        tags: ['Computer Vision', 'Deep Learning', 'Python'],
-        budget: '€40K - €60K',
-        daysAgo: 2,
-    },
-    {
-        id: 2,
-        type: 'Joint Venture',
-        company: 'FinTech Global',
-        verified: true,
-        title: 'Expansión a Mercado LATAM',
-        description: 'Consultora busca socio tecnológico para implementar soluciones de IA en banca latinoamericana.',
-        tags: ['FinTech', 'Banking', 'AI'],
-        budget: '€100K+',
-        daysAgo: 5,
-        featured: true,
-    },
-    {
-        id: 3,
-        type: 'Referido',
-        company: 'Data Solutions',
-        verified: true,
-        title: 'Cliente Enterprise busca NLP',
-        description: 'Tenemos un cliente grande que necesita procesamiento de lenguaje natural. Buscamos experto.',
-        tags: ['NLP', 'Transformers', 'LLMs'],
-        budget: '€50K - €90K',
-        daysAgo: 7,
-    },
-];
 
 export default function ReferralsPage() {
     const [copied, setCopied] = useState(false);
@@ -113,76 +73,6 @@ export default function ReferralsPage() {
                         </div>
                     </div>
                 </Card>
-            </div>
-
-            {/* Networking Opportunities */}
-            <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-display font-bold flex items-center gap-2">
-                        <Star className="h-5 w-5 text-primary" />
-                        Oportunidades de Networking
-                    </h2>
-                    <Badge variant="outline" className="text-primary border-primary">
-                        3 disponibles
-                    </Badge>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-4">
-                    {NETWORKING_OPPORTUNITIES.map((opp) => (
-                        <Card
-                            key={opp.id}
-                            className={`p-5 border-border hover:border-primary/30 transition-all ${opp.featured ? 'ring-1 ring-emerald-500/30' : ''
-                                }`}
-                        >
-                            <div className="flex items-center justify-between mb-3">
-                                <Badge
-                                    className={
-                                        opp.type === 'Colaboración'
-                                            ? 'bg-blue-500/20 text-blue-400 border-0'
-                                            : opp.type === 'Joint Venture'
-                                                ? 'bg-emerald-500/20 text-emerald-400 border-0'
-                                                : 'bg-violet-500/20 text-violet-400 border-0'
-                                    }
-                                >
-                                    {opp.type}
-                                </Badge>
-                                <span className="text-xs text-muted-foreground">Hace {opp.daysAgo} días</span>
-                            </div>
-
-                            <div className="flex items-center gap-3 mb-3">
-                                <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
-                                    {opp.company.charAt(0)}
-                                </div>
-                                <div>
-                                    <p className="font-semibold">{opp.company}</p>
-                                    {opp.verified && (
-                                        <p className="text-xs text-emerald-400 flex items-center gap-1">
-                                            <Check className="h-3 w-3" /> Verificado
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <h3 className="font-semibold mb-2">{opp.title}</h3>
-                            <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{opp.description}</p>
-
-                            <div className="flex flex-wrap gap-1.5 mb-4">
-                                {opp.tags.map((tag) => (
-                                    <Badge key={tag} variant="outline" className="text-xs">
-                                        {tag}
-                                    </Badge>
-                                ))}
-                            </div>
-
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm font-semibold text-primary">{opp.budget}</span>
-                                <Button size="sm" className="gap-2">
-                                    Conectar <ArrowRight className="h-4 w-4" />
-                                </Button>
-                            </div>
-                        </Card>
-                    ))}
-                </div>
             </div>
 
             {/* Referral Invite Section */}

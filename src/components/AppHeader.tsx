@@ -55,7 +55,7 @@ const MOBILE_NAV_PROVIDER = [
         icon: Store,
         items: [
             { name: "Marketplace", href: "/provider/marketplace?tab=empresas", icon: Building2 },
-            { name: "RFIP", href: "/provider/marketplace?tab=rfip", icon: FileText },
+            { name: "Mis Solicitudes", href: "/provider/marketplace?tab=rfp", icon: FileText },
             { name: "Casos de Uso", href: "/provider/marketplace?tab=casos-de-uso", icon: Store },
         ]
     },
@@ -63,7 +63,6 @@ const MOBILE_NAV_PROVIDER = [
         group: "Ventas",
         icon: FolderKanban,
         items: [
-            { name: "Leads", href: "/provider/deal-rooms?tab=leads", icon: Users },
             { name: "Deal Rooms", href: "/provider/deal-rooms?tab=dealrooms", icon: FolderKanban },
             { name: "Dashboard", href: "/provider/deal-rooms?tab=dashboard", icon: LayoutDashboard },
         ]
@@ -77,7 +76,7 @@ const MOBILE_NAV_CLIENT = [
         items: [
             { name: "Marketplace", href: "/client/marketplace?tab=mercado", icon: Globe },
             { name: "Marketplace Privado", href: "/client/marketplace?tab=propuestas", icon: Inbox },
-            { name: "RFIP", href: "/client/marketplace?tab=innovacion", icon: Lightbulb },
+            { name: "Mis Solicitudes", href: "/client/marketplace?tab=innovacion", icon: Lightbulb },
         ]
     },
     {
@@ -296,7 +295,7 @@ export default function AppHeader() {
                                             icon: Store,
                                             subItems: [
                                                 { name: "Marketplace", value: "empresas", icon: Building2 },
-                                                { name: "RFIP", value: "rfip", icon: FileText },
+                                                { name: "Mis Solicitudes", value: "rfp", icon: FileText },
                                                 { name: "Casos de Uso", value: "casos-de-uso", icon: Store },
                                             ]
                                         },
@@ -305,7 +304,6 @@ export default function AppHeader() {
                                             basePath: "/provider/deal-rooms",
                                             icon: FolderKanban,
                                             subItems: [
-                                                { name: "Leads", value: "leads", icon: Users },
                                                 { name: "Deal Rooms", value: "dealrooms", icon: FolderKanban },
                                                 { name: "Dashboard", value: "dashboard", icon: LayoutDashboard },
                                             ]
@@ -324,7 +322,7 @@ export default function AppHeader() {
                                             subItems: [
                                                 { name: "Marketplace", value: "mercado", icon: Globe },
                                                 { name: "Marketplace Privado", value: "propuestas", icon: Inbox },
-                                                { name: "RFIP", value: "innovacion", icon: Lightbulb },
+                                                { name: "Mis Solicitudes", value: "innovacion", icon: Lightbulb },
                                             ]
                                         },
                                         {

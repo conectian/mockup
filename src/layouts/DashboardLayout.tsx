@@ -3,7 +3,7 @@ import AppHeader from '../components/AppHeader';
 
 function DashboardLayout() {
     const location = useLocation();
-    const isFullWidthPage = location.pathname === '/provider/marketplace';
+    const isFullWidthPage = location.pathname === '/provider/marketplace' || location.pathname === '/client/marketplace';
 
     return (
         <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-muted/20 safe-area-top overflow-x-hidden">

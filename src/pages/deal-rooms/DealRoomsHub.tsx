@@ -6,18 +6,17 @@ import { useAuthStore } from '@/store/useAuthStore';
 // Import the existing components/pages as content
 import ProviderHome from '@/pages/dashboard/ProviderHome';
 import ClientHome from '@/pages/dashboard/ClientHome';
-import LeadsPage from '@/pages/provider/LeadsPage';
 import DealRoomsListContent from './DealRoomsListContent';
 
 export default function DealRoomsHub() {
     const { userType } = useAuthStore();
     const [searchParams] = useSearchParams();
     const tabFromUrl = searchParams.get('tab');
-    const [activeTab, setActiveTab] = useState(tabFromUrl || (userType === 'provider' ? 'leads' : 'dealrooms'));
+    const [activeTab, setActiveTab] = useState(tabFromUrl || 'dealrooms');
 
     // Sync activeTab with URL search params
     useEffect(() => {
-        if (tabFromUrl && ['dashboard', 'leads', 'dealrooms'].includes(tabFromUrl)) {
+        if (tabFromUrl && ['dashboard', 'dealrooms'].includes(tabFromUrl)) {
             setActiveTab(tabFromUrl);
         }
     }, [tabFromUrl]);
@@ -37,13 +36,6 @@ export default function DealRoomsHub() {
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                     {/* Tabs Navigation */}
                     {/* TabsList removed as navigation is now in the header */}
-
-                    {/* Leads Tab - Only for providers */}
-                    {userType === 'provider' && (
-                        <TabsContent value="leads" className="mt-6">
-                            <LeadsPage />
-                        </TabsContent>
-                    )}
 
                     {/* Deal Rooms Tab */}
                     <TabsContent value="dealrooms" className="mt-6">

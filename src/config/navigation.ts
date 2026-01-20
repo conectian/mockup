@@ -1,13 +1,11 @@
 import {
   Store,
-  MessageSquare,
   FolderKanban,
   LayoutDashboard,
   Users,
   FileText,
   Banknote,
   Settings,
-
   type LucideIcon,
 } from "lucide-react";
 
@@ -29,7 +27,7 @@ export const MENU_PROVIDER: MenuItem[] = [
     name: "Deal Rooms",
     href: "/provider/deal-rooms",
     icon: FolderKanban,
-    description: "Dashboard, Leads y Negociaciones",
+    description: "Dashboard y Negociaciones",
   },
 ];
 
@@ -79,5 +77,4 @@ export const MENU_ADMIN: MenuItem[] = [
     icon: Settings,
     description: "Ajustes de plataforma",
   },
-
 ];
