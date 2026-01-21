@@ -12,13 +12,12 @@ interface ClientRequestCardGridProps {
 
 export default function ClientRequestCardGrid({ request }: ClientRequestCardGridProps) {
     const isActive = request.status === 'Active';
-    
+
     // Get professional image based on request content
     const getRequestImage = (request: InnovationRequest): string => {
         const titleLower = request.title.toLowerCase();
         const descriptionLower = request.description.toLowerCase();
-        const sectorLower = request.sector.toLowerCase();
-        
+
         // Map to relevant professional images based on use case
         if (titleLower.includes('anomalía') || titleLower.includes('detección') || titleLower.includes('defecto') || descriptionLower.includes('visión artificial')) {
             return 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop';
@@ -41,7 +40,7 @@ export default function ClientRequestCardGrid({ request }: ClientRequestCardGrid
         // Default: innovation/technology image
         return 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop';
     };
-    
+
     const mockImage = getRequestImage(request);
 
     return (

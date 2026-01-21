@@ -13,7 +13,6 @@ import {
     Sparkles,
     ArrowRight,
     Target,
-    Zap,
     FileText,
     TrendingUp
 } from 'lucide-react';

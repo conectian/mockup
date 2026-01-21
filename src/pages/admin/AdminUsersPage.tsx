@@ -26,7 +26,6 @@ import {
     SheetDescription,
     SheetHeader,
     SheetTitle,
-    SheetFooter,
 } from '@/components/ui/sheet';
 import {
     Tabs,
