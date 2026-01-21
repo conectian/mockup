@@ -108,7 +108,7 @@ export default function MessagesPopover() {
                                                 {msg.time}
                                             </span>
                                         </div>
-                                        <p className="text-xs text-muted-foreground truncate">
+                                        <p className="text-xs text-muted-foreground">
                                             {msg.preview}
                                         </p>
                                     </div>

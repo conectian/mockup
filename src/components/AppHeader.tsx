@@ -416,66 +416,45 @@ export default function AppHeader() {
                                 </svg>
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-64 bg-card border-border shadow-2xl mt-2 p-3">
-                            <div className="px-3 py-2.5 mb-2">
-                                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Mi Cuenta</p>
-                            </div>
-
-                            <DropdownMenuItem asChild className="focus:bg-accent hover:bg-accent cursor-pointer rounded-lg px-3 py-3 mb-1 transition-all">
+                        <DropdownMenuContent align="end" className="w-52 bg-card border-border shadow-xl mt-1 p-1.5 rounded-lg">
+                            <DropdownMenuItem asChild className="focus:bg-accent hover:bg-accent cursor-pointer rounded-md px-3 py-2.5 transition-colors">
                                 <Link to={
                                     userType === 'provider' ? '/provider/profile?tab=profile' :
                                         userType === 'client' ? '/client/profile?tab=profile' :
                                             '/admin/profile'
-                                } className="flex items-center gap-3">
-                                    <div className={cn(
-                                        "h-9 w-9 rounded-lg flex items-center justify-center",
-                                        userType === 'provider' && "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400",
-                                        userType === 'client' && "bg-blue-500/20 text-blue-600 dark:text-blue-400",
-                                        userType === 'admin' && "bg-amber-500/20 text-amber-600 dark:text-amber-400"
-                                    )}>
-                                        <User className="h-4 w-4" />
-                                    </div>
-                                    <span className="font-semibold text-foreground">Mi Perfil</span>
+                                } className="flex items-center gap-2.5">
+                                    <User className="h-4 w-4 text-muted-foreground" />
+                                    <span className="text-sm font-medium text-foreground">Mi Perfil</span>
                                 </Link>
                             </DropdownMenuItem>
 
-                            {/* Referidos - available for provider and client */}
                             {(userType === 'provider' || userType === 'client') && (
                                 <>
-                                    <DropdownMenuSeparator className="bg-border my-2" />
-
-                                    <DropdownMenuItem asChild className="focus:bg-accent hover:bg-accent cursor-pointer rounded-lg px-3 py-3 mb-1 transition-all">
-                                        <Link to={userType === 'provider' ? '/provider/referrals' : '/client/referrals'} className="flex items-center gap-3">
-                                            <div className="h-9 w-9 rounded-lg bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-                                                <Users className="h-4 w-4" />
-                                            </div>
-                                            <span className="font-semibold text-foreground">Referidos</span>
+                                    <DropdownMenuItem asChild className="focus:bg-accent hover:bg-accent cursor-pointer rounded-md px-3 py-2.5 transition-colors">
+                                        <Link to={userType === 'provider' ? '/provider/referrals' : '/client/referrals'} className="flex items-center gap-2.5">
+                                            <Users className="h-4 w-4 text-muted-foreground" />
+                                            <span className="text-sm font-medium text-foreground">Referidos</span>
                                         </Link>
                                     </DropdownMenuItem>
 
-                                    {/* Pagos - available for provider and client */}
-                                    <DropdownMenuItem asChild className="focus:bg-accent hover:bg-accent cursor-pointer rounded-lg px-3 py-3 mb-1 transition-all">
-                                        <Link to={userType === 'provider' ? '/provider/payments' : '/client/payments'} className="flex items-center gap-3">
-                                            <div className="h-9 w-9 rounded-lg bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
-                                                <CreditCard className="h-4 w-4" />
-                                            </div>
-                                            <span className="font-semibold text-foreground">Pagos</span>
+                                    <DropdownMenuItem asChild className="focus:bg-accent hover:bg-accent cursor-pointer rounded-md px-3 py-2.5 transition-colors">
+                                        <Link to={userType === 'provider' ? '/provider/payments' : '/client/payments'} className="flex items-center gap-2.5">
+                                            <CreditCard className="h-4 w-4 text-muted-foreground" />
+                                            <span className="text-sm font-medium text-foreground">Pagos</span>
                                         </Link>
                                     </DropdownMenuItem>
                                 </>
                             )}
 
-                            <DropdownMenuSeparator className="bg-border my-2" />
+                            <DropdownMenuSeparator className="bg-border my-1" />
 
                             <DropdownMenuItem
                                 onClick={logout}
-                                className="hover:bg-red-500/10 focus:bg-red-500/10 cursor-pointer rounded-lg px-3 py-3 transition-all group"
+                                className="hover:bg-destructive/10 focus:bg-destructive/10 cursor-pointer rounded-md px-3 py-2.5 transition-colors"
                             >
-                                <div className="flex items-center gap-3 w-full">
-                                    <div className="h-9 w-9 rounded-lg bg-red-500/20 group-hover:bg-red-500/30 flex items-center justify-center transition-colors">
-                                        <LogOut className="h-4 w-4 text-red-400" />
-                                    </div>
-                                    <span className="font-semibold text-red-400 group-hover:text-red-300 transition-colors">Cerrar Sesión</span>
+                                <div className="flex items-center gap-2.5 w-full">
+                                    <LogOut className="h-4 w-4 text-destructive" />
+                                    <span className="text-sm font-medium text-destructive">Cerrar Sesión</span>
                                 </div>
                             </DropdownMenuItem>
                         </DropdownMenuContent>

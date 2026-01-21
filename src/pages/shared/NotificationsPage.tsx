@@ -43,16 +43,6 @@ const allNotifications: Notification[] = [
         link: '/deal-room/dr-001'
     },
     {
-        id: 2,
-        type: 'update',
-        title: 'Actualización de Deal Room',
-        message: 'Se han subido 3 nuevos documentos al Deal Room #DR-002 por el equipo de InnovateX.',
-        time: 'Hace 30 min',
-        date: 'Hoy',
-        read: false,
-        link: '/deal-room/dr-002?view=docs'
-    },
-    {
         id: 3,
         type: 'info',
         title: 'Nuevo lead disponible',

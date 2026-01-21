@@ -27,6 +27,13 @@ const mockRecommendations = [
         category: 'Analytics',
         image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop',
     },
+    {
+        id: 4,
+        title: 'Optimización de Logística con IA',
+        provider: 'LogiSmart',
+        category: 'Logistics',
+        image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=200&fit=crop',
+    },
 ];
 
 export default function ClientHome() {
@@ -174,7 +181,7 @@ export default function ClientHome() {
                     </Link>
                 </div>
 
-                <div className="grid gap-8 md:grid-cols-3">
+                <div className="zoom-adaptive-grid">
                     {mockRecommendations.map((item) => (
                         <Card key={item.id} className="py-0 overflow-hidden group cursor-pointer border-white/5 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-md">
                             <div className="aspect-[16/10] relative overflow-hidden">

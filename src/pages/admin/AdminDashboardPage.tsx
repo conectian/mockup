@@ -143,7 +143,7 @@ export default function AdminDashboardPage() {
                                             color: 'hsl(var(--foreground))'
                                         }}
                                         labelStyle={{ color: 'hsl(var(--muted-foreground))', marginBottom: '4px' }}
-                                        formatter={(value: number) => [`€${(value || 0).toLocaleString()}`, 'Ingresos']}
+                                        formatter={(value: number | any) => [`€${(Number(value) || 0).toLocaleString()}`, 'Ingresos']}
                                         cursor={{ stroke: '#10b981', strokeWidth: 1, strokeDasharray: '4 4' }}
                                     />
                                     <Area

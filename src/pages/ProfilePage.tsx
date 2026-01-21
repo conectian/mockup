@@ -35,7 +35,10 @@ import {
     FileText,
     Coins,
     ChevronRight,
-    Check
+    Check,
+    Share2,
+    Copy,
+    ExternalLink
 } from 'lucide-react';
 import {
     Table,
@@ -465,6 +468,60 @@ export default function ProfilePage() {
                                 <Button variant="outline">Cancelar</Button>
                                 <Button onClick={() => toast.success('Empresa actualizada')}>Guardar Cambios</Button>
                             </CardFooter>
+                        </Card>
+
+                        {/* Referral Program */}
+                        <Card className="overflow-hidden">
+                            <CardHeader>
+                                <div className="flex items-center justify-between">
+                                    <div className="space-y-1">
+                                        <CardTitle className="flex items-center gap-2">
+                                            <Gift className="h-5 w-5 text-indigo-500" />
+                                            Programa de Referidos
+                                        </CardTitle>
+                                        <CardDescription>Invita a otras empresas a Conectian y obtén beneficios exclusivos en vuestro plan.</CardDescription>
+                                    </div>
+                                    <Badge variant="outline" className="bg-indigo-500/10 text-indigo-500 border-indigo-500/20">
+                                        15% Descuento por referido
+                                    </Badge>
+                                </div>
+                            </CardHeader>
+                            <CardContent className="space-y-6">
+                                <div className="flex flex-col md:flex-row gap-4">
+                                    <div className="flex-1 space-y-2">
+                                        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Tu Enlace Personalizado</Label>
+                                        <div className="relative group">
+                                            <Input
+                                                value={`https://conectian.com/join?ref=${profile.company.toLowerCase().replace(/\s+/g, '-')}`}
+                                                readOnly
+                                                className="h-12 bg-muted/40 border-white/10 pr-12 font-mono text-sm focus-visible:ring-indigo-500/50"
+                                            />
+                                            <Button
+                                                size="icon"
+                                                variant="ghost"
+                                                className="absolute right-1 top-1 h-10 w-10 hover:bg-indigo-500/10 text-muted-foreground hover:text-indigo-500 transition-colors"
+                                                onClick={() => {
+                                                    const link = `https://conectian.com/join?ref=${profile.company.toLowerCase().replace(/\s+/g, '-')}`;
+                                                    navigator.clipboard.writeText(link);
+                                                    toast.success("Enlace de referido copiado");
+                                                }}
+                                            >
+                                                <Copy className="h-4 w-4" />
+                                            </Button>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-end gap-2">
+                                        <Button variant="outline" className="h-12 px-6 gap-2 border-white/10 hover:bg-white/5">
+                                            <Share2 className="h-4 w-4" />
+                                            Compartir
+                                        </Button>
+                                        <Button className="h-12 px-6 gap-2 text-white shadow-lg border-0">
+                                            <ExternalLink className="h-4 w-4" />
+                                            Ver Estadísticas
+                                        </Button>
+                                    </div>
+                                </div>
+                            </CardContent>
                         </Card>
 
                         {/* Team Members */}

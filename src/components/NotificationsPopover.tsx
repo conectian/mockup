@@ -34,15 +34,6 @@ const mockNotifications: Notification[] = [
         link: '/deal-room/dr-001'
     },
     {
-        id: 2,
-        type: 'update',
-        title: 'Actualización de Deal Room',
-        message: 'Se han subido nuevos documentos al Deal Room #DR-002',
-        time: 'Hace 30 min',
-        read: false,
-        link: '/deal-room/dr-002?view=docs'
-    },
-    {
         id: 3,
         type: 'info',
         title: 'Nuevo lead disponible',
