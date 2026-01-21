@@ -126,6 +126,9 @@ export interface FilterState {
     regulations: string[];
     certifications: string[];
     dataSecurity: string[];
+    innovationStatus: string[];
+    innovationUrgency: string[];
+    minResponses: string;
 }
 
 const initialFilters: FilterState = {
@@ -148,6 +151,9 @@ const initialFilters: FilterState = {
     regulations: [],
     certifications: [],
     dataSecurity: [],
+    innovationStatus: [],
+    innovationUrgency: [],
+    minResponses: '',
 };
 
 export default function MarketplacePage() {
@@ -274,8 +280,35 @@ export default function MarketplacePage() {
                 const matches =
                     request.title.toLowerCase().includes(searchLower) ||
                     request.description.toLowerCase().includes(searchLower) ||
-                    request.sector?.toLowerCase().includes(searchLower);
+                    request.sector?.toLowerCase().includes(searchLower) ||
+                    request.technologies?.some(t => t.toLowerCase().includes(searchLower));
                 if (!matches) return false;
+            }
+            if (filters.sector.length > 0) {
+                const hasMatch = filters.sector.some(s =>
+                    s.toLowerCase().includes(request.sector.toLowerCase()) ||
+                    request.sector.toLowerCase().includes(s.split(' ')[0].toLowerCase())
+                );
+                if (!hasMatch) return false;
+            }
+            if (filters.innovationStatus.length > 0) {
+                const statusMap: Record<string, string> = {
+                    'Activa': 'Active',
+                    'Cerrada': 'Closed',
+                    'Pendiente': 'Draft'
+                };
+                if (!filters.innovationStatus.some(s => statusMap[s] === request.status)) return false;
+            }
+            if (filters.innovationUrgency.length > 0) {
+                if (!filters.innovationUrgency.includes(request.urgency)) return false;
+            }
+            if (filters.minResponses) {
+                if (request.responsesCount < parseInt(filters.minResponses)) return false;
+            }
+            if (filters.costMin) {
+                const min = parseInt(filters.costMin);
+                const requestValue = parseInt(request.budgetRange.split(' ')[0].replace('k', '000'));
+                if (requestValue < min) return false;
             }
             return true;
         });
@@ -676,6 +709,17 @@ export default function MarketplacePage() {
                                     <h3 className="text-lg font-display font-bold flex items-center gap-2">
                                         <Filter className="h-4 w-4" /> Filtros
                                     </h3>
+                                    {activeFilterCount > 0 && (
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={resetFilters}
+                                            className="h-8 w-fit text-xs text-muted-foreground hover:text-destructive px-2"
+                                        >
+                                            <X className="h-3 w-3 mr-1" />
+                                            Limpiar
+                                        </Button>
+                                    )}
                                 </div>
 
                                 {/* SECTOR */}
@@ -698,6 +742,11 @@ export default function MarketplacePage() {
                                                 <input
                                                     type="checkbox"
                                                     id={`innovacion_${status}`}
+                                                    checked={filters.innovationStatus.includes(status)}
+                                                    onChange={() => setFilters({
+                                                        ...filters,
+                                                        innovationStatus: toggleArrayItem(filters.innovationStatus, status)
+                                                    })}
                                                     className="rounded border-white/10 bg-white/5 text-primary focus:ring-primary"
                                                 />
                                                 <Label htmlFor={`innovacion_${status}`} className="text-sm font-normal cursor-pointer select-none">
@@ -708,22 +757,56 @@ export default function MarketplacePage() {
                                     </div>
                                 </div>
 
+                                {/* URGENCIA */}
+                                <div className="space-y-3">
+                                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Urgencia</Label>
+                                    <div className="flex flex-wrap gap-2">
+                                        {['Baja', 'Media', 'Alta'].map(urgency => (
+                                            <Badge
+                                                key={urgency}
+                                                variant="outline"
+                                                className={cn(
+                                                    "cursor-pointer px-3 py-1.5",
+                                                    filters.innovationUrgency.includes(urgency)
+                                                        ? "bg-primary text-primary-foreground"
+                                                        : "bg-transparent border-white/10 text-muted-foreground"
+                                                )}
+                                                onClick={() => setFilters({
+                                                    ...filters,
+                                                    innovationUrgency: toggleArrayItem(filters.innovationUrgency, urgency)
+                                                })}
+                                            >
+                                                {urgency}
+                                            </Badge>
+                                        ))}
+                                    </div>
+                                </div>
+
                                 {/* PRESUPUESTO */}
                                 <div className="space-y-3">
-                                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Presupuesto</Label>
-                                    <div className="flex items-center gap-2">
-                                        <Input
-                                            type="text"
-                                            placeholder="Min"
-                                            className="bg-muted/30 border-white/10 h-9"
-                                        />
-                                        <span className="text-muted-foreground">-</span>
-                                        <Input
-                                            type="text"
-                                            placeholder="Max"
-                                            className="bg-muted/30 border-white/10 h-9"
-                                        />
-                                    </div>
+                                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Presupuesto Mínimo (€)</Label>
+                                    <Input
+                                        type="number"
+                                        placeholder="Ej: 50000"
+                                        className="bg-muted/30 border-white/10 h-9"
+                                        value={filters.costMin}
+                                        onChange={(e) => setFilters({ ...filters, costMin: e.target.value })}
+                                    />
+                                </div>
+
+                                {/* RESPUESTAS */}
+                                <div className="space-y-3">
+                                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Respuestas Mínimas</Label>
+                                    <Select value={filters.minResponses} onValueChange={(v) => setFilters({ ...filters, minResponses: v })}>
+                                        <SelectTrigger className="w-full bg-muted/30 border-white/10 h-9">
+                                            <SelectValue placeholder="Cualquiera" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="0">Cualquiera</SelectItem>
+                                            <SelectItem value="5">Más de 5</SelectItem>
+                                            <SelectItem value="10">Más de 10</SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                             </div>
                         </div>

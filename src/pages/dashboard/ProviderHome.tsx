@@ -62,7 +62,7 @@ export default function ProviderHome() {
             {/* KPI Row */}
             <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
                 {/* Credits */}
-                <Card className="border-0 bg-primary/10 relative overflow-hidden rounded-md shadow-xl shadow-amber-500/5 group col-span-2 lg:col-span-1">
+                <Card className="border-0 relative overflow-hidden rounded-md shadow-xl group col-span-2 lg:col-span-1">
                     <div className="absolute top-0 right-0 p-3 md:p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
                         <Coins className="h-12 w-12 md:h-20 md:w-20 text-amber-500" />
                     </div>

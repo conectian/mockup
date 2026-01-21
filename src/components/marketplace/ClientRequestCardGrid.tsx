@@ -20,25 +20,32 @@ export default function ClientRequestCardGrid({ request }: ClientRequestCardGrid
 
         // Map to relevant professional images based on use case
         if (titleLower.includes('anomalía') || titleLower.includes('detección') || titleLower.includes('defecto') || descriptionLower.includes('visión artificial')) {
-            return 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop';
+            return 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop'; // Industrial Tech
         }
         if (titleLower.includes('recomendación') || titleLower.includes('e-commerce') || titleLower.includes('cross-selling')) {
-            return 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop';
+            return 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop'; // Shopping/Payments
         }
         if (titleLower.includes('reporte') || titleLower.includes('financiero') || titleLower.includes('erp')) {
-            return 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop';
+            return 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop'; // Analytics Laptop
         }
         if (titleLower.includes('visión') || titleLower.includes('computador') || titleLower.includes('control de calidad') || titleLower.includes('epi')) {
-            return 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop';
+            return 'https://images.unsplash.com/photo-1535378437327-b7149b379c2e?w=800&h=600&fit=crop'; // AI/Robot Hand
         }
         if (titleLower.includes('chatbot') || titleLower.includes('atención al cliente') || titleLower.includes('multiidioma')) {
-            return 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&h=600&fit=crop';
+            return 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&h=600&fit=crop'; // Customer Support
         }
         if (titleLower.includes('ruta') || titleLower.includes('logística') || titleLower.includes('carbono') || titleLower.includes('entrega')) {
-            return 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop';
+            return 'https://images.unsplash.com/photo-1566576912902-1b91ceb5ec3f?w=800&h=600&fit=crop'; // Logistics/Shipping
         }
-        // Default: innovation/technology image
-        return 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop';
+
+        // Randomize default fallback slightly based on ID or length
+        const fallbacks = [
+            'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop', // Globe/Tech
+            'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop', // Working Team
+            'https://images.unsplash.com/photo-1504384372584-c69007c496a0?w=800&h=600&fit=crop', // Modern Tech
+            'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=600&fit=crop'  // Cybersecurity
+        ];
+        return fallbacks[request.id.length % fallbacks.length];
     };
 
     const mockImage = getRequestImage(request);
@@ -46,14 +53,14 @@ export default function ClientRequestCardGrid({ request }: ClientRequestCardGrid
     return (
         <Card className="py-0 overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full border border-white/5 rounded-xl bg-card/40 backdrop-blur-sm hover:border-primary/30">
             {/* Header with image */}
-            <div className="aspect-[16/10] relative overflow-hidden">
+            <div className="aspect-[16/10] relative overflow-hidden bg-gradient-to-br from-muted/50 to-muted-foreground/10">
                 <img
-                    src={mockImage}
+                    src={request.image || mockImage}
                     alt={request.title}
                     className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
                     onError={(e) => {
                         // Fallback to gradient if image fails
-                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.style.opacity = '0';
                     }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-70 group-hover:opacity-50 transition-opacity duration-500" />

@@ -16,20 +16,20 @@ export default function LoginPage() {
 
     const roles = [
         {
-            id: 'provider' as const,
-            title: 'Proveedor',
-            description: 'Gestiona tus soluciones y leads',
-            icon: Briefcase,
-            color: 'text-violet-500',
-            bgColor: 'bg-violet-500/10',
-        },
-        {
             id: 'client' as const,
             title: 'Cliente',
             description: 'Explora y contacta proveedores',
             icon: Building2,
             color: 'text-blue-500',
             bgColor: 'bg-blue-500/10',
+        },
+        {
+            id: 'provider' as const,
+            title: 'Proveedor',
+            description: 'Gestiona tus soluciones y leads',
+            icon: Briefcase,
+            color: 'text-violet-500',
+            bgColor: 'bg-violet-500/10',
         },
         {
             id: 'admin' as const,
@@ -52,7 +52,7 @@ export default function LoginPage() {
                             key={role.id}
                             onClick={() => handleLogin(role.id)}
                             className={cn(
-                                "w-full flex items-center gap-4 p-4 rounded-lg",
+                                "w-full flex items-center gap-4 p-4 rounded-lg cursor-pointer",
                                 "bg-white/5 border border-white/5",
                                 "hover:bg-white/10 hover:border-white/10",
                                 "transition-all duration-200 group text-left"

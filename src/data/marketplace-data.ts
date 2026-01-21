@@ -61,15 +61,15 @@ export const mockUseCases: UseCase[] = [
     techStack: ["Node.js", "NLP", "Azure"],
     roi: "€50k/año ahorro",
     image:
-      "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=600&h=400&fit=crop",
   },
   {
     id: "uc-003",
     title: "Predicción de Demanda con ML",
-    providerName: "DataFlow Analytics",
-    providerTier: "Silver",
     description:
       "Modelo de machine learning que predice la demanda de productos con 95% de precisión, optimizando inventarios y reduciendo costes de almacenamiento.",
+    providerName: "DataFlow Analytics",
+    providerTier: "Silver",
     industry: "Retail",
     techStack: ["Python", "TensorFlow", "Kubernetes"],
     roi: "25% reducción stock",
@@ -87,7 +87,7 @@ export const mockUseCases: UseCase[] = [
     techStack: ["Blockchain", "Python", "AWS"],
     roi: "€200k fraude evitado",
     image:
-      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop",
   },
   {
     id: "uc-005",
@@ -126,7 +126,7 @@ export const mockUseCases: UseCase[] = [
     techStack: ["Node.js", "NLP", "Kubernetes"],
     roi: "60% menos tiempo",
     image:
-      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&h=400&fit=crop",
   },
   {
     id: "uc-008",
@@ -152,6 +152,9 @@ export interface InnovationRequest {
   status: "Active" | "Closed" | "Draft";
   budgetRange: string;
   responsesCount: number;
+  image?: string;
+  urgency: "Baja" | "Media" | "Alta";
+  technologies: string[];
 }
 
 export const MOCK_REQUESTS: InnovationRequest[] = [
@@ -165,6 +168,10 @@ export const MOCK_REQUESTS: InnovationRequest[] = [
     status: "Active",
     budgetRange: "50k - 100k",
     responsesCount: 5,
+    image:
+      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop",
+    urgency: "Alta",
+    technologies: ["Computer Vision", "Python"],
   },
   {
     id: "2",
@@ -176,6 +183,10 @@ export const MOCK_REQUESTS: InnovationRequest[] = [
     status: "Closed",
     budgetRange: "20k - 50k",
     responsesCount: 12,
+    image:
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+    urgency: "Media",
+    technologies: ["TensorFlow", "React"],
   },
   {
     id: "3",
@@ -187,17 +198,25 @@ export const MOCK_REQUESTS: InnovationRequest[] = [
     status: "Active",
     budgetRange: "30k - 60k",
     responsesCount: 8,
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+    urgency: "Media",
+    technologies: ["AWS", "Node.js"],
   },
   {
     id: "4",
     title: "Sistema de Visión por Computador para Control de Calidad",
     description:
-      "Implementación de IA en cámaras de seguridad para control de EPIs.",
+      "Implementación de IA en cámaras de seguridad para control de EPIs en zonas críticas.",
     sector: "Seguridad",
     createdAt: "2025-10-28",
     status: "Active",
     budgetRange: "80k - 150k",
     responsesCount: 3,
+    image:
+      "https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=800&h=600&fit=crop",
+    urgency: "Alta",
+    technologies: ["Computer Vision", "Azure"],
   },
   {
     id: "5",
@@ -208,6 +227,10 @@ export const MOCK_REQUESTS: InnovationRequest[] = [
     status: "Closed",
     budgetRange: "40k - 80k",
     responsesCount: 15,
+    image:
+      "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=600&fit=crop",
+    urgency: "Media",
+    technologies: ["NLP", "Node.js"],
   },
   {
     id: "6",
@@ -219,6 +242,40 @@ export const MOCK_REQUESTS: InnovationRequest[] = [
     status: "Active",
     budgetRange: "60k - 120k",
     responsesCount: 6,
+    image:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop",
+    urgency: "Alta",
+    technologies: ["Python", "Algorithms"],
+  },
+  {
+    id: "7",
+    title: "Análisis de Sentimiento para Feedback de Producto",
+    description:
+      "Procesamiento de miles de reseñas diarias para extraer insights accionables.",
+    sector: "Marketing",
+    createdAt: "2025-11-15",
+    status: "Active",
+    budgetRange: "25k - 45k",
+    responsesCount: 4,
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+    urgency: "Baja",
+    technologies: ["NLP", "Python"],
+  },
+  {
+    id: "8",
+    title: "Implementación de Gemelo Digital para Logística",
+    description:
+      "Simulación en tiempo real de operaciones de almacén para optimizar flujos.",
+    sector: "Logística",
+    createdAt: "2025-12-01",
+    status: "Active",
+    budgetRange: "120k - 250k",
+    responsesCount: 2,
+    image:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop",
+    urgency: "Alta",
+    technologies: ["IoT", "Azure", "Simulations"],
   },
 ];
 
@@ -273,7 +330,7 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-emerald-500",
     icon: ShoppingCart,
     image:
-      "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&h=500&fit=crop", // Supermarket aisles
     description:
       "Mercadona es la compañía líder en España de supermercados físicos y online. Con un modelo de negocio centrado en la excelencia, buscamos innovar constantemente en la cadena de suministro, la experiencia del cliente y la sostenibilidad. Nuestro objetivo es ser líderes en transformación digital en el sector retail.",
   },
@@ -293,7 +350,7 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-amber-500",
     icon: Cpu,
     image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop", // Processor/Chip
     description:
       "Hewlett Packard Enterprise es una empresa global de plataforma como servicio desde el borde hasta la nube que ayuda a las organizaciones a acelerar los resultados al desbloquear el valor de todos sus datos, en cualquier lugar.",
   },
@@ -313,7 +370,7 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-red-500",
     icon: Landmark,
     image:
-      "https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?w=800&h=500&fit=crop", // Handshake/Business
     description:
       "Banco Santander es uno de los mayores bancos del mundo por capitalización bursátil. Estamos inmersos en una profunda transformación digital para ofrecer los mejores servicios financieros a nuestros clientes a través de canales innovadores.",
   },
@@ -333,7 +390,7 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-indigo-500",
     icon: Building2,
     image:
-      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&h=500&fit=crop", // Meeting overhead
     description:
       "Líderes en soluciones de RRHH y gestión del talento. Buscamos tecnologías disruptivas para mejorar la experiencia del empleado y optimizar los procesos de reclutamiento.",
   },
@@ -353,7 +410,9 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-teal-500",
     icon: Zap,
     image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=500&fit=crop", // Tech team
+    description:
+      "Empresa líder en desarrollo de software y soluciones cloud. Buscamos partners estratégicos para ampliar nuestro catálogo de servicios de IA.",
   },
   {
     id: "6",
@@ -371,7 +430,9 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-cyan-500",
     icon: Truck,
     image:
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=500&fit=crop", // Warehouse
+    description:
+      "Operador logístico global enfocado en la eficiencia y la sostenibilidad. Interesados en soluciones de trazabilidad IoT y optimización de rutas.",
   },
   {
     id: "7",
@@ -389,7 +450,9 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-blue-600",
     icon: Radio,
     image:
-      "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=500&fit=crop", // Globe/Network
+    description:
+      "Líder global en telecomunicaciones y soluciones digitales. Buscamos innovaciones en 5G, ciberseguridad y servicios digitales para empresas.",
   },
   {
     id: "8",
@@ -407,7 +470,9 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-orange-500",
     icon: Leaf,
     image:
-      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&h=500&fit=crop", // Solar/Green
+    description:
+      "Compañía multienergética global liderando la transición energética. Buscamos tecnologías limpias, captura de carbono y eficiencia operativa.",
   },
   {
     id: "9",
@@ -425,7 +490,9 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-rose-500",
     icon: Car,
     image:
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&h=500&fit=crop", // Car design
+    description:
+      "Diseñamos y fabricamos vehículos para la nueva era de la movilidad. Interesados en coche conectado, conducción autónoma y fabricación inteligente.",
   },
   {
     id: "10",
@@ -443,7 +510,9 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-red-600",
     icon: Heart,
     image:
-      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=500&fit=crop", // Paperwork/Care
+    description:
+      "Aseguradora global de confianza. Buscamos insurtechs que nos ayuden a personalizar productos y agilizar la gestión de siniestros.",
   },
   {
     id: "11",
@@ -461,7 +530,9 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-slate-700",
     icon: ShoppingCart,
     image:
-      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=500&fit=crop", // Fashion store
+    description:
+      "Uno de los mayores grupos de distribución de moda del mundo. La innovación en tienda y logística es clave para nuestro modelo de negocio.",
   },
   {
     id: "12",
@@ -479,6 +550,8 @@ export const TARGET_COMPANIES: Company[] = [
     color: "bg-lime-600",
     icon: Factory,
     image:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop", // Construction
+    description:
+      "Líder en soluciones de infraestructura y energías renovables. Buscamos digitalizar la construcción y operación de activos.",
   },
 ];

@@ -11,28 +11,28 @@ const mockRecommendations = [
         title: 'Automatización de Facturas con IA',
         provider: 'DataFlow AI',
         category: 'Fintech',
-        image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=200&fit=crop',
+        image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=200&fit=crop',
     },
     {
         id: 2,
         title: 'Chatbot de Soporte 24/7',
         provider: 'BotMaster',
         category: 'Customer Service',
-        image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=400&h=200&fit=crop',
+        image: 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=400&h=200&fit=crop',
     },
     {
         id: 3,
         title: 'Analytics Predictivo de Ventas',
         provider: 'InsightPro',
         category: 'Analytics',
-        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop',
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop',
     },
     {
         id: 4,
         title: 'Optimización de Logística con IA',
         provider: 'LogiSmart',
         category: 'Logistics',
-        image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=200&fit=crop',
+        image: 'https://images.unsplash.com/photo-1566576912902-1b91ceb5ec3f?w=400&h=200&fit=crop',
     },
 ];
 
